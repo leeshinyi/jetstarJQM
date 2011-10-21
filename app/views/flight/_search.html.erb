@@ -9,7 +9,7 @@
        <%= form_tag(flight_index_path, :method => :post, :id => "flightForm") do %>
          <%= hidden_field_tag params[:q], "", :id => "search_#{params[:q]}_hidden" %>
        <%- end -%>
-       <a href="/flight" class="doneBtn">Done</a>
+       <a href="#flightIndex" class="doneBtn" data-direction="reverse">Done</a>
      </div>
   </div>
   
