@@ -927,3 +927,60 @@ span.graytxt {
   color:#BEBEBE !important;
   text-align:center !important;
 }
+
+/* FLIGHT INDEX STYLES
+-------------------------------------------------------------------------------------------*/
+.header {
+  background: transparent url("headBG.jpg") repeat-x !important;
+  height:56px;
+  border:none !important;
+}
+.header div {
+  position:relative !important;
+}    
+.header #midHeader {
+  margin-top:-32px;
+}
+
+/* FOOTER STYLES
+-------------------------------------------------------------------------------------------*/
+.footer {
+    width: 100% !important;
+    height:40px !important;
+    margin: 0 auto !important;
+    background-color:#000000 !important;
+    border-bottom:1px solid #666 !important;
+    float:left !important;
+  }
+    .footer nav {
+      text-align:center !important;
+      padding-top: 3px !important;
+    }
+    .footer nav ul {
+      display: inline-block !important;
+      height: 35px !important;
+      padding-top:5px !important;
+    }
+    .footer nav ul li {
+      text-align: center !important;
+      width:96px !important;
+      float:left !important;
+      display: block !important;
+    }
+    .footer nav ul li a, .footer nav ul li a:visited {
+      padding: 7px 3px !important;
+      height: 12px !important;
+      background-color: #383838 !important;
+      color: #B0B0B0 !important;
+      text-decoration: none !important;
+      display: block !important;
+      -moz-border-radius: 6px !important; 
+      border-radius: 6px !important;
+      font-size: 10px !important;
+    }
+    .footer #copyright {
+      width:100% !important;
+      text-align:center !important;
+      font-size:12px !important;
+      color:#bebebe !important;
+    }
