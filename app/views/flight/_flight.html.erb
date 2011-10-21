@@ -1,0 +1,207 @@
+<div data-role="page" id="flightIndex" >
+    
+  <div data-role="header" class="header">
+    <!--h1>INDEX</h1-->
+    <div>
+      <div id="back"><a href="/" id="backBtn">Back</a></div>
+      <div id="midHeader"><h2 id="findFlights">Find Flights</h2></div>
+      <div id="bcrumb"><h3>1 <span>of</span> 6</h3></div>
+    </div>
+  </div>
+  
+  <div data-role="content" class="left contentWrap ffIndex"> 
+    <div id="main">
+    <div id="flightMenu" class="left contentWrap ffIndex">
+      <ul id="flightNav">
+        <li><a href="#" class="gap3">One Way</a></li>
+        <li><a href="#" class="gap3 current">Return</a></li>
+        <li><a href="#">Multi-City</a></li>
+      </ul>
+      <div id="toFrom" class="left fullwidth">
+        <div id="fromWrap" class="left">
+          <h4 class="reset tfhead">From</h4>
+          <div id="fromContent" class="left fullwidth">            
+             <a href="#flightSearch" id="<%= (session[:origin].blank?)? "origin_airport" : "session_origin" %>">
+              <span class="tfl"></span>
+              <span id="ffOrig">
+                <%- if session[:origin] -%>
+                  <span id="origin_short"><%= session[:origin][-4..-2] %></span>
+                  <span id="origin_city"><%= session[:origin][0..-6]%></span>
+                <%- else -%>
+                  <span id="origin_short"></span>
+                  <span id="origin_city">Choose your origin</span>
+                <%- end -%>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div id="ftSepa" class="left">&nbsp;</div>
+        <div id="toWrap" class="left">
+          <h4 class="reset tfhead tfto">To</h4>
+          <div id="toContent" class="left fullwidth">
+            <a href="#flightSearch" id="<%= (session[:dest].blank?)? "dest_airport" : "session_dest" %>">
+              <span class="tfl left"></span>
+              <span id="ffDest" class="left">
+                <%- if session[:dest] -%>
+                  <span id="dest_short"><%= session[:dest][-4..-2] %></span>
+                  <span id="dest_city"><%= session[:dest][0..-6] %></span>
+                <%- else -%>
+                  <span id="dest_short"></span>
+                  <span id="dest_city">
+                    Choose your
+                    <br />
+                    destination
+                  </span>
+                <%- end -%>
+              </span>
+              <span class="tfr right"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    
+    <div id="drWrap" class="left">
+        <a href="#flightCalendar" id="calLink">
+          <ul id="dr" class="reset">
+            <li>
+              <div class="schedtaps left" id="ffdd">
+                <h4>Depart</h4>
+                <div id="departDetails" class="left fullwidth">
+                  <%- if session[:depart] 
+                      d = Date.new(session[:depart].split("/")[2].to_i, session[:depart].split("/")[0].to_i, session[:depart].split("/")[1].to_i) -%>
+                    <div id="dpDate" class="halfi left"><span class="graytxt"><%= d.strftime("%A")%></span><br /><%= d.strftime("%b")%></div>
+                    <div id="dpDay" class="halfi left"><%= d.strftime("%d")%></div>
+                  <%- else %>
+                    <div id="dpDate" class="halfi left"><span class="graytxt"><%= Date.today.strftime("%A")%></span><br/><%= Date.today.strftime("%b")%></div>
+                    <div id="dpDay" class="halfi left"><%= Date.today.strftime("%d")%></div>
+                  <%- end %>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="schedtaps left" id="ffrd">
+                <h4>Return</h4>
+                <div id="returnDetails" class="left fullwidth">
+                  <%- if session[:return] 
+                      d = Date.new(session[:return].split("/")[2].to_i, session[:return].split("/")[0].to_i, session[:return].split("/")[1].to_i) -%>
+                    <div id="rpDate" class="halfi left"><span class="graytxt"><%= d.strftime("%A")%></span><br /><%= d.strftime("%b")%></div>
+                    <div id="rpDay" class="halfi left"><%= d.strftime("%d")%></div>
+                  <%- else %>
+                    <div id="rpDate" class="halfi left"><span class="graytxt"><%= Date.today.strftime("%A")%></span><br/><%= Date.today.strftime("%b")%></div>
+                    <div id="rpDay" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
+                  <%- end %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </a>
+    </div>
+    
+    <div id="passengerWrap" class="left contentWrap">
+      <h4 class="wtborder">Passengers</h4>
+      <%= form_tag(flight_index_path, :method => :post) do %>
+        <div id="passengerOpts">
+          <div class="thirdsP left sselect tacenter wdiv">
+            <span class="adult"></span>
+            <%= select_tag "adults", options_for_select(%w(1 2 3 4 5 6 7 8 9), session[:adults]) %>
+          </div>
+          <div class="thirds left sselect tacenter wdiv">
+            <span class="child"></span>
+            <%= select_tag "child", options_for_select(%w(0 1 2 3 4 5 6 7 8 9), session[:child]) %>
+          </div>
+          <div class="thirds left sselect tacenter">
+            <span class="infant"></span>
+            <%= select_tag "infants", options_for_select(%w(0 1 2), session[:infants]) %>
+          </div>
+        </div>
+        <div id="passengerLbls">
+          <div class="thirdsP left tacenter">Adult</div>
+          <div class="thirds left tacenter">2-11 years</div>
+          <div class="thirds left tacenter">< 2 years</div>
+        </div>
+        <div id="searchFLight" class="floatLeft width99">
+          <h4>Search by</h4>
+          <ul class="submitList">
+            <li class="halfw"><%= submit_tag "Find Flexible Date Flights", :id => "lowestFares"%></li>
+            <li class="halfw"><%= submit_tag "Find Exact Date Flights", :id => "exactDates"%></li>
+          </ul>
+        </div>
+      <%- end -%>
+    </div>
+    
+    <ul id="search_#{params[:q]}_list"></ul>
+    <div class="left contentWrap">
+        <div id="recentSearches">
+          <div id="searchesHeader">
+            <div id="clock" class="floatLeft"></div>
+            <h3 class="left width70">Recent Searches</h3>
+            <div id="downIcon" class="floatRight"></div>
+          </div>
+
+          <%- if session[:flight] || session[:return_flights] %>
+            <ul id="recentResults">
+              <%- if session[:flight] -%>
+                <%- session[:flight].each_with_index do |flight, i| %>
+                  <%- i += 1 -%>
+                  <%- ddate = parseDate(flight[:ddt]) -%>
+                  <%- adate = parseDate(flight[:adt]) -%>
+                  <li class="left">
+                    <a href="#" class="borderBottomGray <%= 'topradius' if (i==1) %>">
+                      <span class="resultTitle floatLeft"><%= "#{flight[:da]}-#{flight[:aa]}" %></span>                    
+                      <div class="searchDates floatRight">
+                        <div id="atd" class="floatleft days">
+                          ATD <%= flight[:ddt][11..15] %>
+                          <br/>
+                          ATA <%= flight[:adt][11..15] %>
+                        </div>
+                        <div class="floatleft days"><%= ddate.strftime('%a').upcase %><br/><%= ddate.strftime('%b').upcase %></div>
+                        <div class="floatRight date"><%= ddate.strftime('%d') %></div>
+                      </div>
+                    </a>
+                  </li>
+                <% end %>
+              <%- end -%>
+
+              <%- if session[:return_flights] -%>
+                <%- session[:return_flights].each_with_index do |rflight, i| -%>
+                  <%- i += 1 -%>
+                  <%- ddate = parseDate(rflight[:ddt]) -%>
+                  <%- adate = parseDate(rflight[:adt]) -%>
+                  <li class="left">
+                    <a href="#" class="borderBottomGray <%= 'bottomradius' if (i==session[:return_flights].size) %> returnGray <%= 'topradius' if (session[:flight].blank? && i.eql?(1))%>">
+                      <span class="return resultTitle floatLeft"><%= "#{rflight[:da]}-#{rflight[:aa]}" %></span>
+                      <div class="searchDates floatRight">
+                        <div id="atd" class="floatleft days">
+                          ATD <%= rflight[:ddt][11..15] %>
+                          <br/>
+                          ATA <%= rflight[:adt][11..15] %>
+                        </div>
+                        <div class="floatleft days"><%= adate.strftime('%a').upcase %><br/><%= ddate.strftime('%b').upcase %></div>
+                        <div class="floatRight date"><%= ddate.strftime('%d') %></div>
+                      </div>
+                    </a>
+                  </li>
+                <%- end -%>
+              <%- end -%>
+            </ul>
+          <%- else -%>
+            No search result yet.          
+          <% end %>
+        </div>
+    </div>
+    
+    
+    <%#= link_to "Choose origin", "#flightSearch" %>
+    <%#= link_to "Choose destination", "#flightSearch" %>
+    
+    <%#= link_to "Depart", "#flightCalendar" %>
+    <%#= link_to "Return", "#flightCalendar" %>
+  </div>
+  
+  <div data-role="footer" class="footer">
+    <%= render "footer" %>
+  </div>
+  
+</div>

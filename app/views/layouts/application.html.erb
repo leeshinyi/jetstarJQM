@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JetstarJQM</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="cleartype" content="on">
+    
+    <%= stylesheet_link_tag "style" %>
+    <%= stylesheet_link_tag "custom" %>
+    <%#= stylesheet_link_tag "jquery.ui.custom" %>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0rc1/jquery.mobile-1.0rc1.min.css" />
+    <%= stylesheet_link_tag "jquery.ui.datepicker.css" %>
+
+    <%= javascript_include_tag "application" %>
+    <script src="http://code.jquery.com/mobile/1.0rc1/jquery.mobile-1.0rc1.min.js"></script>  
+    <%= javascript_include_tag "jQuery.ui.datepicker" %>
+    <%= javascript_include_tag "jquery.mobile.datepicker.js" %>
+    
+    
+    <%= csrf_meta_tag %>
+  
+    <%= javascript_include_tag "modernizr-custom"%>
+    <script>
+      Modernizr.mq('(min-width:0)') || document.write('<script src="respond.min.js">\x3C/script>')
+    </script>
+    <script>
+    $( document ).bind( "mobileinit", function(){
+        $.mobile.page.prototype.options.degradeInputs.date = true;
+      });
+      var centerLatitude = -38.47;
+      var centerLongitude = 144.98;
+      var origin_airports = ['<%= @origins.join("\', \'") if @origins %>'];
+      var destination_airports = ['<%= @destination.join("\', \'") if @destination %>'];
+    </script>
+    
+  </head>
+  <body>
+    <div id="container" data-role="page">
+      <div data-role="header" class="header">
+        <%= yield :header%>
+      </div>
+      
+      <div id="main" data-role="content">
+        <%= yield %>
+      </div>
+      
+      <footer class="left">
+        <%= render "footer" %>
+      </footer>
+    </div>
+    <%= hidden_field_tag "origin", "", :id => "searchOrigin" %>
+    <%= hidden_field_tag "destination", "", :id => "searchDestination" %>
+    
+    <%= render "flight" %>
+    <%= render "search" %>
+    <%= render "calendar" %>
+    
+    <!--
+    <%#= javascript_include_tag "application"%>
+    <%#= javascript_include_tag "jquery.iphonepicker"%>
+    <%#- if session[:origin].blank? %>
+      <script>
+        $(document).ready(function() {
+          if (Modernizr.geolocation)
+            navigator.geolocation.getCurrentPosition(function(position) {
+              centerLatitude = position.coords.latitude;
+              centerLongitude = position.coords.longitude;
+              // // remove me...
+              centerLatitude = -33.870721;
+              centerLongitude = 151.204814;
+              findClosestAirport(centerLatitude, centerLongitude);
+            });
+          else {
+            findClosestAirport(centerLatitude, centerLongitude);
+            alert('Unable to get nearby airports');
+          }
+        });
+      </script>
+    <%#end%>
+    -->
+  </body>
+</html>

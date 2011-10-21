@@ -1,0 +1,95 @@
+<div data-role="page" id="flightCalendar" >
+    
+  <div data-role="header" class="header">
+    <div id="calendar"><a href="#flightIndex" class="cancelBtn" data-rel="back">Back</a></div>
+    <div id="midHeader">
+      <h2 id="tfthead">
+        <%- if session[:origin] || session[:dest] -%>
+          <span id="originToDest">
+            <%- if session[:origin] -%>
+              <%= session[:origin][-4..-2] %>
+            <%- else -%>
+              <%= "Origin "%>
+            <%- end -%>
+            to
+            <%- if session[:dest] -%>
+              <%= session[:dest][-4..-2] %>
+            <%- else -%>
+              <%= " Destination"%>
+            <%- end -%>
+          </span>
+          <span id="destToOrgin" class="hidden">
+            <%- if session[:dest] -%>
+              <%= session[:dest][-4..-2] %>
+            <%- else -%>
+              <%= "Destination "%>
+            <%- end -%>
+            to
+            <%- if session[:origin] -%>
+              <%= session[:origin][-4..-2] %>
+            <%- else -%>
+              <%= " Origin"%>
+            <%- end -%>
+          </span>
+        <%- else -%>
+          Schedules
+        <%- end -%>
+      </h2>
+    </div>
+    <div id="crumb"><a href="javascript:void(0)" id="submitDate" class="doneBtn">Done</a></div>
+  </div>
+  
+  <div data-role="content"> 
+    <div id="drWrap">
+      <ul id="dr" class="reset">
+        <li>
+          <div class="tapable schedtaps left" id="dd">
+            <h4>Depart</h4>
+            <div class="left fullwidth">
+              <div id="departDetails" class="hidden"></div>
+              <%- if session[:depart] 
+                  d = Date.new(session[:depart].split("/")[2].to_i, session[:depart].split("/")[0].to_i, session[:depart].split("/")[1].to_i) -%>
+                <div id="dpDate" class="halfi left"><span class="graytxt"><%= d.strftime("%A")%></span><br /><%= d.strftime("%b")%></div>
+                <div id="dpDay" class="halfi left"><%= d.strftime("%d")%></div>
+                <div id="dpSource" class="hidden"><%= d.strftime("%m/%d/%Y") %></div>
+              <%- else %>
+                <div id="dpDate" class="halfi left"><span class="graytxt"><%= Date.today.strftime("%A")%></span><br/><%= Date.today.strftime("%b")%></div>
+                <div id="dpDay" class="halfi left"><%= Date.today.strftime("%d")%></div>
+                <div id="dpSource" class="hidden"><%= Date.today.strftime("%m/%d/%Y") %></div>
+              <%- end %>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="schedtaps left" id="rd">
+            <h4>Return</h4>
+            <div class="left fullwidth">
+              <div id="returnDetails" class="hidden"></div>
+              <%- if session[:return] 
+                  d = Date.new(session[:return].split("/")[2].to_i, session[:return].split("/")[0].to_i, session[:return].split("/")[1].to_i) -%>
+                <div id="rpDate" class="halfi left"><span class="graytxt"><%= d.strftime("%A")%></span><br /><%= d.strftime("%b")%></div>
+                <div id="rpDay" class="halfi left"><%= d.strftime("%d")%></div>
+                <div id="rpSource" class="hidden"><%= d.strftime("%m/%d/%Y") %></div>
+              <%- else %>
+                <div id="rpDate" class="halfi left"><span class="graytxt"><%= Date.today.strftime("%A")%></span><br/><%= Date.today.strftime("%b")%></div>
+                <div id="rpDay" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
+                <div id="rpSource" class="hidden"><%= (Date.today + 1).strftime("%m/%d/%Y") %></div>
+              <%- end %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div id="dps" class="left fullwidth">
+      <div id="datepickerD">
+      </div>
+      <div id="datepickerR" class="hidden">
+      </div>
+    </div>
+  </div>
+  
+  <div data-role="footer" class="footer">
+    <%= render "footer" %>
+  </div>
+  
+</div>

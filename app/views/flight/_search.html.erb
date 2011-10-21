@@ -1,0 +1,14 @@
+<div data-role="page" id="flightSearch">
+  <div data-role="header" class="header">
+    <%= link_to "BACK", "#flightIndex" %>
+    <h1><%= text_field_tag "borga", "", :id => "search_#{params[:q]}", :class => "searchField", :placeholder => "Type a city or Airport Code" %></h1>
+    <%= link_to "DONE", "", :class => "ui-btn-right" %>
+  </div>
+  
+  <div data-role="content"> 
+  </div>
+  
+  <div data-role="footer" class="footer">
+    <%= render "footer" %>
+  </div>
+</div>
