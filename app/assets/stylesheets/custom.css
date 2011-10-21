@@ -635,7 +635,10 @@ h4.wtborder {
   font-size:16px;
   overflow:hidden;
 }
-.sselect span {
+.sselect span.adult,
+.sselect span.child,
+.sselect span.infant
+{
   height:28px;
   width:20px;
   display:block;
@@ -1005,6 +1008,7 @@ span.graytxt {
       color:#bebebe !important;
     }
 
+
 /* FLIGHT INDEX STYLES
 -------------------------------------------------------------------------------------------*/
 .ui-content {
@@ -1024,3 +1028,39 @@ span.graytxt {
   -webkit-box-shadow:0 0 0 white !important;
   -moz-box-shadow:0 0 0 white !important;
 }
+
+/* PASSENGER STYLES
+-------------------------------------------------------------------------------------------*/
+
+#passengerOpts .ui-select .ui-icon-arrow-d {
+  display: none;
+}
+
+#passengerOpts .ui-select{
+    display:block !important
+}
+
+#passengerOpts .sselect select{
+    margin:0 !important
+}
+
+#passengerOpts .ui-btn-corner-all{
+    border: 0 !important
+}
+
+#passengerOpts .ui-btn{
+    margin-top:1em !important
+}
+
+#passengerOpts .ui-btn-up-c,
+#passengerOpts .ui-btn-up-hover-c{
+    background-image: none !important;
+    border: 0 !important;
+    background-color: transparent !important;
+}
+
+#passengerOpts .ui-shadow,
+#passengerOpts .ui-btn-up-hover-c{
+    box-shadow: none !important
+}
+
