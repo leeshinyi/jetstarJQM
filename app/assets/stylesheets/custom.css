@@ -974,6 +974,7 @@ span.graytxt {
     background-color:#000000 !important;
     border-bottom:1px solid #666 !important;
     float:left !important;
+    overflow:visible !important;
   }
     .footer nav {
       text-align:center !important;
@@ -989,6 +990,7 @@ span.graytxt {
       width:96px !important;
       float:left !important;
       display: block !important;
+      color: #B0B0B0 !important;
     }
     .footer nav ul li a, .footer nav ul li a:visited {
       padding: 7px 3px !important;
@@ -1006,6 +1008,8 @@ span.graytxt {
       text-align:center !important;
       font-size:12px !important;
       color:#bebebe !important;
+      text-shadow: white 0px 0px 0px !important;
+      font-weight:normal !important;
     }
 
 
@@ -1027,6 +1031,9 @@ span.graytxt {
   box-shadow:0 0 0 white !important;
   -webkit-box-shadow:0 0 0 white !important;
   -moz-box-shadow:0 0 0 white !important;
+}
+.gray{
+  color: #B0B0B0 !important;
 }
 
 /* PASSENGER STYLES
@@ -1063,4 +1070,3 @@ span.graytxt {
 #passengerOpts .ui-btn-up-hover-c{
     box-shadow: none !important
 }
-
