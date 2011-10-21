@@ -821,3 +821,28 @@ span.graytxt {
   color: #bebebe !important;
 }
 
+.ui-link{
+color:#B0B0B0 !important;
+font-weight:normal !important;
+text-shadow: white 0px 0px 0px !important;
+}
+.ui-link:hover{
+color:#B0B0B0 !important;
+}
+#intro a.ui-link{
+font-weight:bold !important;
+color:#fff !important;
+}
+#midHeader h2{
+text-shadow: white 0px 0px 0px !important;
+}
+.ui-body-c{
+background-image:none !important;
+background-color:#fff !important;
+
+}
+#copyright{
+font-size:12px !important;
+color:#BEBEBE !important;
+text-align:center !important;
+}
