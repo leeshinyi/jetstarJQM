@@ -927,22 +927,25 @@ span.graytxt {
   color:#BEBEBE !important;
   text-align:center !important;
 }
+
+/* SEARCH STYLES
+-------------------------------------------------------------------------------------------*/
 #searchFieldGroup strong{
-color:#222 !important;
-text-shadow: white 0px 0px 0px !important;
+  color:#222 !important;
+  text-shadow: white 0px 0px 0px !important;
 }
 .ui-body-a {
-background-color:#fff !important;
-border: 1px solid #f85720 !important;
-text-shadow: white 0px 0px 0px !important;
-font-size:13px !important;
+  background-color:#fff !important;
+  border: 1px solid #f85720 !important;
+  text-shadow: white 0px 0px 0px !important;
+  font-size:13px !important;
 }
 
 #searchHeader{
-text-shadow: white 0px 0px 0px !important;
+  text-shadow: white 0px 0px 0px !important;
 }
 .searchField{
-color:gray !important;
+  color:gray !important;
 }
 
 /* FLIGHT INDEX STYLES
@@ -1001,3 +1004,23 @@ color:gray !important;
       font-size:12px !important;
       color:#bebebe !important;
     }
+
+/* FLIGHT INDEX STYLES
+-------------------------------------------------------------------------------------------*/
+.ui-content {
+  padding:0 !important;
+}
+.ui-link, .ui-link:hover, .ui-link:active {
+  color:#484848 !important;
+}
+#flightNav .current {
+  color:white !important;
+}
+.submitList input {
+  opacity:0 !important;
+}
+.submitList .ui-shadow {
+  box-shadow:0 0 0 white !important;
+  -webkit-box-shadow:0 0 0 white !important;
+  -moz-box-shadow:0 0 0 white !important;
+}
