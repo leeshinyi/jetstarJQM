@@ -968,6 +968,7 @@ color:gray !important;
     background-color:#000000 !important;
     border-bottom:1px solid #666 !important;
     float:left !important;
+    overflow:visible !important;
   }
     .footer nav {
       text-align:center !important;
@@ -1000,4 +1001,6 @@ color:gray !important;
       text-align:center !important;
       font-size:12px !important;
       color:#bebebe !important;
+      text-shadow: white 0px 0px 0px !important;
+      font-weight:normal !important;
     }
