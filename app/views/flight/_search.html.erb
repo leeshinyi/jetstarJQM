@@ -1,11 +1,41 @@
 <div data-role="page" id="flightSearch">
   <div data-role="header" class="header">
-    <%= link_to "BACK", "#flightIndex" %>
-    <h1><%= text_field_tag "borga", "", :id => "search_#{params[:q]}", :class => "searchField", :placeholder => "Type a city or Airport Code" %></h1>
-    <%= link_to "DONE", "", :class => "ui-btn-right" %>
+    <div id="findFlights">      
+       <span id="searchFieldGroup">
+         <strong><%= "#{(params[:q] == "from")? "From" : "To" }" %></strong>
+         <%= text_field_tag params[:q], "", :id => "search_#{params[:q]}", :class => "searchField", :placeholder => "Type a city or Airport Code" %>
+         <span id="clearSearch"><span class="hidden">Clear Search</span></span>
+       </span>
+       <%= form_tag(flight_index_path, :method => :post, :id => "flightForm") do %>
+         <%= hidden_field_tag params[:q], "", :id => "search_#{params[:q]}_hidden" %>
+       <%- end -%>
+       <a href="/flight" class="doneBtn">Done</a>
+     </div>
   </div>
   
   <div data-role="content"> 
+    <div id="searchPage" class="contentWrap left">
+      <div id="geolocation" class="left">
+        <div id="geoLocWrap" class="left fullwidth">
+          <span class="boxLeft left"></span>
+          <span id="geolocationTxt" class="left">
+            <span id="plane" class="left"></span>
+            <span id="geolocationHeader">Show nearest departure airports</span>
+            <span id="pen" class="right"></span>
+          </span>
+          <span class="boxRight right"></span>
+        </div>
+      </div>
+      <%- if session[:origin].blank? %>
+        <div id="airportLst" class="searchResults left fullwidth">
+          <span id="searchHeader">Search airports via City or Airport Code</span>
+        </div>
+      <%- else -%>
+        <div id="airportLst" class="searchResults left fullwidth">
+          <span id="searchHeader">Search airports via City or Airport Code</span>
+        </div>
+      <%- end -%>
+    </div>
   </div>
   
   <div data-role="footer" class="footer">
