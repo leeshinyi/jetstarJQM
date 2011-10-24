@@ -1105,6 +1105,6 @@ span.graytxt {
     box-shadow: none !important
 }
 #passengerOpts .ui-btn-inner{
-    padding-right:0 !important
+    padding-right:0 !important;
+    text-indent: 9px !important
 }
-
