@@ -959,6 +959,27 @@ span.graytxt {
   color:gray !important;
 }
 
+.ui-autocomplete a.ui-corner-all{
+display:block !important;
+padding: 10px !important;
+color: #222 !important;
+cursor: default !important;
+}
+.ui-autocomplete li.ui-menu-item{
+padding: 10px !important;
+}
+#flightSearch div.ui-content{
+margin-top: -8px !important;
+}
+div#searchPage{
+margin-top: 22px !important;
+}
+div#airportLst{
+margin-top: 0 !important;
+position: relative !important;
+z-index: 30 !important;
+}
+
 /* FOOTER STYLES
 -------------------------------------------------------------------------------------------*/
 .footer {

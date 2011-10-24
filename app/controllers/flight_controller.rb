@@ -1,5 +1,9 @@
 require 'net/http'
 class FlightController < ApplicationController
+  def index
+        @origins = findOriginAirports
+    @destination = findDestinationAirports
+  end
 
   def create
     if params[:from] && !params[:from].blank?
