@@ -10,7 +10,11 @@
 
 
 $(document).ready(function() {
-  // $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
+  $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
+
+  $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
+    e.preventDefault();
+  });
 
   addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
   function hideURLbar(){
