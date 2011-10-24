@@ -8,7 +8,7 @@
  * http://docs.jquery.com/UI/Datepicker#theming
  */
 div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0; }
-.ui-datepicker {  overflow: visible; margin: 0; max-width: 500px;  }
+.ui-datepicker {  overflow: visible; margin: 0; max-width: 96%; margin-left: 2%; margin-right: 2%;}
 .ui-datepicker .ui-datepicker-header { position:relative; padding:.4em 0; border-bottom: 0; font-weight: bold; }
 .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { padding: 1px 0 1px 2px; position:absolute; top: .5em; margin-top: 0; text-indent: -9999px; }
 
@@ -28,3 +28,132 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 .ui-datepicker-calendar td a { padding-top: .5em; padding-bottom: .5em; }
 
 .min-width-480px div.hasDatepicker  { width: 63%; display: inline-block; margin: 0; } 
+
+#datepickerD > div {
+  border: none !important;
+}
+
+.ui-datepicker-header, .ui-datepicker-calendar * {
+  border: none;
+}
+
+.ui-datepicker-header {
+  border-radius: 0em !important; -moz-border-radius: 0em !important; -webkit-border-radius: 0em !important; -o-border-radius: 0em !important;  
+  background-color: #383838 !important;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+  background: none;
+  border: none;
+}
+
+.ui-datepicker-header * {
+  border-radius: 0em !important; -moz-border-radius: 0em !important; -webkit-border-radius: 0em !important; -o-border-radius: 0em !important;
+}
+
+.ui-datepicker-title * {
+  color: #e0e0e0 !important;
+  text-shadow: 1px 1px #333333 !important;
+  font-size: 1.3em !important;
+}
+
+.ui-datepicker-calendar thead tr th {
+  background: #efefef !important;
+  padding: 5px 0px 5px 0px !important;
+
+  color: #626262 !important;
+  /*font-weight: normal;*/
+  text-transform: uppercase;
+}
+
+.ui-datepicker-calendar thead tr th span {
+  color: #828282 !important;
+  opacity: 1;
+  filter: alpha('opacity=100');
+}
+
+table.ui-datepicker-calendar tbody tr td {
+  width: 8%;
+  height: 32px;
+  border: solid 2px #ffffff;
+}
+
+table.ui-datepicker-calendar tbody tr td a,
+table.ui-datepicker-calendar tbody tr td span
+{
+  display: block !important;
+  text-align: center;
+  width: auto !important;
+  height: inherit !important;
+  line-height: 32px;
+  font-weight: bold !important;
+  text-shadow: 1px 1px #eeeeee;
+}
+
+.ui-state-disabled span {
+  background-image: linear-gradient(bottom, rgb(194,194,194) 20%, rgb(228,228,228) 61%, rgb(236,236,236) 72%) !important;
+  background-image: -o-linear-gradient(bottom, rgb(194,194,194) 20%, rgb(228,228,228) 61%, rgb(236,236,236) 72%) !important;
+  background-image: -moz-linear-gradient(bottom, rgb(194,194,194) 20%, rgb(228,228,228) 61%, rgb(236,236,236) 72%) !important;
+  background-image: -webkit-linear-gradient(bottom, rgb(194,194,194) 20%, rgb(228,228,228) 61%, rgb(236,236,236) 72%) !important;
+  background-image: -ms-linear-gradient(bottom, rgb(194,194,194) 20%, rgb(228,228,228) 61%, rgb(236,236,236) 72%) !important;
+
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.2, rgb(194,194,194)),
+    color-stop(0.61, rgb(228,228,228)),
+    color-stop(0.72, rgb(236,236,236))
+  ) !important;
+}
+
+.ui-state-default {
+  background-image: linear-gradient(bottom, rgb(227,227,227) 37%, rgb(247,247,247) 85%) !important;
+  background-image: -o-linear-gradient(bottom, rgb(227,227,227) 37%, rgb(247,247,247) 85%) !important;
+  background-image: -moz-linear-gradient(bottom, rgb(227,227,227) 37%, rgb(247,247,247) 85%) !important;
+  background-image: -webkit-linear-gradient(bottom, rgb(227,227,227) 37%, rgb(247,247,247) 85%) !important;
+  background-image: -ms-linear-gradient(bottom, rgb(227,227,227) 37%, rgb(247,247,247) 85%) !important;
+
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.37, rgb(227,227,227)),
+    color-stop(0.85, rgb(247,247,247))
+  ) !important;
+
+  text-shadow: 1px 1px #efefef !important;
+  color: #666666 !important;
+}
+
+.ui-state-active {
+  background: #ff5115 !important;
+  text-shadow: 1px 1px #ff7444 !important;
+  color: #000000 !important;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+  padding: 0px !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -o-box-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  margin-top: 2px !important;
+}
+
+.ui-datepicker-prev .ui-icon { left:2px; background: url("calendarArrows.jpg") no-repeat; }
+.ui-datepicker-next .ui-icon { right:2px; background: url("calendarArrows.jpg") right bottom no-repeat; }
+
+.ui-icon {
+  width: 13px;
+  height: 13px;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -o-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.ui-btn-inner {
+  border: none !important;
+}
