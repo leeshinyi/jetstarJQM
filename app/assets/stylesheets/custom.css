@@ -14,6 +14,14 @@
                             * FLIGHT SEARCH AREA
                             * CLASSES
 ================================================================================================
+                                    JQM CSS Hacks
+================================================================================================                            
+                            * WELCOME PAGE STYLES
+                            * SEARCH STYLES
+                            * FOOTER STYLES
+                            * FLIGHT INDEX STYLES
+                            * PASSENGER STYLES
+================================================================================================
 ================================================================================================*/
 
 @media only screen and (min-width: 800px){
@@ -951,20 +959,6 @@ span.graytxt {
   color:gray !important;
 }
 
-/* FLIGHT INDEX STYLES
--------------------------------------------------------------------------------------------*/
-.header {
-  background: transparent url("headBG.jpg") repeat-x !important;
-  height:56px;
-  border:none !important;
-}
-.header div {
-  position:relative !important;
-}    
-.header #findFlights2 #midHeader {
-  margin-top:-32px;
-}
-
 /* FOOTER STYLES
 -------------------------------------------------------------------------------------------*/
 .footer {
@@ -1012,9 +1006,19 @@ span.graytxt {
       font-weight:normal !important;
     }
 
-
 /* FLIGHT INDEX STYLES
 -------------------------------------------------------------------------------------------*/
+.header {
+  background: transparent url("headBG.jpg") repeat-x !important;
+  height:56px;
+  border:none !important;
+}
+.header div {
+  position:relative !important;
+}    
+.header #findFlights2 #midHeader {
+  margin-top:-32px;
+}
 .ui-content {
   padding:0 !important;
 }
