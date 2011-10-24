@@ -121,11 +121,11 @@
           <div class="thirds left tacenter">2-11 years</div>
           <div class="thirds left tacenter">< 2 years</div>
         </div>
-        <div id="searchFLight" class="floatLeft width99">
+        <div id="searchFLight" class="floatLeft fullwidth">
           <h4>Search by</h4>
           <ul class="submitList">
             <li class="halfw"><%= submit_tag "Find Flexible Date Flights", :id => "lowestFares"%></li>
-            <li class="halfw"><%= submit_tag "Find Exact Date Flights", :id => "exactDates"%></li>
+            <li class="halfw" id="exact"><%= submit_tag "Find Exact Date Flights", :id => "exactDates"%></li>
           </ul>
         </div>
       <%- end -%>
