@@ -21,63 +21,77 @@ $(document).ready(function() {
   var rp_source = $("#rpSource").html()
 
   if ($("#datepickerD").length){
-    $( "#datepickerD" ).datepicker({
-      defaultDate: dp_source,
-      onSelect: function(dateText, inst) {
-//        $("#departDetails").html(dateText);
-//        $("#dDate").val(dateText);
-        $("#dpDay").text(dateText.split("/")[1]);
-        $("#dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-        $("#datepickerR").datepicker("option","minDate",$.datepicker.parseDate($.datepicker._defaults.dateFormat, dateText, $( "#datepickerD" ).data( "datepicker" )) );
-        submitDate("depart", dateText);
-      }
-    });
-    $( "#datepickerR" ).datepicker({
-      defaultDate: rp_source,
-      onSelect: function(dateText, inst) {
-//        $("#returnDetails").html(dateText);
-//        $("#rData").val(dateText);
-        $("#rpDay").text(dateText.split("/")[1]);
-        $("#rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-        submitDate("return", dateText);
-      }
-    });
-  }
+     $( "#datepickerD" ).datepicker({
+       minDate: 0,
+       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+       firstDay: 1,
+       defaultDate: dp_source,
+       onSelect: function(dateText, inst) {
+         $("#dpDay").text(dateText.split("/")[1]);
+         $("#dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+         $("#datepickerR").datepicker("option","minDate",$.datepicker.parseDate($.datepicker._defaults.dateFormat, dateText, $( "#datepickerD" ).data( "datepicker" )) );
+         $("#dpSource").html(dateText);
+       }
+     });
+     $( "#datepickerR" ).datepicker({
+       defaultDate: rp_source,
+       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+       firstDay: 1,
+       minDate: dp_source,
+       onSelect: function(dateText, inst) {
+         $("#rpDay").text(dateText.split("/")[1]);
+         $("#rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+         $("#rpSource").html(dateText);
+       }
+     });
+   }
   
-  $("#rd").click (function (){
-    $("#datepickerD").toggleClass("hidden");
-    $("#datepickerR").toggleClass("hidden");
-    $(this).toggleClass("tapable");
-    $("#dd").toggleClass("tapable");
-  });
-  $("#dd").click (function (){
-    $("#datepickerD").toggleClass("hidden");
-    $("#datepickerR").toggleClass("hidden");
-    $(this).toggleClass("tapable");
-    $("#rd").toggleClass("tapable");
-  });
+   $("#rd").click (function (){
+     $("#datepickerD").toggleClass("hidden");
+     $("#datepickerR").toggleClass("hidden");
+     $(this).toggleClass("tapable");
+     $("#dd").toggleClass("tapable");
+
+     if ($("#originToDest").length) {
+       $("#destToOrgin").toggleClass("hidden");
+       $("#originToDest").toggleClass("hidden");
+     }
+   });
+   $("#dd").click (function (){
+     $("#datepickerD").toggleClass("hidden");
+     $("#datepickerR").toggleClass("hidden");
+     $(this).toggleClass("tapable");
+     $("#rd").toggleClass("tapable");
+
+     if ($("#originToDest").length) {
+       $("#destToOrgin").toggleClass("hidden");
+       $("#originToDest").toggleClass("hidden");
+     }
+   });
     
-  $('#search_from').autocomplete({
-    source: origin_airports,
-    minLength: 1,
-    select:function(event, ui){
-      $("#search_from_hidden").val(ui.item.value);
-      $("#flightForm").submit();
-    },
-    change:function(event, ui){
-      $("#search_from_hidden").val(ui.item.value);
-      $("#flightForm").submit();
-    },
-    open: function(event, ui) {
-      $("#geolocation").hide();
-      $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLst').show();
-      $("#searchHeader").hide();
-    },
-    close:function(event,ui){
-      $("#airportLstTxt").show();
-      $("ul.ui-autocomplete").show();
-    }
-  });
+
+   $('#search_from').autocomplete({
+     source: origin_airports,
+     minLength: 1,
+     select:function(event, ui){
+       $("#search_from_hidden").val(ui.item.value);
+       $("#flightForm").submit();
+     },
+     change:function(event, ui){
+       $("#search_from_hidden").val(ui.item.value);
+       $("#flightForm").submit();
+     },
+     open: function(event, ui) {
+       $("#geolocation").hide();
+       $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLst').show();
+       $("#searchHeader").hide();
+     },
+     close:function(event,ui){
+       $("#airportLstTxt").show();
+       $("ul.ui-autocomplete").show();
+     }
+   });
+
 
   
   $('#search_to').autocomplete({
