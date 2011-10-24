@@ -962,13 +962,14 @@ span.graytxt {
   color:gray !important;
 }
 
-.ui-autocomplete a.ui-corner-all{
+.ui-autocomplete a.ui-corner-all, .ui-autocomplete2 a.selectClosestAirport{
   display:block !important;
   padding: 10px !important;
   color: #222 !important;
   cursor: default !important;
+  text-decoration:none;
 }
-.ui-autocomplete li.ui-menu-item{
+.ui-autocomplete li.ui-menu-item, .ui-autocomplete2 li.ui-menu-item{
   padding: 10px !important;
 }
 #flightSearch div.ui-content{
