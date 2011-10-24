@@ -1072,7 +1072,14 @@ span.graytxt {
    box-shadow: none !important
 }
 
-#passengerOpts .ui-shadow{
+#passengerOpts .ui-shadow
+{
+    -webkit-box-shadow: none!important;
     box-shadow: none !important
 }
+
+#passengerOpts .ui-btn-inner{
+    padding-right:0 !important
+}
+
 
