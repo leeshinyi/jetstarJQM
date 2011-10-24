@@ -1078,14 +1078,25 @@ span.graytxt {
     margin-top:1em !important
 }
 
-#passengerOpts .ui-btn-up-c,
-#passengerOpts .ui-btn-up-hover-c{
+#passengerOpts .ui-btn-up-c{
     background-image: none !important;
     border: 0 !important;
     background-color: transparent !important;
 }
 
-#passengerOpts .ui-shadow,
-#passengerOpts .ui-btn-up-hover-c{
+#passengerOpts .ui-btn-hover-c{
+   border: 0 !important;
+   background-color: transparent !important;
+   background-image: none !important;
+   box-shadow: none !important
+}
+
+#passengerOpts .ui-shadow
+{
+    -webkit-box-shadow: none!important;
     box-shadow: none !important
 }
+#passengerOpts .ui-btn-inner{
+    padding-right:0 !important
+}
+
