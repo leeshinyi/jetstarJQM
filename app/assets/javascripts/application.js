@@ -27,8 +27,10 @@ $(document).ready(function() {
        firstDay: 1,
        defaultDate: dp_source,
        onSelect: function(dateText, inst) {
-         $("#dpDay").text(dateText.split("/")[1]);
-         $("#dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+         $("#flightCalendar #dpDay").text(dateText.split("/")[1]);
+         $("#flightCalendar #dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+         $("#flightIndex #dpDay").text(dateText.split("/")[1]);
+         $("#flightIndex #dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
          $("#datepickerR").datepicker("option","minDate",$.datepicker.parseDate($.datepicker._defaults.dateFormat, dateText, $( "#datepickerD" ).data( "datepicker" )) );
          $("#dpSource").html(dateText);
        }
@@ -39,8 +41,10 @@ $(document).ready(function() {
        firstDay: 1,
        minDate: dp_source,
        onSelect: function(dateText, inst) {
-         $("#rpDay").text(dateText.split("/")[1]);
-         $("#rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+         $("#flightCalendar #rpDay").text(dateText.split("/")[1]);
+         $("#flightCalendar #rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+          $("#flightIndex #rpDay").text(dateText.split("/")[1]);
+          $("#flightIndex #rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
          $("#rpSource").html(dateText);
        }
      });
