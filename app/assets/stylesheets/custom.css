@@ -456,6 +456,9 @@ only screen and (min-device-pixel-ratio: 1.5) {
   }
   #searchPage {
     min-height:276px;
+    margin-top:0;
+    position:relative;
+    z-index:20;
   }
   .ui-autocomplete .ui-menu-item, .ui-autocomplete2 .ui-menu-item {
     font-size: 13px;
@@ -483,7 +486,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
     width:100%;
     margin-bottom:10px;
     display:block;
-    margin-top:-22px;    
+    /*margin-top:-22px; */
   }
   #geoLocWrap {
     background:url("searchGeoBg.png") repeat-x;
@@ -959,6 +962,28 @@ span.graytxt {
   color:gray !important;
 }
 
+.ui-autocomplete a.ui-corner-all, .ui-autocomplete2 a.selectClosestAirport{
+  display:block !important;
+  padding: 10px !important;
+  color: #222 !important;
+  cursor: default !important;
+  text-decoration:none;
+}
+.ui-autocomplete li.ui-menu-item, .ui-autocomplete2 li.ui-menu-item{
+  padding: 10px !important;
+}
+#flightSearch div.ui-content{
+  margin-top: -8px !important;
+}
+div#airportLst{
+  margin-top: 0 !important;
+  position: relative !important;
+  z-index: 30 !important;
+}
+.ui-body-c {
+  text-shadow:none !important;
+}
+
 /* FOOTER STYLES
 -------------------------------------------------------------------------------------------*/
 .footer {
@@ -1106,5 +1131,13 @@ span.graytxt {
 }
 #passengerOpts .ui-btn-inner{
     padding-right:0 !important;
-    text-indent: 0 !important
+    text-indent: 0 !important;
+    display:none !important
+}
+
+#uipv_content_adults,
+#uipv_content_child,
+#uipv_content_infants{
+    position:relative;
+    top:-18px
 }

@@ -3,11 +3,11 @@
     <div id="findFlights">      
        <span id="searchFieldGroup">
          <strong><%= "#{(params[:q] == "from")? "From" : "To" }" %></strong>
-         <%= text_field_tag params[:q], "", :id => "search_#{params[:q]}", :class => "searchField", :placeholder => "Type a city or Airport Code" %>
+         <%= text_field_tag "from", "", :id => "search_from", :class => "searchField", :placeholder => "Type a city or Airport Code" %>
          <span id="clearSearch"><span class="hidden">Clear Search</span></span>
        </span>
        <%= form_tag(flight_index_path, :method => :post, :id => "flightForm") do %>
-         <%= hidden_field_tag params[:q], "", :id => "search_#{params[:q]}_hidden" %>
+         <%= hidden_field_tag "from", "", :id => "search_from_hidden" %>
        <%- end -%>
        <a href="#flightIndex" class="doneBtn" data-direction="reverse">Done</a>
      </div>
