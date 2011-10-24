@@ -1,7 +1,7 @@
 require 'net/http'
 class FlightController < ApplicationController
   def index
-        @origins = findOriginAirports
+    @origins = findOriginAirports
     @destination = findDestinationAirports
   end
 

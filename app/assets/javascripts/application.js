@@ -138,7 +138,6 @@ $(document).ready(function() {
 });
 
 function findClosestAirport(lat, lng){
-alert("a");
   $.ajax({
     type: "GET",
     url: "/flight/findClosestAirports?lat="+ lat + "&lng=" + lng, 
