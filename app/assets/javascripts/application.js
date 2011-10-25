@@ -228,8 +228,12 @@ $(document).ready(function() {
       $(".searchResults").css("margin-top","0");
     }
   });
-    $(".geoneararea").click(function (){
-    findClosestAirport(centerLatitude, centerLongitude);
+  
+    $(".nearestairportFrom").click(function (){
+    findClosestAirport(centerLatitude, centerLongitude,"from");
+  });
+    $(".nearestairportTo").click(function (){
+    findClosestAirport(centerLatitude, centerLongitude,"to");
   });
   
   
@@ -270,7 +274,7 @@ function tagReturn(targetDate) {
 }
 // Calendar-specific functions - END
 
-function findClosestAirport(lat, lng){
+function findClosestAirport(lat, lng, fromto){
   $.ajax({
     type: "GET",
     url: "/flight/findClosestAirports?lat="+ lat + "&lng=" + lng, 
@@ -285,13 +289,22 @@ function findClosestAirport(lat, lng){
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
         }
-        
-        $("#origin_short").html(data[0].a.split(";")[0] );
-        $("#origin_city").html(data[0].a.split(";")[1]);
+        if(fromto == "from"){
+          $("#origin_short").html(data[0].a.split(";")[0] );
+          $("#origin_city").html(data[0].a.split(";")[1]);
+        }
+        else{
+          $("#dest_short").html(data[0].a.split(";")[0] );
+          $("#dest_city").html(data[0].a.split(";")[1]);
+        }
         $(".selectClosestAirport").click(function(e){
           e.preventDefault();
-          $("#search_from_hidden").val($(this).html());
-          $("#search_to_hidden").val($(this).html());
+          if(fromto == "from"){
+            $("#search_from_hidden").val($(this).html());
+          }
+          else{
+            $("#search_to_hidden").val($(this).html());
+          }
           $.mobile.changePage("#flightIndex");
           //$("#flightForm").submit();
         });
@@ -305,12 +318,22 @@ function findClosestAirport(lat, lng){
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
         }
-        $("#origin_short").html(data[0].a.split(";")[0]);
-        $("#origin_city").html(data[0].a.split(";")[1]);
+        if(fromto == "from"){
+          $("#origin_short").html(data[0].a.split(";")[0] );
+          $("#origin_city").html(data[0].a.split(";")[1]);
+        }
+        else{
+          $("#dest_short").html(data[0].a.split(";")[0] );
+          $("#dest_city").html(data[0].a.split(";")[1]);
+        }
         $(".selectClosestAirport").click(function(e){
           e.preventDefault();
-          $("#search_from_hidden").val($(this).html());
-          $("#search_to_hidden").val($(this).html());
+          if(fromto == "from"){
+            $("#search_from_hidden").val($(this).html());
+          }
+          else{
+            $("#search_to_hidden").val($(this).html());
+          }
           $.mobile.changePage("#flightIndex");
           //$("#flightForm").submit();
         });
