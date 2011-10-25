@@ -279,6 +279,7 @@ function findClosestAirport(lat, lng){
           e.preventDefault();
           $("#search_from_hidden").val($(this).html());
           $("#search_to_hidden").val($(this).html());
+          $.mobile.changePage("#flightIndex");
           //$("#flightForm").submit();
         });
       } else if(data.length > 1){
@@ -297,6 +298,7 @@ function findClosestAirport(lat, lng){
           e.preventDefault();
           $("#search_from_hidden").val($(this).html());
           $("#search_to_hidden").val($(this).html());
+          $.mobile.changePage("#flightIndex");
           //$("#flightForm").submit();
         });
       }
