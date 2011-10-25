@@ -58,10 +58,11 @@
     <%= hidden_field_tag "destination", "", :id => "searchDestination" %>
     
     <%= render "flight" %>
-    <%= render "search" %>
+    <%= render "search", :q => "from" %>
+    <%= render "search", :q => "to" %>
     <%= render "calendar" %>
     
-    <!--
+
     <%#= javascript_include_tag "application"%>
     <%#= javascript_include_tag "jquery.iphonepicker"%>
     <%#- if session[:origin].blank? %>
@@ -83,6 +84,6 @@
         });
       </script>
     <%#end%>
-    -->
+
   </body>
 </html>
