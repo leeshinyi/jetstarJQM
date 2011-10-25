@@ -70,12 +70,20 @@
                 <h4>Depart</h4>
                 <div id="departDetails" class="left fullwidth">
                   <%- if session[:depart] 
-                      d = Date.new(session[:depart].split("/")[2].to_i, session[:depart].split("/")[0].to_i, session[:depart].split("/")[1].to_i) -%>
-                    <div id="dpDate" class="halfi left"><span class="graytxt"><%= d.strftime("%A")%></span><br /><%= d.strftime("%b")%></div>
+                    d = Date.new(session[:depart].split("/")[2].to_i, session[:depart].split("/")[0].to_i, session[:depart].split("/")[1].to_i) -%>
+                    <div id="dpDate" class="halfi left">
+                      <div class='dpWD'><%= d.strftime("%A")%></div>
+                      <div class='dpMN'><%= d.strftime("%b")%></div>
+                    </div>
                     <div id="dpDay" class="halfi left"><%= d.strftime("%d")%></div>
+                    <div id="dpSource_f" class="hidden"><%= session[:depart] %></div>
                   <%- else %>
-                    <div id="dpDate" class="halfi left"><span class="graytxt"><%= Date.today.strftime("%A")%></span><br/><%= Date.today.strftime("%b")%></div>
+                    <div id="dpDate" class="halfi left">
+                      <div class='dpWD'><%= Date.today.strftime("%A")%></div>
+                      <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                    </div>
                     <div id="dpDay" class="halfi left"><%= Date.today.strftime("%d")%></div>
+                    <div id="dpSource_f" class="hidden"><%= Date.today.strftime("%m/%d/%Y") %></div>
                   <%- end %>
                 </div>
               </div>
@@ -86,11 +94,19 @@
                 <div id="returnDetails" class="left fullwidth">
                   <%- if session[:return] 
                       d = Date.new(session[:return].split("/")[2].to_i, session[:return].split("/")[0].to_i, session[:return].split("/")[1].to_i) -%>
-                    <div id="rpDate" class="halfi left"><span class="graytxt"><%= d.strftime("%A")%></span><br /><%= d.strftime("%b")%></div>
+                    <div id="rpDate" class="halfi left">
+                      <div class='dpWD'><%= d.strftime("%A")%></div>
+                      <div class='dpMN'><%= d.strftime("%b")%></div>
+                    </div>
                     <div id="rpDay" class="halfi left"><%= d.strftime("%d")%></div>
+                    <div id="rpSource_f" class="hidden"><%= session[:return] %></div>
                   <%- else %>
-                    <div id="rpDate" class="halfi left"><span class="graytxt"><%= Date.today.strftime("%A")%></span><br/><%= Date.today.strftime("%b")%></div>
+                    <div id="rpDate" class="halfi left">
+                      <div class='dpWD'><%= Date.today.strftime("%A")%></div>
+                      <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                    </div>
                     <div id="rpDay" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
+                    <div id="rpSource_f" class="hidden"><%= (Date.today + 1).strftime("%m/%d/%Y") %></div>
                   <%- end %>
                 </div>
               </div>
