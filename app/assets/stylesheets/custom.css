@@ -125,7 +125,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
     line-height: 0;
     text-indent: -9999px;
   }
-  #flightSearch .doneBtn {
+  #flightSearchFrom .doneBtn, #flightSearchTo .doneBtn {
     top:5px !important;
   }
   
@@ -362,7 +362,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
     width:90%;
     margin:0 auto;
   }
-  #airportLst #searchHeader {
+  #airportLstFrom #searchHeader, #airportLstTo #searchHeader {
     padding:10px 0;
     text-align:center;
     background-color:#c4c4c4;
@@ -384,7 +384,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
     margin-left:5px;
   }
   #searchFieldGroup strong {
-    width: 33px;
+    width: 40px;
     text-align: right;
     float: left;
     display: block;

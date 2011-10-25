@@ -143,6 +143,10 @@ $(document).ready(function() {
        str = ui.item.value.toString();
        $("#flightIndex #origin_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
        $("#flightIndex #origin_city").text(str.substring(0, str.indexOf("(")));
+       
+       $("#flightIndex #dest_short").text("");
+       $("#flightIndex #dest_city").html("Choose your<br />destination");
+       
        $.mobile.changePage("#flightIndex");
        // do ajaxy thingy here...
        $.ajax({
@@ -204,7 +208,6 @@ $(document).ready(function() {
   });
     $(".searchField").focus(function(){
     $("#geolocation").slideUp();
-    $(".searchResults").css("margin-top","-21px");
   });
   $(".searchField").blur(function(){
     if($(".searchField").val() == ""){
