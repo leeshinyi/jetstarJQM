@@ -8,7 +8,7 @@
  * http://docs.jquery.com/UI/Datepicker#theming
  */
 div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0; }
-.ui-datepicker {  overflow: visible; margin: 0; max-width: 96%; margin-left: 2%; margin-right: 2%;}
+.ui-datepicker {  overflow: visible; margin-top: -5px; max-width: 96%; margin-left: 2%; margin-right: 2%;}
 .ui-datepicker .ui-datepicker-header { position:relative; padding:.4em 0; border-bottom: 0; font-weight: bold; }
 .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { padding: 1px 0 1px 2px; position:absolute; top: .5em; margin-top: 0; text-indent: -9999px; }
 
@@ -40,7 +40,7 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 .ui-datepicker-header {
   border-radius: 0em !important; -moz-border-radius: 0em !important; -webkit-border-radius: 0em !important; -o-border-radius: 0em !important;  
   background-color: #383838 !important;
-  padding: 3px 0px 3px 0px !important;
+  padding: 1px 0px 1px 0px !important;
 }
 
 .ui-datepicker-prev, .ui-datepicker-next {
@@ -60,7 +60,7 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 
 .ui-datepicker-calendar thead tr th {
   background: #efefef !important;
-  padding: 5px 0px 5px 0px !important;
+  padding: 2px 0px 2px 0px !important;
 
   color: #626262 !important;
   /*font-weight: normal;*/
@@ -75,7 +75,7 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 
 table.ui-datepicker-calendar tbody tr td {
   width: 8%;
-  height: 32px !important;
+  height: 26px !important;
   border: solid 2px #ffffff;
 }
 
@@ -85,8 +85,8 @@ table.ui-datepicker-calendar tbody tr td span
   display: block !important;
   text-align: center;
   width: auto !important;
-  height: 32px !important;
-  line-height: 32px;
+  height: 28px !important;
+  line-height: 30px;
   font-weight: bold !important;
   text-shadow: 1px 1px #eeeeee;
 }
@@ -157,6 +157,10 @@ table.ui-datepicker-calendar tbody tr td span
   -moz-box-shadow: none !important;
   -o-box-shadow: none !important;
   box-shadow: none !important;
+}
+
+.ui-btn-icon-notext .ui-btn-inner {
+  padding: 1px 1px 2px 3px !important;
 }
 
 .ui-datepicker-header * .ui-btn-inner,.ui-datepicker-header * .ui-btn-corner-all {
