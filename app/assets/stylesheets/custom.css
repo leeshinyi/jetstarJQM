@@ -125,6 +125,9 @@ only screen and (min-device-pixel-ratio: 1.5) {
     line-height: 0;
     text-indent: -9999px;
   }
+  #flightSearch .doneBtn {
+    top:5px !important;
+  }
   
 /* FOOTER STYLES
 ---------------------------------------------------------------------------------------------*/ 
