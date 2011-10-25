@@ -78,6 +78,7 @@ $(document).ready(function() {
   // Calendar Functionality - START
   // NOTE: check tagDepart() and tagReturn() on how these integrates
   if ($("#datepickerD").length){
+  //  console.log("DEPARTURE VALUE: " + rp_source);
     $( "#datepickerD" ).datepicker({
       minDate: 0,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -89,19 +90,18 @@ $(document).ready(function() {
         $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
         $("#dpSource_c").html(dateText);
         $("#datepickerR").datepicker("option","minDate",$("#dpSource_c").text());
-        $.datepicker.refresh();
-        //$("#dpSource_c").html(dateText);
-        //dp_source = dateText;
+        dp_source = dateText;
       }
     });
   }
 
   if ($("#datepickerR").length) {
+  //  console.log("RETURN VALUE: " + rp_source);
     $( "#datepickerR").datepicker({
-      defaultDate: rp_source,
+      minDate: new Date($("#dpSource_c").text()),
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      minDate: $("#dpSource_c").html(),
+      defaultDate: rp_source,
       beforeShowDay: tagDepart,
       onSelect: function(dateText, inst) {
         $("#rpDay_c").text(dateText.split("/")[1]);
@@ -115,7 +115,9 @@ $(document).ready(function() {
   $("#rd").click (function (){
     $("#datepickerD").toggleClass("hidden");
     $("#datepickerR").toggleClass("hidden");
+    
     $("#datepickerR").datepicker( "refresh" );
+    
     $(this).toggleClass("tapable");
     $("#dd").toggleClass("tapable");
     
@@ -124,10 +126,13 @@ $(document).ready(function() {
       $("#originToDest").toggleClass("hidden");
     }
   });
+  
   $("#dd").click (function (){
     $("#datepickerD").toggleClass("hidden");
     $("#datepickerR").toggleClass("hidden");
+    
     $("#datepickerD").datepicker( "refresh" );
+    
     $(this).toggleClass("tapable");
     $("#rd").toggleClass("tapable");
     
@@ -241,7 +246,9 @@ $(document).ready(function() {
 
 // Calendar-specific functions - START
 function tagDepart(targetDate) {
+  console.log("In DEP search...");
   if (Date.parse(dp_source) == Date.parse(targetDate)){
+    console.log("DEP SEARCH MATCH FOUND:" + Date.parse(rp_source) + " for " + Date.parse(targetDate))
     return [true, 'dDate'];
   } else {
     return [true, ''];
@@ -249,6 +256,7 @@ function tagDepart(targetDate) {
 }
 
 function tagReturn(targetDate) {
+  console.log("In RET search...");
   if (Date.parse(rp_source) == Date.parse(targetDate)){
     return [true, 'dDate'];
   } else {
