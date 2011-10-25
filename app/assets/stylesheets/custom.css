@@ -119,7 +119,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
     height:34px;
     position:absolute;
     z-index:20;
-    top:5px;
+    top:-52px;
     right: 5px;
     line-height: 0;
     text-indent: -9999px;
