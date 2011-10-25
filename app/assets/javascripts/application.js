@@ -12,6 +12,12 @@
 $(document).ready(function() {
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
+  $("input.searchField").click(function() {
+    $(this).css("border","1px solid #F85720 !important;");
+    $(this).css("box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
+    $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
+  });
+
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
   });
