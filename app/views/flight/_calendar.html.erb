@@ -36,7 +36,7 @@
         <%- end -%>
       </h2>
     </div>
-    <div id="crumb"><a href="javascript:void(0)" id="submitDate" class="doneBtn">Done</a></div>
+    <div id="crumb"><a href="#flightIndex" id="setDates" class="doneBtn">Done</a></div>
   </div>
   
   <div data-role="content"> 
@@ -48,14 +48,20 @@
             <div class="left fullwidth">
               <div id="departDetails" class="hidden"></div>
               <%- if session[:depart] 
-                  d = Date.new(session[:depart].split("/")[2].to_i, session[:depart].split("/")[0].to_i, session[:depart].split("/")[1].to_i) -%>
-                <div id="dpDate" class="halfi left"><span class="graytxt"><%= d.strftime("%A")%></span><br /><%= d.strftime("%b")%></div>
-                <div id="dpDay" class="halfi left"><%= d.strftime("%d")%></div>
-                <div id="dpSource" class="hidden"><%= d.strftime("%m/%d/%Y") %></div>
+                d = Date.new(session[:depart].split("/")[2].to_i, session[:depart].split("/")[0].to_i, session[:depart].split("/")[1].to_i) -%>
+                <div id="dpDate_c" class="halfi left">
+                  <div class='dpWD'><%= d.strftime("%A")%></div>
+                  <div class='dpMN'><%= d.strftime("%b")%></div>
+                </div>
+                <div id="dpDay_c" class="halfi left"><%= d.strftime("%d")%></div>
+                <div id="dpSource_c" class="hidden"><%= d.strftime("%m/%d/%Y") %></div>
               <%- else %>
-                <div id="dpDate" class="halfi left"><span class="graytxt"><%= Date.today.strftime("%A")%></span><br/><%= Date.today.strftime("%b")%></div>
-                <div id="dpDay" class="halfi left"><%= Date.today.strftime("%d")%></div>
-                <div id="dpSource" class="hidden"><%= Date.today.strftime("%m/%d/%Y") %></div>
+                <div id="dpDate_c" class="halfi left">
+                  <div class='dpWD'><%= Date.today.strftime("%A")%></div>
+                  <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                </div>
+                <div id="dpDay_c" class="halfi left"><%= Date.today.strftime("%d")%></div>
+                <div id="dpSource_c" class="hidden"><%= Date.today.strftime("%m/%d/%Y") %></div>
               <%- end %>
             </div>
           </div>
@@ -66,14 +72,20 @@
             <div class="left fullwidth">
               <div id="returnDetails" class="hidden"></div>
               <%- if session[:return] 
-                  d = Date.new(session[:return].split("/")[2].to_i, session[:return].split("/")[0].to_i, session[:return].split("/")[1].to_i) -%>
-                <div id="rpDate" class="halfi left"><span class="graytxt"><%= d.strftime("%A")%></span><br /><%= d.strftime("%b")%></div>
-                <div id="rpDay" class="halfi left"><%= d.strftime("%d")%></div>
-                <div id="rpSource" class="hidden"><%= d.strftime("%m/%d/%Y") %></div>
+                d = Date.new(session[:return].split("/")[2].to_i, session[:return].split("/")[0].to_i, session[:return].split("/")[1].to_i) -%>
+                <div id="rpDate_c" class="halfi left">
+                  <div class='dpWD'><%= d.strftime("%A")%></div>
+                  <div class='dpMN'><%= d.strftime("%b")%></div>
+                </div>
+                <div id="rpDay_c" class="halfi left"><%= d.strftime("%d")%></div>
+                <div id="rpSource_c" class="hidden"><%= d.strftime("%m/%d/%Y") %></div>
               <%- else %>
-                <div id="rpDate" class="halfi left"><span class="graytxt"><%= Date.today.strftime("%A")%></span><br/><%= Date.today.strftime("%b")%></div>
-                <div id="rpDay" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
-                <div id="rpSource" class="hidden"><%= (Date.today + 1).strftime("%m/%d/%Y") %></div>
+                <div id="rpDate_c" class="halfi left">
+                  <div class='dpWD'><%= Date.today.strftime("%A")%></div>
+                  <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                </div>
+                <div id="rpDay_c" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
+                <div id="rpSource_c" class="hidden"><%= (Date.today + 1).strftime("%m/%d/%Y") %></div>
               <%- end %>
             </div>
           </div>

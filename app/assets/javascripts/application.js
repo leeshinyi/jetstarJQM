@@ -8,6 +8,8 @@
 //= require jquery_ujs
 //= require jqueryui
 
+var dp_source = $("#dpSource").html();
+var rp_source = $("#rpSource").html();
 
 $(document).ready(function() {
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
@@ -18,6 +20,7 @@ $(document).ready(function() {
     $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
   });
 
+  // Passenger area handling
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
   });
@@ -32,76 +35,103 @@ $(document).ready(function() {
     $("#search_mode").text(search_mode);
   });
 
-
-    if (navigator.userAgent.match(/iPhone/i)) {
+  // Device orientation handler
+  if (navigator.userAgent.match(/iPhone/i)) {
     $(window).bind('orientationchange', function(event) {
-        if (window.orientation == 90 || window.orientation == -90) {
-            $('meta[name="viewport"]').attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
-        } else {
-            $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
-        }
-        setTimeout(function (){
-          window.scrollTo(0,1);
-        }, false);
+      if (window.orientation == 90 || window.orientation == -90) {
+        $('meta[name="viewport"]').attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
+      } else {
+        $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
+      }
+      setTimeout(function (){
+        window.scrollTo(0,1);
+      }, false);
     }).trigger('orientationchange');
-    }
-
-
-  var dp_source = $("#dpSource").html()
-  var rp_source = $("#rpSource").html()
-
-  if ($("#datepickerD").length){
-     $( "#datepickerD" ).datepicker({
-       minDate: 0,
-       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-       firstDay: 1,
-       defaultDate: dp_source,
-       onSelect: function(dateText, inst) {
-         $("#flightCalendar #dpDay").text(dateText.split("/")[1]);
-         $("#flightCalendar #dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-         $("#flightIndex #dpDay").text(dateText.split("/")[1]);
-         $("#flightIndex #dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-         $("#datepickerR").datepicker("option","minDate",$.datepicker.parseDate($.datepicker._defaults.dateFormat, dateText, $( "#datepickerD" ).data( "datepicker" )) );
-         $("#dpSource").html(dateText);
-       }
-     });
-     $( "#datepickerR" ).datepicker({
-       defaultDate: rp_source,
-       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-       firstDay: 1,
-       minDate: dp_source,
-       onSelect: function(dateText, inst) {
-         $("#flightCalendar #rpDay").text(dateText.split("/")[1]);
-         $("#flightCalendar #rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-          $("#flightIndex #rpDay").text(dateText.split("/")[1]);
-          $("#flightIndex #rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-         $("#rpSource").html(dateText);
-       }
-     });
-   }
+  }
   
-   $("#rd").click (function (){
-     $("#datepickerD").toggleClass("hidden");
-     $("#datepickerR").toggleClass("hidden");
-     $(this).toggleClass("tapable");
-     $("#dd").toggleClass("tapable");
+  // Calendar Call, make sure dp_source and rp_source have a value
+  $("#calLink").click(function (){
+    dp_source = $("#dpSource_f").html();
+    rp_source = $("#rpSource_f").html();
 
-     if ($("#originToDest").length) {
-       $("#destToOrgin").toggleClass("hidden");
-       $("#originToDest").toggleClass("hidden");
-     }
-   });
-   $("#dd").click (function (){
-     $("#datepickerD").toggleClass("hidden");
-     $("#datepickerR").toggleClass("hidden");
-     $(this).toggleClass("tapable");
-     $("#rd").toggleClass("tapable");
+    // Reload the calendars
+    $("#datepickerR").datepicker( "refresh" );
+    $("#datepickerD").datepicker( "refresh" );
+  });
+  
+  // Update the flight page with the new values
+  $("#setDates").click(function (){
+    $("#dpSource_f").html(dp_source);
+    $("#rpSource_f").html(rp_source);
+    
+    //Load it now visually...
+    $("#dpDate").html($("#dpDate_c").html());
+    $("#dpDay").text($("#dpDay_c").text());
+    
+    $("#rpDate").html($("#rpDate_c").html());
+    $("#rpDay").text($("#rpDay_c").text());    
+  })
+  
+  // Calendar Functionality - START
+  // NOTE: check tagDepart() and tagReturn() on how these integrates
+  if ($("#datepickerD").length){
+    $( "#datepickerD" ).datepicker({
+      minDate: 0,
+      dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      firstDay: 1,
+      defaultDate: dp_source,
+      beforeShowDay: tagReturn,
+      onSelect: function(dateText, inst) {
+        $("#dpDay_c").text(dateText.split("/")[1]);
+        $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+        $("#datepickerR").datepicker("option","minDate",$.datepicker.parseDate($.datepicker._defaults.dateFormat, dateText, $( "#datepickerD" ).data( "datepicker" )) );
+        $("#dpSource_c").html(dateText);
+        dp_source = dateText;
+      }
+    });
+  }
 
-     if ($("#originToDest").length) {
-       $("#destToOrgin").toggleClass("hidden");
-       $("#originToDest").toggleClass("hidden");
-     }
-   });
+  if ($("#datepickerR").length) {
+    $( "#datepickerR").datepicker({
+      defaultDate: rp_source,
+      dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      firstDay: 1,
+      minDate: dp_source,
+      beforeShowDay: tagDepart,
+      onSelect: function(dateText, inst) {
+        $("#rpDay_c").text(dateText.split("/")[1]);
+        $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+        $("#rpSource_c").html(dateText);
+        rp_source = dateText;
+      }
+    });
+  }
+  
+  $("#rd").click (function (){
+    $("#datepickerD").toggleClass("hidden");
+    $("#datepickerR").toggleClass("hidden");
+    $("#datepickerR").datepicker( "refresh" );
+    $(this).toggleClass("tapable");
+    $("#dd").toggleClass("tapable");
+    
+    if ($("#originToDest").length) {
+      $("#destToOrgin").toggleClass("hidden");
+      $("#originToDest").toggleClass("hidden");
+    }
+  });
+  $("#dd").click (function (){
+    $("#datepickerD").toggleClass("hidden");
+    $("#datepickerR").toggleClass("hidden");
+    $("#datepickerD").datepicker( "refresh" );
+    $(this).toggleClass("tapable");
+    $("#rd").toggleClass("tapable");
+    
+    if ($("#originToDest").length) {
+      $("#destToOrgin").toggleClass("hidden");
+      $("#originToDest").toggleClass("hidden");
+    }
+  });
+  // Calendar Functionality - END
 
    $('#search_from').autocomplete({
      source: origin_airports,
@@ -164,9 +194,7 @@ $(document).ready(function() {
     }
   });
   
-  
-  
-  $(".clearSearch").click(function(){
+  $("#clearSearch").click(function(){
     $(".searchField").val("");
     $("#geolocation").slideDown();
     $(".searchResults").css("margin-top","0");
@@ -187,6 +215,24 @@ $(document).ready(function() {
     findClosestAirport(centerLatitude, centerLongitude);
   });
 });
+
+// Calendar-specific functions - START
+function tagDepart(targetDate) {
+  if (Date.parse(dp_source) == Date.parse(targetDate)){
+    return [true, 'dDate'];
+  } else {
+    return [true, ''];
+  }
+}
+
+function tagReturn(targetDate) {
+  if (Date.parse(rp_source) == Date.parse(targetDate)){
+    return [true, 'dDate'];
+  } else {
+    return [true, ''];
+  }
+}
+// Calendar-specific functions - END
 
 function findClosestAirport(lat, lng){
   $.ajax({

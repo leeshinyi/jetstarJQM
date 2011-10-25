@@ -782,7 +782,7 @@ a#calLink {
   font-family: Arial, sans-serif !important;
 }
 
-#dpDate, #rpDate {
+#dpDate, #rpDate, #dpDate_c, #rpDate_c {
   margin-top: 4px;
   width: 73px;
 }
@@ -793,7 +793,7 @@ span.graytxt {
   color: #7f7f7f;
 }
 
-#dpDay, #rpDay {
+#dpDay, #rpDay, #dpDay_c, #rpDay_c {
   font-size:40px;
   text-align:left;
   font-weight:bold;
@@ -835,7 +835,7 @@ span.graytxt {
     width: 280px;
   }
 
-  #dpDate, #rpDate {
+  #dpDate, #rpDate, #dpDate_c, #rpDate_c {
     width: 105px;
   }
 }
@@ -912,6 +912,11 @@ span.graytxt {
 .withGap {margin-right:8px;}
 .width70 {width:70%;}
 .width99 {width:99%;}
+tr td.dDate a {
+  background:#ff6a37 !important;
+  color: #fff !important;
+  text-shadow: none !important;
+}
 
 
 /*----------------------------------------------------------------------------------------------- 
