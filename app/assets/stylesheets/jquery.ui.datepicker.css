@@ -40,6 +40,7 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 .ui-datepicker-header {
   border-radius: 0em !important; -moz-border-radius: 0em !important; -webkit-border-radius: 0em !important; -o-border-radius: 0em !important;  
   background-color: #383838 !important;
+  padding: 3px 0px 3px 0px !important;
 }
 
 .ui-datepicker-prev, .ui-datepicker-next {
@@ -143,7 +144,7 @@ table.ui-datepicker-calendar tbody tr td span
   -o-box-shadow: none !important;
   box-shadow: none !important;
   border: none !important;
-  margin-top: 2px !important;
+  margin-top: 0px !important;
 }
 
 .ui-datepicker-prev .ui-icon { left:2px; background: url("calendarArrows.jpg") no-repeat !important; }
