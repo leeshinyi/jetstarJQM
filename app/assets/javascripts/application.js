@@ -203,7 +203,6 @@ $(document).ready(function() {
   });
     $(".searchField").focus(function(){
     $("#geolocation").slideUp();
-    $(".searchResults").css("margin-top","-21px");
   });
   $(".searchField").blur(function(){
     if($(".searchField").val() == ""){

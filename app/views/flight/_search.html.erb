@@ -2,7 +2,7 @@
   <div data-role="header" class="header">
     <div id="findFlights">      
        <span id="searchFieldGroup">
-         <strong id="from_to_text"></strong>
+         <strong id="from_to_text"><%= q.camelize%></strong>
          <%= text_field_tag q, "", :id => "search_#{q}", :class => "searchField", :placeholder => "Type a city or Airport Code" %>
          <span class="clearSearch" id="clearSearch"><span class="hidden">Clear Search</span></span>
        </span>
