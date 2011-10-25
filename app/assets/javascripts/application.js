@@ -53,6 +53,9 @@ $(document).ready(function() {
   $("#calLink").click(function (){
     dp_source = $("#dpSource_f").html();
     rp_source = $("#rpSource_f").html();
+    
+    console.log("DEP: " + dp_source);
+    console.log("RET: " + rp_source);
 
     // Reload the calendars
     $("#datepickerR").datepicker( "refresh" );
