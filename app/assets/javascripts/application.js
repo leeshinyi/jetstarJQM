@@ -10,12 +10,34 @@
 
 
 $(document).ready(function() {
-  // $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
+  $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
-  addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+  $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
+    e.preventDefault();
+  });
+
+  /*addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
   function hideURLbar(){
     window.scrollTo(0,100);
-  }  
+  }*/
+
+   window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
+
+    if (navigator.userAgent.match(/iPhone/i)) {
+    $(window).bind('orientationchange', function(event) {
+        if (window.orientation == 90 || window.orientation == -90) {
+            $('meta[name="viewport"]').attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
+        } else {
+            $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
+        }
+        setTimeout(function (){
+          window.scrollTo(0,1);
+        }, false);
+    }).trigger('orientationchange');
+    }
+
+
+  window.addEventListener("orientationchange", hideAddressBar );
 
   var dp_source = $("#dpSource").html()
   var rp_source = $("#rpSource").html()
@@ -27,8 +49,10 @@ $(document).ready(function() {
        firstDay: 1,
        defaultDate: dp_source,
        onSelect: function(dateText, inst) {
-         $("#dpDay").text(dateText.split("/")[1]);
-         $("#dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+         $("#flightCalendar #dpDay").text(dateText.split("/")[1]);
+         $("#flightCalendar #dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+         $("#flightIndex #dpDay").text(dateText.split("/")[1]);
+         $("#flightIndex #dpDate").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
          $("#datepickerR").datepicker("option","minDate",$.datepicker.parseDate($.datepicker._defaults.dateFormat, dateText, $( "#datepickerD" ).data( "datepicker" )) );
          $("#dpSource").html(dateText);
        }
@@ -39,8 +63,10 @@ $(document).ready(function() {
        firstDay: 1,
        minDate: dp_source,
        onSelect: function(dateText, inst) {
-         $("#rpDay").text(dateText.split("/")[1]);
-         $("#rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+         $("#flightCalendar #rpDay").text(dateText.split("/")[1]);
+         $("#flightCalendar #rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+          $("#flightIndex #rpDay").text(dateText.split("/")[1]);
+          $("#flightIndex #rpDate").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
          $("#rpSource").html(dateText);
        }
      });
@@ -224,5 +250,15 @@ function getWeekDay(day){
     case 4:  return "Thursday";
     case 5:  return "Friday";
     case 6:  return "Saturday";
+  }
+}
+
+function hideAddressBar(){
+  if(!window.location.hash){
+      if(document.height < window.outerHeight)
+      {
+          document.body.style.height = (window.outerHeight + 50) + 'px';
+      }
+      setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
   }
 }

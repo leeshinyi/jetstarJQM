@@ -1142,5 +1142,13 @@ input.ui-input-text, textarea.ui-input-text {
 }
 #passengerOpts .ui-btn-inner{
     padding-right:0 !important;
-    text-indent: 0 !important
+    text-indent: 0 !important;
+    display:none !important
+}
+
+#uipv_content_adults,
+#uipv_content_child,
+#uipv_content_infants{
+    position:relative;
+    top:-18px
 }
