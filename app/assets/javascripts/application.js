@@ -21,13 +21,17 @@ $(document).ready(function() {
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
   });
+  
+  // Search Trace
+  $("#origin_airport").click(function (){
+    search_mode = "From";
+    $("#search_mode").text(search_mode);
+  });
+  $("#dest_airport").click(function (){
+    search_mode = "To";
+    $("#search_mode").text(search_mode);
+  });
 
-  /*addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-  function hideURLbar(){
-    window.scrollTo(0,100);
-  }*/
-
-  window.addEventListener("load", hideAddressBar );
 
     if (navigator.userAgent.match(/iPhone/i)) {
     $(window).bind('orientationchange', function(event) {
@@ -42,8 +46,6 @@ $(document).ready(function() {
     }).trigger('orientationchange');
     }
 
-
-  window.addEventListener("orientationchange", hideAddressBar );
 
   var dp_source = $("#dpSource").html()
   var rp_source = $("#rpSource").html()
@@ -259,12 +261,3 @@ function getWeekDay(day){
   }
 }
 
-function hideAddressBar(){
-  if(!window.location.hash){
-      if(document.height < window.outerHeight)
-      {
-          document.body.style.height = (window.outerHeight + 50) + 'px';
-      }
-      setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
-  }
-}

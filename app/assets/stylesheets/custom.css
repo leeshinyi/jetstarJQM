@@ -874,6 +874,7 @@ span.graytxt {
   text-decoration: none !important;
   color: #bebebe !important;
 }
+#search_mode {line-height:1;}
 
 /* CLASSES
 ------------------------------------------------------------------------------------------*/

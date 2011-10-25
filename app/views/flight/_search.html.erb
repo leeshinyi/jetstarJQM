@@ -2,7 +2,7 @@
   <div data-role="header" class="header">
     <div id="findFlights">      
        <span id="searchFieldGroup">
-         <strong><%= "#{(params[:q] == "from")? "From" : "To" }" %></strong>
+        <strong><span id="search_mode"></span></strong>
          <%= text_field_tag "from", "", :id => "search_from", :class => "searchField", :placeholder => "Type a city or Airport Code" %>
          <span id="clearSearch"><span class="hidden">Clear Search</span></span>
        </span>
