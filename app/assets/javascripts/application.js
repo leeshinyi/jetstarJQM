@@ -8,6 +8,7 @@
 //= require jquery_ujs
 //= require jqueryui
 
+var search_mode = "";
 
 $(document).ready(function() {
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
@@ -15,24 +16,23 @@ $(document).ready(function() {
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
   });
-
-  /*addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-  function hideURLbar(){
-    window.scrollTo(0,100);
-  }*/
+  
+  // Search Trace
+  $("#origin_airport").click(function (){
+    search_mode = "From";
+    $("#search_mode").text = search_mode;
+  });
+  
 
   window.addEventListener("load", hideAddressBar );
 
     if (navigator.userAgent.match(/iPhone/i)) {
     $(window).bind('orientationchange', function(event) {
-        if (window.orientation == 90 || window.orientation == -90) {
-            $('meta[name="viewport"]').attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
-        } else {
-            $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
-        }
-        setTimeout(function (){
-          window.scrollTo(0,1);
-        }, false);
+      if (window.orientation == 90 || window.orientation == -90) {
+          $('meta[name="viewport"]').attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
+      } else {
+          $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
+      }
     }).trigger('orientationchange');
     }
 
