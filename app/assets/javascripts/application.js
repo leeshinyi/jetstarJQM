@@ -192,9 +192,12 @@ $(document).ready(function() {
        $("#destToOrgin").text($("#flightIndex #dest_short").text() + " to " + $("#flightIndex #origin_short").text())
     },
     open: function(event, ui) {
+      $(".geoneararea").hide();
       $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstTo').show();
+      $(".searchHeaderbox").hide();
     },
     close:function(event,ui){
+      $("#airportLstTxt").show();
       $("ul.ui-autocomplete").show();
     }
   });
@@ -210,7 +213,7 @@ $(document).ready(function() {
     $(".geoneararea").slideUp();
   });
   $(".searchField").blur(function(){
-    if($(".searchField").val() == ""){
+    if($(this).val() == ""){
       $(".geoneararea").slideDown();
       $(".searchResults").css("margin-top","0");
     }
