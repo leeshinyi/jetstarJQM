@@ -21,7 +21,7 @@ $(document).ready(function() {
     window.scrollTo(0,100);
   }*/
 
-   window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
+  window.addEventListener("load", hideAddressBar );
 
     if (navigator.userAgent.match(/iPhone/i)) {
     $(window).bind('orientationchange', function(event) {
