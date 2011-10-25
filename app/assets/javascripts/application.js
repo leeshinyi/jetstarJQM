@@ -20,7 +20,11 @@ $(document).ready(function() {
   // Search Trace
   $("#origin_airport").click(function (){
     search_mode = "From";
-    $("#search_mode").text = search_mode;
+    $("#search_mode").text(search_mode);
+  });
+  $("#dest_airport").click(function (){
+    search_mode = "To";
+    $("#search_mode").text(search_mode);
   });
   
 
