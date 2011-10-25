@@ -64,8 +64,8 @@ $(document).ready(function() {
   
   // Update the flight page with the new values
   $("#setDates").click(function (){
-    $("#dpSource_f").html(dp_source);
-    $("#rpSource_f").html(rp_source);
+    $("#dpSource_f").html($("#dpSource_c").text());
+    $("#rpSource_f").html($("#rpSource_c").text());
     
     //Load it now visually...
     $("#dpDate").html($("#dpDate_c").html());
