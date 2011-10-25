@@ -21,7 +21,6 @@ $(document).ready(function() {
     window.scrollTo(0,100);
   }*/
 
-  window.addEventListener("load", hideAddressBar );
 
     if (navigator.userAgent.match(/iPhone/i)) {
     $(window).bind('orientationchange', function(event) {
@@ -30,11 +29,12 @@ $(document).ready(function() {
         } else {
             $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
         }
+        setTimeout(function (){
+          window.scrollTo(0,1);
+        }, false);
     }).trigger('orientationchange');
     }
 
-
-  window.addEventListener("orientationchange", hideAddressBar );
 
   var dp_source = $("#dpSource").html()
   var rp_source = $("#rpSource").html()
@@ -250,12 +250,3 @@ function getWeekDay(day){
   }
 }
 
-function hideAddressBar(){
-  if(!window.location.hash){
-      if(document.height < window.outerHeight)
-      {
-          document.body.style.height = (window.outerHeight + 50) + 'px';
-      }
-      setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
-  }
-}
