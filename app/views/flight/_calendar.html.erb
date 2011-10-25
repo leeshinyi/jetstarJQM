@@ -4,36 +4,8 @@
     <div id="calendar"><a href="#flightIndex" class="cancelBtn" data-rel="back">Back</a></div>
     <div id="midHeader">
       <h2 id="tfthead">
-        <%- if session[:origin] || session[:dest] -%>
-          <span id="originToDest">
-            <%- if session[:origin] -%>
-              <%= session[:origin][-4..-2] %>
-            <%- else -%>
-              <%= "Origin "%>
-            <%- end -%>
-            to
-            <%- if session[:dest] -%>
-              <%= session[:dest][-4..-2] %>
-            <%- else -%>
-              <%= " Destination"%>
-            <%- end -%>
-          </span>
-          <span id="destToOrgin" class="hidden">
-            <%- if session[:dest] -%>
-              <%= session[:dest][-4..-2] %>
-            <%- else -%>
-              <%= "Destination "%>
-            <%- end -%>
-            to
-            <%- if session[:origin] -%>
-              <%= session[:origin][-4..-2] %>
-            <%- else -%>
-              <%= " Origin"%>
-            <%- end -%>
-          </span>
-        <%- else -%>
-          Schedules
-        <%- end -%>
+          <span id="originToDest"></span>
+          <span id="destToOrgin" class="hidden"></span>
       </h2>
     </div>
     <div id="crumb"><a href="#flightIndex" id="setDates" class="doneBtn" data-transition="slidedown">Done</a></div>
@@ -47,22 +19,14 @@
             <h4>Depart</h4>
             <div class="left fullwidth">
               <div id="departDetails" class="hidden"></div>
-              <%- if session[:depart] 
-                d = Date.new(session[:depart].split("/")[2].to_i, session[:depart].split("/")[0].to_i, session[:depart].split("/")[1].to_i) -%>
-                <div id="dpDate_c" class="halfi left">
-                  <div class='dpWD'><%= d.strftime("%A")%></div>
-                  <div class='dpMN'><%= d.strftime("%b")%></div>
-                </div>
-                <div id="dpDay_c" class="halfi left"><%= d.strftime("%d")%></div>
-                <div id="dpSource_c" class="hidden"><%= d.strftime("%m/%d/%Y") %></div>
-              <%- else %>
+
                 <div id="dpDate_c" class="halfi left">
                   <div class='dpWD'><%= Date.today.strftime("%A")%></div>
                   <div class='dpMN'><%= Date.today.strftime("%b")%></div>
                 </div>
                 <div id="dpDay_c" class="halfi left"><%= Date.today.strftime("%d")%></div>
                 <div id="dpSource_c" class="hidden"><%= Date.today.strftime("%m/%d/%Y") %></div>
-              <%- end %>
+
             </div>
           </div>
         </li>
@@ -71,22 +35,13 @@
             <h4>Return</h4>
             <div class="left fullwidth">
               <div id="returnDetails" class="hidden"></div>
-              <%- if session[:return] 
-                d = Date.new(session[:return].split("/")[2].to_i, session[:return].split("/")[0].to_i, session[:return].split("/")[1].to_i) -%>
-                <div id="rpDate_c" class="halfi left">
-                  <div class='dpWD'><%= d.strftime("%A")%></div>
-                  <div class='dpMN'><%= d.strftime("%b")%></div>
-                </div>
-                <div id="rpDay_c" class="halfi left"><%= d.strftime("%d")%></div>
-                <div id="rpSource_c" class="hidden"><%= d.strftime("%m/%d/%Y") %></div>
-              <%- else %>
+
                 <div id="rpDate_c" class="halfi left">
                   <div class='dpWD'><%= Date.today.strftime("%A")%></div>
                   <div class='dpMN'><%= Date.today.strftime("%b")%></div>
                 </div>
                 <div id="rpDay_c" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
                 <div id="rpSource_c" class="hidden"><%= (Date.today + 1).strftime("%m/%d/%Y") %></div>
-              <%- end %>
             </div>
           </div>
         </li>
