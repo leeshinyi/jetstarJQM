@@ -12,22 +12,30 @@
 $(document).ready(function() {
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
+  $("input.searchField").click(function() {
+    $(this).css("border","1px solid #F85720 !important;");
+    $(this).css("box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
+    $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
+  });
+
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
   });
+  
+  // Search Trace
+  $("#origin_airport").click(function (){
+    search_mode = "From";
+    $("#search_mode").text(search_mode);
+  });
+  $("#dest_airport").click(function (){
+    search_mode = "To";
+    $("#search_mode").text(search_mode);
+  });
 
-  /*addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-  function hideURLbar(){
-    window.scrollTo(0,100);
-  }*/
 
-  window.addEventListener('load', function() {
-    setTimeout(scrollTo, 0, 0, 1);
-    }, false);
-
-  if (navigator.userAgent.match(/iPhone/i)) {
+    if (navigator.userAgent.match(/iPhone/i)) {
     $(window).bind('orientationchange', function(event) {
-        if (window.orientation == 90 || window.orientation == -90 || window.orientation == 270) {
+        if (window.orientation == 90 || window.orientation == -90) {
             $('meta[name="viewport"]').attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
         } else {
             $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
@@ -37,6 +45,7 @@ $(document).ready(function() {
         }, false);
     }).trigger('orientationchange');
     }
+
 
   var dp_source = $("#dpSource").html()
   var rp_source = $("#rpSource").html()
@@ -264,3 +273,4 @@ function getWeekDay(day){
     case 6:  return "Saturday";
   }
 }
+

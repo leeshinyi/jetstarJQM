@@ -40,6 +40,7 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 .ui-datepicker-header {
   border-radius: 0em !important; -moz-border-radius: 0em !important; -webkit-border-radius: 0em !important; -o-border-radius: 0em !important;  
   background-color: #383838 !important;
+  padding: 3px 0px 3px 0px !important;
 }
 
 .ui-datepicker-prev, .ui-datepicker-next {
@@ -74,7 +75,7 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 
 table.ui-datepicker-calendar tbody tr td {
   width: 8%;
-  height: 32px;
+  height: 32px !important;
   border: solid 2px #ffffff;
 }
 
@@ -84,10 +85,14 @@ table.ui-datepicker-calendar tbody tr td span
   display: block !important;
   text-align: center;
   width: auto !important;
-  height: inherit !important;
+  height: 32px !important;
   line-height: 32px;
   font-weight: bold !important;
   text-shadow: 1px 1px #eeeeee;
+}
+
+.ui-state-disabled .ui-state-default {
+  padding: 6px 0px 6px 0px !important;
 }
 
 .ui-state-disabled span {
@@ -139,11 +144,11 @@ table.ui-datepicker-calendar tbody tr td span
   -o-box-shadow: none !important;
   box-shadow: none !important;
   border: none !important;
-  margin-top: 2px !important;
+  margin-top: 0px !important;
 }
 
-.ui-datepicker-prev .ui-icon { left:2px; background: url("calendarArrows.jpg") no-repeat; }
-.ui-datepicker-next .ui-icon { right:2px; background: url("calendarArrows.jpg") right bottom no-repeat; }
+.ui-datepicker-prev .ui-icon { left:2px; background: url("calendarArrows.jpg") no-repeat !important; }
+.ui-datepicker-next .ui-icon { right:2px; background: url("calendarArrows.jpg") right bottom no-repeat !important; }
 
 .ui-icon {
   width: 13px;
@@ -154,6 +159,7 @@ table.ui-datepicker-calendar tbody tr td span
   box-shadow: none !important;
 }
 
-.ui-btn-inner {
+.ui-datepicker-header * .ui-btn-inner,.ui-datepicker-header * .ui-btn-corner-all {
+  background: none transparent !important;
   border: none !important;
 }
