@@ -21,19 +21,20 @@ $(document).ready(function() {
     window.scrollTo(0,100);
   }*/
 
-  window.addEventListener('load', function() {
-    setTimeout(scrollTo, 0, 0, 1);
-    }, false);
+   window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
 
-  if (navigator.userAgent.match(/iPhone/i)) {
+    if (navigator.userAgent.match(/iPhone/i)) {
     $(window).bind('orientationchange', function(event) {
-        if (window.orientation == 90 || window.orientation == -90 || window.orientation == 270) {
+        if (window.orientation == 90 || window.orientation == -90) {
             $('meta[name="viewport"]').attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
         } else {
             $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
         }
     }).trigger('orientationchange');
     }
+
+
+  window.addEventListener("orientationchange", hideAddressBar );
 
   var dp_source = $("#dpSource").html()
   var rp_source = $("#rpSource").html()
@@ -246,5 +247,15 @@ function getWeekDay(day){
     case 4:  return "Thursday";
     case 5:  return "Friday";
     case 6:  return "Saturday";
+  }
+}
+
+function hideAddressBar(){
+  if(!window.location.hash){
+      if(document.height < window.outerHeight)
+      {
+          document.body.style.height = (window.outerHeight + 50) + 'px';
+      }
+      setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
   }
 }
