@@ -1,14 +1,12 @@
-<div data-role="page" id="flightSearch">
+<div data-role="page" id="flightSearch<%= q.camelize%>">
   <div data-role="header" class="header">
     <div id="findFlights">      
        <span id="searchFieldGroup">
-         <strong><%= "#{(params[:q] == "from")? "From" : "To" }" %></strong>
-         <%= text_field_tag "from", "", :id => "search_from", :class => "searchField", :placeholder => "Type a city or Airport Code" %>
-         <span id="clearSearch"><span class="hidden">Clear Search</span></span>
+         <strong id="from_to_text"></strong>
+         <%= text_field_tag q, "", :id => "search_#{q}", :class => "searchField", :placeholder => "Type a city or Airport Code" %>
+         <span class="clearSearch" id="clearSearch"><span class="hidden">Clear Search</span></span>
        </span>
-       <%= form_tag(flight_index_path, :method => :post, :id => "flightForm") do %>
-         <%= hidden_field_tag "from", "", :id => "search_from_hidden" %>
-       <%- end -%>
+       <%= hidden_field_tag q, "", :id => "search_#{q}_hidden" %>
        <a href="#flightIndex" class="doneBtn" data-direction="reverse">Done</a>
      </div>
   </div>
@@ -20,21 +18,15 @@
           <span class="boxLeft left"></span>
           <span id="geolocationTxt" class="left">
             <span id="plane" class="left"></span>
-            <span id="geolocationHeader">Show nearest departure airports</span>
+            <span id="geolocationHeader">Show nearest <%= (q == "from")?  "Departure" : "Return" %> airports</span>
             <span id="pen" class="right"></span>
           </span>
           <span class="boxRight right"></span>
         </div>
       </div>
-      <%- if session[:origin].blank? %>
-        <div id="airportLst" class="searchResults left fullwidth">
-          <span id="searchHeader">Search airports via City or Airport Code</span>
-        </div>
-      <%- else -%>
-        <div id="airportLst" class="searchResults left fullwidth">
-          <span id="searchHeader">Search airports via City or Airport Code</span>
-        </div>
-      <%- end -%>
+      <div id="airportLst<%= q.camelize%>" class=" searchResults left fullwidth">
+        <span id="searchHeader">Search airports via City or Airport Code</span>
+      </div>
     </div>
   </div>
   

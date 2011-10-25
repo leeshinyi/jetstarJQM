@@ -93,22 +93,36 @@ $(document).ready(function() {
        $("#originToDest").toggleClass("hidden");
      }
    });
-    
 
    $('#search_from').autocomplete({
      source: origin_airports,
      minLength: 1,
      select:function(event, ui){
        $("#search_from_hidden").val(ui.item.value);
-       $("#flightForm").submit();
+       str = ui.item.value.toString();
+       $("#flightIndex #origin_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
+       $("#flightIndex #origin_city").text(str.substring(0, str.indexOf("(")));
+       $.mobile.changePage("#flightIndex");
+       // do ajaxy thingy here...
+       $.ajax({
+          url: "/flight/findDestinationAirports",
+          data: "o=" + str,
+          type: "GET",
+          success:function(d){
+            item = []
+            for(i=0; i<d.length; i++){
+              item.push(d[i][0]);
+            }
+            //destination_airports = d;
+            $('ul.ui-autocomplete').empty();
+            $('#search_to').autocomplete("option", { source: item });
+          }
+       });
      },
-     change:function(event, ui){
-       $("#search_from_hidden").val(ui.item.value);
-       $("#flightForm").submit();
-     },
+     
      open: function(event, ui) {
        $("#geolocation").hide();
-       $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLst').show();
+       $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstFrom').show();
        $("#searchHeader").hide();
      },
      close:function(event,ui){
@@ -121,17 +135,16 @@ $(document).ready(function() {
   
   $('#search_to').autocomplete({
     source: destination_airports,
-    minLength: 3,
+    minLength: 1,
     select:function(event, ui){
       $("#search_to_hidden").val(ui.item.value);
-      $("#flightForm").submit();
-    },
-    change:function(event, ui){
-      $("#search_to_hidden").val(ui.item.value);
-      $("#flightForm").submit();
+       str = ui.item.value.toString();
+       $("#flightIndex #dest_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
+       $("#flightIndex #dest_city").text(str.substring(0, str.indexOf("(")));
+       $.mobile.changePage("#flightIndex");
     },
     open: function(event, ui) {
-      $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLst').show();
+      $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstTo').show();
     },
     close:function(event,ui){
       $("ul.ui-autocomplete").show();
@@ -140,7 +153,7 @@ $(document).ready(function() {
   
   
   
-  $("#clearSearch").click(function(){
+  $(".clearSearch").click(function(){
     $(".searchField").val("");
     $("#geolocation").slideDown();
     $(".searchResults").css("margin-top","0");
@@ -184,7 +197,7 @@ function findClosestAirport(lat, lng){
           e.preventDefault();
           $("#search_from_hidden").val($(this).html());
           $("#search_to_hidden").val($(this).html());
-          $("#flightForm").submit();
+          //$("#flightForm").submit();
         });
       } else if(data.length > 1){
         if ($("#geolocation").length) {
@@ -202,7 +215,7 @@ function findClosestAirport(lat, lng){
           e.preventDefault();
           $("#search_from_hidden").val($(this).html());
           $("#search_to_hidden").val($(this).html());
-          $("#flightForm").submit();
+          //$("#flightForm").submit();
         });
       }
     }

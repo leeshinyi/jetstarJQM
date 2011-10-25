@@ -27,8 +27,11 @@ class FlightController < ApplicationController
     end
     if request.xml_http_request?
       render :nothing => true, :status => 200
+      #render :action => 'index#flightIndex'
+      #redirect_to  "/#flightIndex"
+      #redirect_to flight_index_path ,:anchor => "flightIndex"
     else
-      redirect_to flight_index_path
+      #redirect_to flight_index_path ,:anchor => "flightIndex"
     end
   end
 
@@ -85,12 +88,12 @@ class FlightController < ApplicationController
   def findDestinationAirports
     airports = []
     o = ""
-    if !session[:origin].blank?
-      o = session[:origin][-4..-2]
+    if !params[:o].blank?
+      o = params[:o][-4..-2]
     else
       o = "VIZ"
     end
-    url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/airports/destination/#{o}")
+    url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/airports/destination/#{o.upcase}")
     req = Net::HTTP::Get.new(url.path)
     res = Net::HTTP.start(url.host, url.port) do |http|
       http.request(req)
@@ -101,6 +104,9 @@ class FlightController < ApplicationController
     end if parsed_json["wrapper"]["results"]
     
     airports
+    if request.xhr?
+      render :json => airports
+    end
   end
     
   def findFlights

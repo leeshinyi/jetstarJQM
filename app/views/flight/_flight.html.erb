@@ -21,16 +21,11 @@
         <div id="fromWrap" class="left">
           <h4 class="reset tfhead">From</h4>
           <div id="fromContent" class="left fullwidth">            
-             <a href="#flightSearch" id="<%= (session[:origin].blank?)? "origin_airport" : "session_origin" %>">
+             <a href="#flightSearchFrom" id="origin_airport">
               <span class="tfl"></span>
               <span id="ffOrig">
-                <%- if session[:origin] -%>
-                  <span id="origin_short"><%= session[:origin][-4..-2] %></span>
-                  <span id="origin_city"><%= session[:origin][0..-6]%></span>
-                <%- else -%>
-                  <span id="origin_short"></span>
-                  <span id="origin_city">Choose your origin</span>
-                <%- end -%>
+                <span id="origin_short"></span>
+                <span id="origin_city">Choose your origin</span>
               </span>
             </a>
           </div>
@@ -39,20 +34,15 @@
         <div id="toWrap" class="left">
           <h4 class="reset tfhead tfto">To</h4>
           <div id="toContent" class="left fullwidth">
-            <a href="#flightSearch" id="<%= (session[:dest].blank?)? "dest_airport" : "session_dest" %>">
+            <a href="#flightSearchTo" id="dest_airport">
               <span class="tfl left"></span>
               <span id="ffDest" class="left">
-                <%- if session[:dest] -%>
-                  <span id="dest_short"><%= session[:dest][-4..-2] %></span>
-                  <span id="dest_city"><%= session[:dest][0..-6] %></span>
-                <%- else -%>
-                  <span id="dest_short"></span>
-                  <span id="dest_city">
-                    Choose your
-                    <br />
-                    destination
-                  </span>
-                <%- end -%>
+                <span id="dest_short"></span>
+                <span id="dest_city">
+                  Choose your
+                  <br />
+                  destination
+                </span>
               </span>
               <span class="tfr right"></span>
             </a>
