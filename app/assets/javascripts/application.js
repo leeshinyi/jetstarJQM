@@ -29,10 +29,12 @@ $(document).ready(function() {
   $("#origin_airport").click(function (){
     search_mode = "From";
     $("#search_mode").text(search_mode);
+    $(".geolocret").hide();
   });
   $("#dest_airport").click(function (){
     search_mode = "To";
     $("#search_mode").text(search_mode);
+    $(".geolocret").hide();
   });
 
   // Device orientation handler
