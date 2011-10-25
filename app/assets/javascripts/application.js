@@ -87,9 +87,11 @@ $(document).ready(function() {
       onSelect: function(dateText, inst) {
         $("#dpDay_c").text(dateText.split("/")[1]);
         $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-        $("#datepickerR").datepicker("option","minDate",$.datepicker.parseDate($.datepicker._defaults.dateFormat, dateText, $( "#datepickerD" ).data( "datepicker" )) );
         $("#dpSource_c").html(dateText);
-        dp_source = dateText;
+        $("#datepickerR").datepicker("option","minDate",$("#dpSource_c").text());
+        $.datepicker.refresh();
+        //$("#dpSource_c").html(dateText);
+        //dp_source = dateText;
       }
     });
   }
@@ -99,7 +101,7 @@ $(document).ready(function() {
       defaultDate: rp_source,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      minDate: dp_source,
+      minDate: $("#dpSource_c").html(),
       beforeShowDay: tagDepart,
       onSelect: function(dateText, inst) {
         $("#rpDay_c").text(dateText.split("/")[1]);
@@ -188,6 +190,9 @@ $(document).ready(function() {
        $("#flightIndex #dest_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
        $("#flightIndex #dest_city").text(str.substring(0, str.indexOf("(")));
        $.mobile.changePage("#flightIndex");
+       
+       $("#originToDest").text($("#flightIndex #origin_short").text() + " to " + $("#flightIndex #dest_short").text());
+       $("#destToOrgin").text($("#flightIndex #dest_short").text() + " to " + $("#flightIndex #origin_short").text())
     },
     open: function(event, ui) {
       $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstTo').show();
@@ -215,6 +220,22 @@ $(document).ready(function() {
   });
     $("#geolocation").click(function (){
     findClosestAirport(centerLatitude, centerLongitude);
+  });
+  
+  
+  
+  $("#exactDates, #lowestFares").click(function(event) {
+    event.preventDefault();
+    var commit = $(this).attr("id");
+    $.ajax({
+      type: "GET",
+      url: "/flight/findFlights",
+      data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
+     success: function(html){ // this happens after we get results
+     }
+    });
+
+    return false;
   });
 });
 
