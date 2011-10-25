@@ -16,10 +16,24 @@ $(document).ready(function() {
     e.preventDefault();
   });
 
-  addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+  /*addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
   function hideURLbar(){
     window.scrollTo(0,100);
-  }  
+  }*/
+
+  window.addEventListener('load', function() {
+    setTimeout(scrollTo, 0, 0, 1);
+    }, false);
+
+  if (navigator.userAgent.match(/iPhone/i)) {
+    $(window).bind('orientationchange', function(event) {
+        if (window.orientation == 90 || window.orientation == -90 || window.orientation == 270) {
+            $('meta[name="viewport"]').attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
+        } else {
+            $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
+        }
+    }).trigger('orientationchange');
+    }
 
   var dp_source = $("#dpSource").html()
   var rp_source = $("#rpSource").html()
