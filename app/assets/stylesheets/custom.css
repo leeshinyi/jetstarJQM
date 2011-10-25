@@ -380,9 +380,12 @@ only screen and (min-device-pixel-ratio: 1.5) {
     margin-left:5px;
   }
   #searchFieldGroup strong {
-    display: inline-block;
     width: 33px;
     text-align: right;
+    float: left;
+    display: block;
+    margin-right: 6px;
+    margin-top: 10px;
   }
   ul.ui-autocomplete, ul.ui-autocomplete2 {
     width: 100%;
@@ -856,7 +859,7 @@ span.graytxt {
       background: url("searchClear.jpg") no-repeat;
       position: relative;
       z-index: 9;
-      margin: 0px 20px -5px -30px;
+      margin: 7px 20px -5px -30px;
       display: inline-block;
       width: 19px;
       height: 20px;
@@ -982,6 +985,14 @@ div#airportLst{
 }
 .ui-body-c {
   text-shadow:none !important;
+}
+input.ui-input-text, textarea.ui-input-text {
+  float: left;
+  height: 18px;
+  padding: 7px 28px 7px 6px !important;  
+  min-width:55% !important;
+  max-width:65% !important;
+  width:0 !important;
 }
 
 /* FOOTER STYLES
