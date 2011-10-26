@@ -21,7 +21,7 @@
         <div id="fromWrap" class="left">
           <h4 class="reset tfhead">From</h4>
           <div id="fromContent" class="left fullwidth">            
-             <a href="#flightSearchFrom" id="origin_airport">
+             <a href="#flightSearchFrom" id="origin_airport" data-direction="reverse">
               <span class="tfl"></span>
               <span id="ffOrig">
                 <span id="origin_short"></span>
@@ -53,18 +53,18 @@
     </div>
     
     <div id="drWrap" class="left">
-        <a href="#flightCalendar" id="calLink" data-transition="slideup">
+        <a href="#flightCalendar" id="calLink" data-direction='reverse'>
           <ul id="dr" class="reset">
             <li>
               <div class="schedtaps left" id="ffdd">
                 <h4>Depart</h4>
                 <div id="departDetails" class="left fullwidth">                  
                   <div id="dpDate" class="halfi left">
-                    <div class='dpWD'><%= Date.today.strftime("%A")%></div>
-                    <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                    <div class='dpWD'><%#= Date.today.strftime("%A")%></div>
+                    <div class='dpMN'><%#= Date.today.strftime("%b")%></div>
                   </div>
-                  <div id="dpDay" class="halfi left"><%= Date.today.strftime("%d")%></div>
-                  <div id="dpSource_f" class="hidden"><%= Date.today.strftime("%m/%d/%Y") %></div>
+                  <div id="dpDay" class="halfi left"><%#= Date.today.strftime("%d")%></div>
+                  <div id="dpSource_f" class="hidden"><%#= Date.today.strftime("%m/%d/%Y") %></div>
                 </div>
               </div>
             </li>
@@ -73,11 +73,11 @@
                 <h4>Return</h4>
                 <div id="returnDetails" class="left fullwidth">
                     <div id="rpDate" class="halfi left">
-                      <div class='dpWD'><%= Date.today.strftime("%A")%></div>
-                      <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                      <div class='dpWD rpWeek'><%#= Date.today.strftime("%A")%></div>
+                      <div class='dpMN rpMonth'><%#= Date.today.strftime("%b")%></div>
                     </div>
-                    <div id="rpDay" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
-                    <div id="rpSource_f" class="hidden"><%= (Date.today + 1).strftime("%m/%d/%Y") %></div>
+                    <div id="rpDay" class="halfi left"><%#= (Date.today + 1).strftime("%d")%></div>
+                    <div id="rpSource_f" class="hidden"><%#= (Date.today + 1).strftime("%m/%d/%Y") %></div>
                 </div>
               </div>
             </li>
@@ -105,7 +105,7 @@
         <div id="passengerLbls">
           <div class="thirdsP left tacenter">Adult</div>
           <div class="thirds left tacenter">2-11 years</div>
-          <div class="thirds left tacenter">< 2 years</div>
+          <div class="thirds left tacenter">&lt; 2 years</div>
         </div>
         <div id="searchFLight" class="floatLeft fullwidth">
           <h4>Search by</h4>

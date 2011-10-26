@@ -12,6 +12,16 @@ var dp_source = $("#dpSource").html();
 var rp_source = $("#rpSource").html();
 
 $(document).ready(function() {
+  $(".dpMN").text(getMonthName(new Date()));
+  $(".dpWD").text(getWeekDay(new Date()));
+  $("#dpDay_c, #dpDay").text(new Date().getDate());
+  var d1 = new Date();
+  d1.setDate(new Date().getDate() + 1);
+  $("#rpDay_c, #rpDay").text(d1.getDate());
+  $(".rpMonth").text(getMonthName(d1));
+  $(".rpWeek").text(getWeekDay(d1));
+  $("#dpSource_c").text(new Date().toDateString());
+  $("#rpSource_c").text(new Date().toDateString());
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
   $("input.searchField").click(function() {
@@ -73,9 +83,9 @@ $(document).ready(function() {
     dp_source = $("#dpSource_f").html();
     rp_source = $("#rpSource_f").html();
     
-    console.log("DEP: " + dp_source);
-    console.log("RET: " + rp_source);
-
+    // console.log("DEP: " + dp_source);
+    //     console.log("RET: " + rp_source);
+    
     // Reload the calendars
     $("#datepickerR").datepicker( "refresh" );
     $("#datepickerD").datepicker( "refresh" );
@@ -100,10 +110,10 @@ $(document).ready(function() {
   if ($("#datepickerD").length){
   //  console.log("DEPARTURE VALUE: " + rp_source);
     $( "#datepickerD" ).datepicker({
-      minDate: 0,
+      minDate: new Date(),
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      defaultDate: dp_source,
+      defaultDate: $("#dpSource").html(),
       beforeShowDay: tagReturn,
       onSelect: function(dateText, inst) {
         $("#dpDay_c").text(dateText.split("/")[1]);
@@ -121,7 +131,7 @@ $(document).ready(function() {
       minDate: new Date($("#dpSource_c").text()),
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      defaultDate: rp_source,
+      defaultDate: $("#rpSource").html(),
       beforeShowDay: tagDepart,
       onSelect: function(dateText, inst) {
         $("#rpDay_c").text(dateText.split("/")[1]);
@@ -230,13 +240,18 @@ $(document).ready(function() {
     }
   });
   
-  $(".clearSearchbox").click(function(){
+  function clearsearchfields (){
     $(".searchField").val("");
     $(".geoneararea").slideDown();
     $(".searchResults").css("margin-top","0");
     $(".searchHeaderbox").show();
     $(".geolocret").hide();
-  });
+  }
+  
+  $("#dest_airport").click(clearsearchfields);
+  $("#origin_airport").click(clearsearchfields);  
+  $(".clearSearchbox").click(clearsearchfields);
+  
     $(".searchField").focus(function(){
     $(".geoneararea").slideUp();
   });
@@ -265,18 +280,24 @@ $(document).ready(function() {
       data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
      success: 
      function(html){
+       $("#recentResults").empty();
+       
        for(i=0;i<html.to.length; i++){
          var ddt = new Date(html.to[i].ddt);
          var adt = new Date(html.to[i].adt);
          var top = (i==0) ? "topradius" : "";
-         $("#recentResults").append("<li class='left'><a href='#' class='borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>ATD " + html.to[i].ddt.substring(11,16) + "<br/>ATA " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
+         var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
+         
+         $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.to[i].ddt.substring(11,16) + "<br/>ARR " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
        }
        
        for(i=0;i<html.from.length; i++){
          var ddt = new Date(html.from[i].ddt);
          var adt = new Date(html.from[i].adt);
+         var top = (html.to.length==0 && i==html.from.length-1) ? "topradius" : "";
          var bottom = (i==html.from.length-1) ? "bottomradius" : "";
-         $("#recentResults").append("<li class='left'><a href='#' class='borderBottomGray " + bottom + "'><span class='resultTitle floatLeft'>" + html.to[i].aa + "-" + html.to[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>ATD " + html.to[i].ddt.substring(11,16) + "<br/>ATA " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
+         
+         $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + html.to[i].aa + "-" + html.to[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.from[i].ddt.substring(11,16) + "<br/>ARR " + html.from[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
         }
      }
     });
@@ -287,9 +308,9 @@ $(document).ready(function() {
 
 // Calendar-specific functions - START
 function tagDepart(targetDate) {
-  console.log("In DEP search...");
+  // console.log("In DEP search...");
   if (Date.parse(dp_source) == Date.parse(targetDate)){
-    console.log("DEP SEARCH MATCH FOUND:" + Date.parse(rp_source) + " for " + Date.parse(targetDate))
+    // console.log("DEP SEARCH MATCH FOUND:" + Date.parse(rp_source) + " for " + Date.parse(targetDate))
     return [true, 'dDate'];
   } else {
     return [true, ''];
@@ -297,7 +318,7 @@ function tagDepart(targetDate) {
 }
 
 function tagReturn(targetDate) {
-  console.log("In RET search...");
+  // console.log("In RET search...");
   if (Date.parse(rp_source) == Date.parse(targetDate)){
     return [true, 'dDate'];
   } else {
@@ -315,8 +336,7 @@ function findClosestAirport(lat, lng, fromto){
         if ($(".geoneararea").length) {
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
-            console.log(data[i])
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='hidden selectClosestAirport'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
@@ -344,7 +364,7 @@ function findClosestAirport(lat, lng, fromto){
         if ($(".geoneararea").length) {
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
-            console.log(data[i])
+            // console.log(data[i])
             str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
           }
           $(".geolocret").remove();

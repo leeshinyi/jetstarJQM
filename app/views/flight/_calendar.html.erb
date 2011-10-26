@@ -8,7 +8,7 @@
           <span id="destToOrgin" class="hidden"></span>
       </h2>
     </div>
-    <div id="crumb"><a href="#flightIndex" id="setDates" class="doneBtn" data-transition="slidedown">Done</a></div>
+    <div id="crumb"><a href="#flightIndex" id="setDates" class="doneBtn" >Done</a></div>
   </div>
   
   <div data-role="content"> 
@@ -21,11 +21,11 @@
               <div id="departDetails" class="hidden"></div>
 
                 <div id="dpDate_c" class="halfi left">
-                  <div class='dpWD'><%= Date.today.strftime("%A")%></div>
-                  <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                  <div class='dpWD'><%#= Date.today.strftime("%A")%></div>
+                  <div class='dpMN'><%#= Date.today.strftime("%b")%></div>
                 </div>
-                <div id="dpDay_c" class="halfi left"><%= Date.today.strftime("%d")%></div>
-                <div id="dpSource_c" class="hidden"><%= Date.today.strftime("%m/%d/%Y") %></div>
+                <div id="dpDay_c" class="halfi left"><%#= Date.today.strftime("%d")%></div>
+                <div id="dpSource_c" class="hidden"><%#= Date.today.strftime("%m/%d/%Y") %></div>
 
             </div>
           </div>
@@ -37,11 +37,11 @@
               <div id="returnDetails" class="hidden"></div>
 
                 <div id="rpDate_c" class="halfi left">
-                  <div class='dpWD'><%= Date.today.strftime("%A")%></div>
-                  <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                  <div class='dpWD rpWeek'><%#= Date.today.strftime("%A")%></div>
+                  <div class='dpMN rpMonth'><%#= Date.today.strftime("%b")%></div>
                 </div>
-                <div id="rpDay_c" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
-                <div id="rpSource_c" class="hidden"><%= (Date.today + 1).strftime("%m/%d/%Y") %></div>
+                <div id="rpDay_c" class="halfi left"><%#= (Date.today + 1).strftime("%d")%></div>
+                <div id="rpSource_c" class="hidden"><%#= (Date.today + 1).strftime("%m/%d/%Y") %></div>
             </div>
           </div>
         </li>
