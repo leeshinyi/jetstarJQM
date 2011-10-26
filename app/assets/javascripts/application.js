@@ -24,11 +24,15 @@ $(document).ready(function() {
   $("#dpDay_c, #dpDay").text(new Date().getDate());
   var d1 = new Date();
   d1.setDate(new Date().getDate() + 1);
+  var today = new Date();
   $("#rpDay_c, #rpDay").text(d1.getDate());
   $(".rpMonth").text(getMonthName(d1));
   $(".rpWeek").text(getWeekDay(d1));
   $("#dpSource_c").text(new Date().toDateString());
-  $("#rpSource_c").text(new Date().toDateString());
+//   $("#rpSource_c").text(new Date().toDateString());
+  $("#rpSource_c, #rpSource").text(d1.toDateString());
+  $("#dpSource_f").text(today.getMonth()+1 + "/" + today.getDate() + "/" + today.getFullYear());
+  $("#rpSource_f").text(d1.getMonth()+1 + "/" + d1.getDate() + "/" + d1.getFullYear());
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
   $("input.searchField").click(function() {
@@ -41,6 +45,7 @@ $(document).ready(function() {
 
    $("#adults").bind("change", function() {
      var a = $('#adults').val();
+     console.log(a);
      if(a >= 2){
         for (var i = 5; i < 10; i++){
             $("#uipv_ul_child").append('<li id="uipv_ul_child_'+i+'" value="'+i+'" style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">'+ i + '</li>');
@@ -91,6 +96,8 @@ $(document).ready(function() {
     //     console.log("RET: " + rp_source);
 
     // Reload the calendars
+    $("#datepickerD * a.ui-btn-active").click();
+    $("#datepickerR * a.ui-btn-active").click();
     $("#datepickerR").datepicker( "refresh" );
     $("#datepickerD").datepicker( "refresh" );
   });
@@ -114,10 +121,10 @@ $(document).ready(function() {
   if ($("#datepickerD").length){
   //  console.log("DEPARTURE VALUE: " + rp_source);
     $( "#datepickerD" ).datepicker({
-      minDate: new Date(),
+      minDate: 0,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      defaultDate: $("#dpSource").html(),
+      defaultDate: 0,
       beforeShowDay: tagReturn,
       onSelect: function(dateText, inst) {
         $("#dpDay_c").text(dateText.split("/")[1]);
@@ -132,10 +139,10 @@ $(document).ready(function() {
   if ($("#datepickerR").length) {
   //  console.log("RETURN VALUE: " + rp_source);
     $( "#datepickerR").datepicker({
-      minDate: new Date($("#dpSource_c").text()),
+      minDate: 0,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      defaultDate: $("#rpSource").html(),
+      defaultDate: 1,
       beforeShowDay: tagDepart,
       onSelect: function(dateText, inst) {
         $("#rpDay_c").text(dateText.split("/")[1]);
@@ -210,7 +217,7 @@ $(document).ready(function() {
      open: function(event, ui) {
        $(".geoneararea").hide();
        $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstFrom').show();
-       $(".searchHeaderbox").hide();
+       $(".searchHeaderbox").slideUp();
      },
      close:function(event,ui){
        $("#airportLstTxt").show();
@@ -254,23 +261,23 @@ $(document).ready(function() {
   }
 
   $("#dest_airport").click(function (){
-    clearsearchfields
+    clearsearchfields();
     $(".geolocationHeaderclass").text("Show nearest Return airports");
   });
   $("#origin_airport").click(function (){
-    clearsearchfields
+    clearsearchfields();
     $(".geolocationHeaderclass").text("Show nearest Departure airports");
   });
   $(".clearSearchbox").click(clearsearchfields);
 
   $(".searchField").focus(function(){
-    $(".geoneararea").slideUp();
-
+    $(".geoneararea").hide();
+    $(".searchField").keypress(function() {
+        $(".searchHeaderbox").hide();
+    });
   });
   
-  $(".searchField").keypress(function() {
-      $(".searchHeaderbox").hide();
-  });
+  
   
   $(".searchField").blur(function(){
     if($(this).val() == ""){
