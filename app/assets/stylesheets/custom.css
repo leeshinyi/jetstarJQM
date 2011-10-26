@@ -384,12 +384,12 @@ only screen and (min-device-pixel-ratio: 1.5) {
     margin-left:5px;
   }
   #searchFieldGroup strong {
-    width: 40px;
+    width: 35px;
     text-align: right;
     float: left;
     display: block;
     margin-right: 6px;
-    margin-top: 10px;
+    margin-top: 8px;
   }
   ul.ui-autocomplete, ul.ui-autocomplete2 {
     width: 100%;
@@ -490,11 +490,9 @@ only screen and (min-device-pixel-ratio: 1.5) {
 /* GEOLOCATION HEADER STYLES
 ------------------------------------------------------------------------------------------*/
   #geolocation {
-    margin:0 auto;
+    margin:0 auto 10px auto;
     width:100%;
-    margin-bottom:10px;
     display:block;
-    /*margin-top:-22px; */
   }
   #geoLocWrap {
     background:url("searchGeoBg.png") repeat-x;
@@ -987,8 +985,8 @@ tr td.dDate a {
 .ui-autocomplete li.ui-menu-item, .ui-autocomplete2 li.ui-menu-item{
   padding: 10px !important;
 }
-#flightSearch div.ui-content{
-  margin-top: -8px !important;
+#flightSearchFrom div.ui-content, #flightSearchTo div.ui-content{
+  margin-top: -10px !important;
 }
 div#airportLst{
   margin-top: 0 !important;
@@ -1001,11 +999,14 @@ div#airportLst{
 input.ui-input-text, textarea.ui-input-text {
   float: left;
   height: 18px;
-  padding: 7px 28px 7px 6px !important;  
-  min-width:55% !important;
-  max-width:65% !important;
+  padding: 7px 28px 7px 6px !important;
+  min-width:53% !important;
   width:0 !important;
 }
+#flightSearchFrom .ui-content, #flightSearchTo .ui-content {
+  margin-top:-8px;
+}
+
 
 /* FOOTER STYLES
 -------------------------------------------------------------------------------------------*/
