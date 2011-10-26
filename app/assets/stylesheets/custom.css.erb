@@ -317,13 +317,13 @@ only screen and (min-device-pixel-ratio: 1.5) {
     padding:0;
   }
   #clock {
-    background:url("clockIcon.jpg") no-repeat;
+    background:url(<%= asset_path('clockIcon.jpg') %>) no-repeat;
     width:16px;
     height:16px;
     margin:1px 5px 0 15px;
   }
   #downIcon {
-    background:url("downIcon.jpg") no-repeat 0 4px;
+    background:url(<%= asset_path('upIcon.jpg') %>) no-repeat 0 4px;
     width:17px;
     height:15px;
     float:right;

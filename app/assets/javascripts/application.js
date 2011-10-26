@@ -247,11 +247,11 @@ $(document).ready(function() {
   }
   
   $("#dest_airport").click(function (){
-    clearsearchfields
+    clearsearchfields();
     $(".geolocationHeaderclass").text("Show nearest Return airports");
   });
   $("#origin_airport").click(function (){
-    clearsearchfields
+    clearsearchfields();
     $(".geolocationHeaderclass").text("Show nearest Departure airports");
   });  
   $(".clearSearchbox").click(clearsearchfields);
@@ -279,7 +279,11 @@ $(document).ready(function() {
     $(".geolocationHeaderclass").text("Airports nearest your current location");
   });
   
-  
+  if ($("#dest_short").text() == '') {
+    $("#recentResults").hide();
+    $("#downIcon").hide();
+    $("#recentSearches").append("<p>No recent searches yet.</p>");
+  }  
   
   $("#exactDates, #lowestFares").click(function(event) {
     event.preventDefault();
@@ -287,14 +291,28 @@ $(document).ready(function() {
     if($("#dest_short").text()=='' || $("#origin_short").text()==''){
       return false;
     }else{
-      var commit = $(this).attr("id");
+      var commit = $(this).attr("id");      
       $.ajax({
         type: "GET",
         url: "/flight/findFlights",
         data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
        success: 
        function(html){
+         $("#recentResults").show();
+         $("#downIcon").show();
+         $("#recentSearches p").remove();
          $("#recentResults").empty();
+
+         $("#downIcon").click(function() {
+           if ($("#recentResults").is(":hidden")) {
+             $("#recentResults").slideDown();
+             $(this).css("background","url('../images/upIcon.jpg') no-repeat 0 4px");
+           }
+           else {
+             $("#recentResults").slideUp();
+             $(this).css("background","url('../images/downIcon.jpg') no-repeat 0 4px");
+           }
+         });
 
          for(i=0;i<html.to.length; i++){
            var ddt = setNewDate(html.to[i].ddt);
@@ -319,6 +337,8 @@ $(document).ready(function() {
     
     return false;
   });
+
+  
   
 });
 
