@@ -214,7 +214,7 @@ $(document).ready(function() {
      open: function(event, ui) {
        $(".geoneararea").hide();
        $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstFrom').show();
-       $(".searchHeaderbox").hide();
+       $(".searchHeaderbox").slideUp();
      },
      close:function(event,ui){
        $("#airportLstTxt").show();
@@ -268,13 +268,13 @@ $(document).ready(function() {
   $(".clearSearchbox").click(clearsearchfields);
 
   $(".searchField").focus(function(){
-    $(".geoneararea").slideUp();
-
+    $(".geoneararea").hide();
+    $(".searchField").keypress(function() {
+        $(".searchHeaderbox").hide();
+    });
   });
   
-  $(".searchField").keypress(function() {
-      $(".searchHeaderbox").hide();
-  });
+  
   
   $(".searchField").blur(function(){
     if($(this).val() == ""){
