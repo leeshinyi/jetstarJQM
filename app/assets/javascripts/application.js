@@ -21,7 +21,7 @@ $(document).ready(function() {
   $(".rpMonth").text(getMonthName(d1));
   $(".rpWeek").text(getWeekDay(d1));
   $("#dpSource_c").text(new Date().toDateString());
-  $("#rpSource_c").text(new Date().toDateString());
+  $("#rpSource_c, #rpSource").text(d1.toDateString());
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
   $("input.searchField").click(function() {
@@ -78,6 +78,7 @@ $(document).ready(function() {
   
   // Calendar Call, make sure dp_source and rp_source have a value
   $("#calLink").click(function (){
+    $(this).addClass('bluebg');
     dp_source = $("#dpSource_f").html();
     rp_source = $("#rpSource_f").html();
     
@@ -85,6 +86,8 @@ $(document).ready(function() {
     //     console.log("RET: " + rp_source);
     
     // Reload the calendars
+    $("#datepickerD * a.ui-btn-active").click();
+    $("#datepickerR * a.ui-btn-active").click();
     $("#datepickerR").datepicker( "refresh" );
     $("#datepickerD").datepicker( "refresh" );
   });
@@ -108,10 +111,10 @@ $(document).ready(function() {
   if ($("#datepickerD").length){
   //  console.log("DEPARTURE VALUE: " + rp_source);
     $( "#datepickerD" ).datepicker({
-      minDate: new Date(),
+      minDate: 0,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      defaultDate: $("#dpSource").html(),
+      defaultDate: 0,
       beforeShowDay: tagReturn,
       onSelect: function(dateText, inst) {
         $("#dpDay_c").text(dateText.split("/")[1]);
@@ -126,10 +129,10 @@ $(document).ready(function() {
   if ($("#datepickerR").length) {
   //  console.log("RETURN VALUE: " + rp_source);
     $( "#datepickerR").datepicker({
-      minDate: new Date($("#dpSource_c").text()),
+      minDate: 0,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      defaultDate: $("#rpSource").html(),
+      defaultDate: 1,
       beforeShowDay: tagDepart,
       onSelect: function(dateText, inst) {
         $("#rpDay_c").text(dateText.split("/")[1]);
@@ -368,7 +371,7 @@ function findClosestAirport(lat, lng, fromto){
         if ($(".geoneararea").length) {
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' >" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' data-direction='reverse'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
@@ -397,7 +400,7 @@ function findClosestAirport(lat, lng, fromto){
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
             // console.log(data[i])
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' >" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' data-direction='reverse'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");

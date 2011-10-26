@@ -38,7 +38,14 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 }
 
 .ui-datepicker-header {
-  border-radius: 0em !important; -moz-border-radius: 0em !important; -webkit-border-radius: 0em !important; -o-border-radius: 0em !important;  
+  border-radius-topleft: 2px !important; 
+  -moz-border-radius-topleft: 2px !important; 
+  -webkit-border-radius-topleft: 2px !important; 
+  -o-border-radius-topleft: 2px !important;
+  border-radius-topright: 2px !important; 
+  -moz-border-radius-topright: 2px !important; 
+  -webkit-border-radius-topright: 2px !important; 
+  -o-border-radius-topright: 2px !important;  
   background-color: #383838 !important;
   padding: 1px 0px 1px 0px !important;
 }
@@ -133,8 +140,8 @@ table.ui-datepicker-calendar tbody tr td span
 
 .ui-state-active {
   background: #ff5115 !important;
-  text-shadow: 1px 1px #ff7444 !important;
-  color: #000000 !important;
+  text-shadow: 1px 1px #e54a15 !important;
+  color: #ffffff !important;
 }
 
 .ui-datepicker-prev, .ui-datepicker-next {
