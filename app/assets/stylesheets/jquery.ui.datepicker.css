@@ -70,7 +70,7 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 .ui-datepicker-calendar thead tr th span {
   color: #828282 !important;
   opacity: 1;
-  filter: alpha('opacity=100');
+  /*filter: alpha('opacity=100');*/
 }
 
 table.ui-datepicker-calendar tbody tr td {
