@@ -248,25 +248,37 @@ $(document).ready(function() {
     $(".geolocret").hide();
   }
   
-  $("#dest_airport").click(clearsearchfields);
-  $("#origin_airport").click(clearsearchfields);  
+  $("#dest_airport").click(function (){
+    clearsearchfields
+    $(".geolocationHeaderclass").text("Show nearest Return airports");
+  });
+  $("#origin_airport").click(function (){
+    clearsearchfields
+    $(".geolocationHeaderclass").text("Show nearest Departure airports");
+  });  
   $(".clearSearchbox").click(clearsearchfields);
   
-    $(".searchField").focus(function(){
+  $(".searchField").focus(function(){
     $(".geoneararea").slideUp();
+    $(".searchHeaderbox").hide();
   });
   $(".searchField").blur(function(){
     if($(this).val() == ""){
       $(".geoneararea").slideDown();
       $(".searchResults").css("margin-top","0");
+      $(".searchHeaderbox").show();
     }
   });
   
     $(".nearestairportFrom").click(function (){
     findClosestAirport(centerLatitude, centerLongitude,"from");
+    $(".searchHeaderbox").slideUp();
+    $(".geolocationHeaderclass").text("Airports nearest your current location");
   });
     $(".nearestairportTo").click(function (){
     findClosestAirport(centerLatitude, centerLongitude,"to");
+    $(".searchHeaderbox").slideUp();
+    $(".geolocationHeaderclass").text("Airports nearest your current location");
   });
   
   
