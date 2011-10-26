@@ -43,19 +43,19 @@ $(document).ready(function() {
 
   // Passenger area handling
 
-   $("#adults").bind("change", function() {
-     var a = $('#adults').val();
-     console.log(a);
-     if(a >= 2){
-        for (var i = 5; i < 10; i++){
-            $("#uipv_ul_child").append('<li id="uipv_ul_child_'+i+'" value="'+i+'" style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">'+ i + '</li>');
-        }
-     }
-     else
-      for (var i = 5; i < 10; i++){
-            $("ul#uipv_ul_child li#uipv_ul_child_"+i).remove();
-        }
-   });
+   // $("#adults").bind("change", function() {
+   //   var a = $('#adults').val();
+   //   console.log(a);
+   //   if(a >= 2){
+   //      for (var i = 5; i < 10; i++){
+   //          $("#uipv_ul_child").append('<li id="uipv_ul_child_'+i+'" value="'+i+'" style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">'+ i + '</li>');
+   //      }
+   //   }
+   //   else
+   //    for (var i = 5; i < 10; i++){
+   //          $("ul#uipv_ul_child li#uipv_ul_child_"+i).remove();
+   //      }
+   // });
 
    $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
