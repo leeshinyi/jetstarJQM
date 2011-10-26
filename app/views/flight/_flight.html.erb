@@ -21,7 +21,7 @@
         <div id="fromWrap" class="left">
           <h4 class="reset tfhead">From</h4>
           <div id="fromContent" class="left fullwidth">            
-             <a href="#flightSearchFrom" id="origin_airport">
+             <a href="#flightSearchFrom" id="origin_airport" data-direction="reverse">
               <span class="tfl"></span>
               <span id="ffOrig">
                 <span id="origin_short"></span>
@@ -53,28 +53,18 @@
     </div>
     
     <div id="drWrap" class="left">
-        <a href="#flightCalendar" id="calLink" data-transition="slideup">
+        <a href="#flightCalendar" id="calLink" data-direction='reverse'>
           <ul id="dr" class="reset">
             <li>
               <div class="schedtaps left" id="ffdd">
                 <h4>Depart</h4>
-                <div id="departDetails" class="left fullwidth">
-                  <%- if session[:depart] 
-                    d = Date.new(session[:depart].split("/")[2].to_i, session[:depart].split("/")[0].to_i, session[:depart].split("/")[1].to_i) -%>
-                    <div id="dpDate" class="halfi left">
-                      <div class='dpWD'><%= d.strftime("%A")%></div>
-                      <div class='dpMN'><%= d.strftime("%b")%></div>
-                    </div>
-                    <div id="dpDay" class="halfi left"><%= d.strftime("%d")%></div>
-                    <div id="dpSource_f" class="hidden"><%= session[:depart] %></div>
-                  <%- else %>
-                    <div id="dpDate" class="halfi left">
-                      <div class='dpWD'><%= Date.today.strftime("%A")%></div>
-                      <div class='dpMN'><%= Date.today.strftime("%b")%></div>
-                    </div>
-                    <div id="dpDay" class="halfi left"><%= Date.today.strftime("%d")%></div>
-                    <div id="dpSource_f" class="hidden"><%= Date.today.strftime("%m/%d/%Y") %></div>
-                  <%- end %>
+                <div id="departDetails" class="left fullwidth">                  
+                  <div id="dpDate" class="halfi left">
+                    <div class='dpWD'><%#= Date.today.strftime("%A")%></div>
+                    <div class='dpMN'><%#= Date.today.strftime("%b")%></div>
+                  </div>
+                  <div id="dpDay" class="halfi left"><%#= Date.today.strftime("%d")%></div>
+                  <div id="dpSource_f" class="hidden"><%#= Date.today.strftime("%m/%d/%Y") %></div>
                 </div>
               </div>
             </li>
@@ -82,22 +72,12 @@
               <div class="schedtaps left" id="ffrd">
                 <h4>Return</h4>
                 <div id="returnDetails" class="left fullwidth">
-                  <%- if session[:return] 
-                      d = Date.new(session[:return].split("/")[2].to_i, session[:return].split("/")[0].to_i, session[:return].split("/")[1].to_i) -%>
                     <div id="rpDate" class="halfi left">
-                      <div class='dpWD'><%= d.strftime("%A")%></div>
-                      <div class='dpMN'><%= d.strftime("%b")%></div>
+                      <div class='dpWD rpWeek'><%#= Date.today.strftime("%A")%></div>
+                      <div class='dpMN rpMonth'><%#= Date.today.strftime("%b")%></div>
                     </div>
-                    <div id="rpDay" class="halfi left"><%= d.strftime("%d")%></div>
-                    <div id="rpSource_f" class="hidden"><%= session[:return] %></div>
-                  <%- else %>
-                    <div id="rpDate" class="halfi left">
-                      <div class='dpWD'><%= Date.today.strftime("%A")%></div>
-                      <div class='dpMN'><%= Date.today.strftime("%b")%></div>
-                    </div>
-                    <div id="rpDay" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
-                    <div id="rpSource_f" class="hidden"><%= (Date.today + 1).strftime("%m/%d/%Y") %></div>
-                  <%- end %>
+                    <div id="rpDay" class="halfi left"><%#= (Date.today + 1).strftime("%d")%></div>
+                    <div id="rpSource_f" class="hidden"><%#= (Date.today + 1).strftime("%m/%d/%Y") %></div>
                 </div>
               </div>
             </li>
@@ -125,7 +105,7 @@
         <div id="passengerLbls">
           <div class="thirdsP left tacenter">Adult</div>
           <div class="thirds left tacenter">2-11 years</div>
-          <div class="thirds left tacenter">< 2 years</div>
+          <div class="thirds left tacenter">&lt; 2 years</div>
         </div>
         <div id="searchFLight" class="floatLeft fullwidth">
           <h4>Search by</h4>
@@ -138,70 +118,19 @@
     </div>
     
     <ul id="search_#{params[:q]}_list"></ul>
+    
     <div class="left contentWrap">
-        <div id="recentSearches">
-          <div id="searchesHeader">
-            <div id="clock" class="floatLeft"></div>
-            <h3 class="left width70">Recent Searches</h3>
-            <div id="downIcon" class="floatRight"></div>
-          </div>
-
-          <%- if session[:flight] || session[:return_flights] %>
-            <ul id="recentResults">
-              <%- if session[:flight] -%>
-                <%- session[:flight].each_with_index do |flight, i| %>
-                  <%- i += 1 -%>
-                  <%- ddate = parseDate(flight[:ddt]) -%>
-                  <%- adate = parseDate(flight[:adt]) -%>
-                  <li class="left">
-                    <a href="#" class="borderBottomGray <%= 'topradius' if (i==1) %>">
-                      <span class="resultTitle floatLeft"><%= "#{flight[:da]}-#{flight[:aa]}" %></span>                    
-                      <div class="searchDates floatRight">
-                        <div id="atd" class="floatleft days">
-                          ATD <%= flight[:ddt][11..15] %>
-                          <br/>
-                          ATA <%= flight[:adt][11..15] %>
-                        </div>
-                        <div class="floatleft days"><%= ddate.strftime('%a').upcase %><br/><%= ddate.strftime('%b').upcase %></div>
-                        <div class="floatRight date"><%= ddate.strftime('%d') %></div>
-                      </div>
-                    </a>
-                  </li>
-                <% end %>
-              <%- end -%>
-
-              <%- if session[:return_flights] -%>
-                <%- session[:return_flights].each_with_index do |rflight, i| -%>
-                  <%- i += 1 -%>
-                  <%- ddate = parseDate(rflight[:ddt]) -%>
-                  <%- adate = parseDate(rflight[:adt]) -%>
-                  <li class="left">
-                    <a href="#" class="borderBottomGray <%= 'bottomradius' if (i==session[:return_flights].size) %> returnGray <%= 'topradius' if (session[:flight].blank? && i.eql?(1))%>">
-                      <span class="return resultTitle floatLeft"><%= "#{rflight[:da]}-#{rflight[:aa]}" %></span>
-                      <div class="searchDates floatRight">
-                        <div id="atd" class="floatleft days">
-                          ATD <%= rflight[:ddt][11..15] %>
-                          <br/>
-                          ATA <%= rflight[:adt][11..15] %>
-                        </div>
-                        <div class="floatleft days"><%= adate.strftime('%a').upcase %><br/><%= ddate.strftime('%b').upcase %></div>
-                        <div class="floatRight date"><%= ddate.strftime('%d') %></div>
-                      </div>
-                    </a>
-                  </li>
-                <%- end -%>
-              <%- end -%>
-            </ul>
-          <%- else -%>
-            No search result yet.          
-          <% end %>
+      <div id="recentSearches">
+        <div id="searchesHeader">
+          <div id="clock" class="floatLeft"></div>
+          <h3 class="left width70">Recent Searches</h3>
+          <div id="downIcon" class="floatRight"></div>
         </div>
+        <ul id="recentResults"></ul>
+      </div>
     </div>
-
-  </div>
-  
-  <div data-role="footer" class="footer">
-    <%= render "footer" %>
-  </div>
-  
+    </div>
+    <div data-role="footer" class="footer">
+      <%= render "footer" %>
+    </div>
 </div>

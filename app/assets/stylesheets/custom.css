@@ -38,7 +38,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
 /*----------------------------------------------------------------------------------------------- 
                                     START OF MEDIA QUERY
 ------------------------------------------------------------------------------------------------*/
-@media only screen and (max-width: 480px) {
+/*@media only screen and (max-width: 480px) {*/
 
 /* HEADER STYLES
 ---------------------------------------------------------------------------------------------*/
@@ -384,12 +384,12 @@ only screen and (min-device-pixel-ratio: 1.5) {
     margin-left:5px;
   }
   #searchFieldGroup strong {
-    width: 40px;
+    width: 35px;
     text-align: right;
     float: left;
     display: block;
     margin-right: 6px;
-    margin-top: 10px;
+    margin-top: 8px;
   }
   ul.ui-autocomplete, ul.ui-autocomplete2 {
     width: 100%;
@@ -490,11 +490,9 @@ only screen and (min-device-pixel-ratio: 1.5) {
 /* GEOLOCATION HEADER STYLES
 ------------------------------------------------------------------------------------------*/
   #geolocation {
-    margin:0 auto;
+    margin:0 auto 10px auto;
     width:100%;
-    margin-bottom:10px;
     display:block;
-    /*margin-top:-22px; */
   }
   #geoLocWrap {
     background:url("searchGeoBg.png") repeat-x;
@@ -539,7 +537,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
   #geolocret {
     width:100%;
   }
-}
+/*}*/
 
 /*----------------------------------------------------------------------------------------------- 
                                      END OF MEDIA QUERY
@@ -638,7 +636,8 @@ h4.wtborder {
   box-shadow: inner 0 0 3px #aaa;
 }
 #passengerLbls {
-  height:15px;
+  height:12px;
+  padding:3px 0;
   font-size:10px;
   color:#7b7b7b;
   border-bottom:1px solid #ededed;
@@ -806,7 +805,7 @@ span.graytxt {
 #searchWrap {min-height:220px;}
 
 #introWrap {
-  min-height:171px;
+  min-height:161px;
 }
 #intro {
   width:100px;
@@ -960,7 +959,7 @@ tr td.dDate a {
 -------------------------------------------------------------------------------------------*/
 #searchFieldGroup strong{
   color:#222 !important;
-  text-shadow: white 0px 0px 0px !important;
+  text-shadow: none !important;
 }
 .ui-body-a {
   background-color:#fff !important;
@@ -984,10 +983,10 @@ tr td.dDate a {
   text-decoration:none;
 }
 .ui-autocomplete li.ui-menu-item, .ui-autocomplete2 li.ui-menu-item{
-  padding: 10px !important;
+  padding: 10px 0 !important;
 }
-#flightSearch div.ui-content{
-  margin-top: -8px !important;
+#flightSearchFrom div.ui-content, #flightSearchTo div.ui-content{
+  margin-top: -10px !important;
 }
 div#airportLst{
   margin-top: 0 !important;
@@ -1000,11 +999,14 @@ div#airportLst{
 input.ui-input-text, textarea.ui-input-text {
   float: left;
   height: 18px;
-  padding: 7px 28px 7px 6px !important;  
-  min-width:55% !important;
-  max-width:65% !important;
+  padding: 7px 28px 7px 6px !important;
+  min-width:53% !important;
   width:0 !important;
 }
+#flightSearchFrom .ui-content, #flightSearchTo .ui-content {
+  margin-top:-8px;
+}
+
 
 /* FOOTER STYLES
 -------------------------------------------------------------------------------------------*/

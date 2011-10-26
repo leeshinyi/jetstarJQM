@@ -62,28 +62,24 @@
     <%= render "search", :q => "to" %>
     <%= render "calendar" %>
     
-
-    <%#= javascript_include_tag "application"%>
-    <%#= javascript_include_tag "jquery.iphonepicker"%>
-    <%#- if session[:origin].blank? %>
-      <script>
-        $(document).ready(function() {
-          if (Modernizr.geolocation)
-            navigator.geolocation.getCurrentPosition(function(position) {
-              centerLatitude = position.coords.latitude;
-              centerLongitude = position.coords.longitude;
-              // // remove me...
-              centerLatitude = -33.870721;
-              centerLongitude = 151.204814;
-              findClosestAirport(centerLatitude, centerLongitude);
-            });
-          else {
+    
+    <script>
+      $(document).ready(function() {
+        if (Modernizr.geolocation)
+          navigator.geolocation.getCurrentPosition(function(position) {
+            centerLatitude = position.coords.latitude;
+            centerLongitude = position.coords.longitude;
+            <%- if Rails.env != "production" %>
+            // // remove me...
+            centerLatitude = -33.870721;
+            centerLongitude = 151.204814;
+            <%- end -%>
             findClosestAirport(centerLatitude, centerLongitude);
-            alert('Unable to get nearby airports');
-          }
-        });
-      </script>
-    <%#end%>
-
+          });
+        else {
+          findClosestAirport(centerLatitude, centerLongitude);
+        }
+      });
+    </script>
   </body>
 </html>
