@@ -959,7 +959,7 @@ tr td.dDate a {
 -------------------------------------------------------------------------------------------*/
 #searchFieldGroup strong{
   color:#222 !important;
-  text-shadow: white 0px 0px 0px !important;
+  text-shadow: none !important;
 }
 .ui-body-a {
   background-color:#fff !important;
