@@ -223,7 +223,7 @@ $(document).ready(function() {
   
   $("#dest_airport").click(clearsearchfields);
   $("#origin_airport").click(clearsearchfields);  
-  $(".clearSearchbox").click(fclearsearchfields);
+  $(".clearSearchbox").click(clearsearchfields);
   
     $(".searchField").focus(function(){
     $(".geoneararea").slideUp();
