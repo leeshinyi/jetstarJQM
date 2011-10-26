@@ -292,34 +292,22 @@ $(document).ready(function() {
       return false;
     }else{
       var commit = $(this).attr("id");      
+      $("#downIcon").css("background","url('../images/upIcon.jpg') no-repeat 0 4px");
+      $("#recentResults").show();
+      $("#downIcon").show();
+      $("#recentSearches p").remove();
       $.ajax({
         type: "GET",
         url: "/flight/findFlights",
         data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
        success: 
-       function(html){
-         $("#recentResults").show();
-         $("#downIcon").show();
-         $("#recentSearches p").remove();
+       function(html){         
          $("#recentResults").empty();
-
-         $("#downIcon").click(function() {
-           if ($("#recentResults").is(":hidden")) {
-             $("#recentResults").slideDown();
-             $(this).css("background","url('../images/upIcon.jpg') no-repeat 0 4px");
-           }
-           else {
-             $("#recentResults").slideUp();
-             $(this).css("background","url('../images/downIcon.jpg') no-repeat 0 4px");
-           }
-         });
-
          for(i=0;i<html.to.length; i++){
            var ddt = setNewDate(html.to[i].ddt);
            var adt = setNewDate(html.to[i].adt);
            var top = (i==0) ? "topradius" : "";
-           var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
-
+           var bottom = (html.from.length==0 && html.to.length == 0) ? "bottomradius" : "";
            $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.to[i].ddt.substring(11,16) + "<br/>ARR " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
          }
 
@@ -338,7 +326,15 @@ $(document).ready(function() {
     return false;
   });
 
-  
+  $("#downIcon").click(function() {
+    if ($("#recentResults").is(":hidden")) {
+      $(this).css("background","url('/images/upIcon.jpg') no-repeat 0 4px");             
+    }
+    else {
+      $(this).css("background","url('/images/downIcon.jpg') no-repeat 0 4px");
+    }
+    $("#recentResults").slideToggle();             
+  });
   
 });
 
