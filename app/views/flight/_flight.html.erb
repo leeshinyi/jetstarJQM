@@ -21,7 +21,7 @@
         <div id="fromWrap" class="left">
           <h4 class="reset tfhead">From</h4>
           <div id="fromContent" class="left fullwidth">            
-             <a href="#flightSearchFrom" id="origin_airport">
+             <a href="#flightSearchFrom" id="origin_airport" data-direction="reverse">
               <span class="tfl"></span>
               <span id="ffOrig">
                 <span id="origin_short"></span>
@@ -53,7 +53,7 @@
     </div>
     
     <div id="drWrap" class="left">
-        <a href="#flightCalendar" id="calLink" data-transition="slideup">
+        <a href="#flightCalendar" id="calLink" data-direction='reverse'>
           <ul id="dr" class="reset">
             <li>
               <div class="schedtaps left" id="ffdd">
@@ -95,7 +95,7 @@
           </div>
           <div class="thirds left sselect tacenter wdiv">
             <span class="child"></span>
-            <%= select_tag "child", options_for_select(%w(0 1 2 3 4 5 6 7 8 9), session[:child]) %>
+            <%= select_tag "child", options_for_select(%w(0 1 2 3 4), session[:child]) %>
           </div>
           <div class="thirds left sselect tacenter">
             <span class="infant"></span>
@@ -105,7 +105,7 @@
         <div id="passengerLbls">
           <div class="thirdsP left tacenter">Adult</div>
           <div class="thirds left tacenter">2-11 years</div>
-          <div class="thirds left tacenter">< 2 years</div>
+          <div class="thirds left tacenter">&lt; 2 years</div>
         </div>
         <div id="searchFLight" class="floatLeft fullwidth">
           <h4>Search by</h4>

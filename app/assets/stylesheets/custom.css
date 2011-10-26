@@ -637,7 +637,7 @@ h4.wtborder {
 }
 #passengerLbls {
   height:12px;
-  padding-top:3px;
+  padding:3px 0;
   font-size:10px;
   color:#7b7b7b;
   border-bottom:1px solid #ededed;
@@ -983,7 +983,7 @@ tr td.dDate a {
   text-decoration:none;
 }
 .ui-autocomplete li.ui-menu-item, .ui-autocomplete2 li.ui-menu-item{
-  padding: 10px !important;
+  padding: 10px 0 !important;
 }
 #flightSearchFrom div.ui-content, #flightSearchTo div.ui-content{
   margin-top: -10px !important;
