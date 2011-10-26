@@ -60,11 +60,11 @@
                 <h4>Depart</h4>
                 <div id="departDetails" class="left fullwidth">                  
                   <div id="dpDate" class="halfi left">
-                    <div class='dpWD'><%= Date.today.strftime("%A")%></div>
-                    <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                    <div class='dpWD'><%#= Date.today.strftime("%A")%></div>
+                    <div class='dpMN'><%#= Date.today.strftime("%b")%></div>
                   </div>
-                  <div id="dpDay" class="halfi left"><%= Date.today.strftime("%d")%></div>
-                  <div id="dpSource_f" class="hidden"><%= Date.today.strftime("%m/%d/%Y") %></div>
+                  <div id="dpDay" class="halfi left"><%#= Date.today.strftime("%d")%></div>
+                  <div id="dpSource_f" class="hidden"><%#= Date.today.strftime("%m/%d/%Y") %></div>
                 </div>
               </div>
             </li>
@@ -73,11 +73,11 @@
                 <h4>Return</h4>
                 <div id="returnDetails" class="left fullwidth">
                     <div id="rpDate" class="halfi left">
-                      <div class='dpWD'><%= Date.today.strftime("%A")%></div>
-                      <div class='dpMN'><%= Date.today.strftime("%b")%></div>
+                      <div class='dpWD rpWeek'><%#= Date.today.strftime("%A")%></div>
+                      <div class='dpMN rpMonth'><%#= Date.today.strftime("%b")%></div>
                     </div>
-                    <div id="rpDay" class="halfi left"><%= (Date.today + 1).strftime("%d")%></div>
-                    <div id="rpSource_f" class="hidden"><%= (Date.today + 1).strftime("%m/%d/%Y") %></div>
+                    <div id="rpDay" class="halfi left"><%#= (Date.today + 1).strftime("%d")%></div>
+                    <div id="rpSource_f" class="hidden"><%#= (Date.today + 1).strftime("%m/%d/%Y") %></div>
                 </div>
               </div>
             </li>
