@@ -245,6 +245,7 @@ $(document).ready(function() {
     $(".searchResults").css("margin-top","0");
     $(".searchHeaderbox").show();
     $(".geolocret").hide();
+    $('ul.ui-autocomplete').empty();
   }
   
   $("#dest_airport").click(function (){
@@ -259,8 +260,13 @@ $(document).ready(function() {
   
   $(".searchField").focus(function(){
     $(".geoneararea").slideUp();
-    $(".searchHeaderbox").hide();
+
   });
+  
+  $(".searchField").keypress(function() {
+      $(".searchHeaderbox").hide();
+  });
+  
   $(".searchField").blur(function(){
     if($(this).val() == ""){
       $(".geoneararea").slideDown();
