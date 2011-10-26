@@ -30,24 +30,26 @@ $(document).ready(function() {
     $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
   });
 
-
-
-  // Passenger area handling
-  $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
-    e.preventDefault();
-  });
-
-   $("#adults").bind("change", function() {
+  $("#adults").bind("change", function() {
      var a = $('#adults').val();
+
+
      if(a >= 2){
         for (var i = 5; i < 10; i++){
-            $("#uipv_ul_child").append('<li style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; "value="'+i+'" id="uipv_ul_child_'+i+'">'+ i + '</li>');
+            $("#uipv_ul_child").append('<li style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; "value="'+i+'" id="uipv_ul_child_'+i+'">'+ i + '</li>')
+
         }
      }
      else
       for (var i = 5; i < 10; i++){
             $("ul#uipv_ul_child li#uipv_ul_child_"+i).remove();
+
         }
+  });
+
+  // Passenger area handling
+  $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
+    e.preventDefault();
   });
   
   // Search Trace
@@ -283,43 +285,46 @@ $(document).ready(function() {
   
   $("#exactDates, #lowestFares").click(function(event) {
     event.preventDefault();
-    
-    if($("#dest_short").text()=='' || $("#origin_short").text()==''){
-      return false;
-    }else{
-      var commit = $(this).attr("id");
-      $.ajax({
-        type: "GET",
-        url: "/flight/findFlights",
-        data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
-       success: 
-       function(html){
-         $("#recentResults").empty();
-
-         for(i=0;i<html.to.length; i++){
-           var ddt = setNewDate(html.to[i].ddt);
-           var adt = setNewDate(html.to[i].adt);
-           var top = (i==0) ? "topradius" : "";
-           var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
-
-           $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.to[i].ddt.substring(11,16) + "<br/>ARR " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
-         }
-
-         for(i=0;i<html.from.length; i++){
-           var ddt = setNewDate(html.from[i].ddt);
-           var adt = setNewDate(html.from[i].adt);
-           var top = (html.to.length==0 && i==html.from.length-1) ? "topradius" : "";
-           var bottom = (i==html.from.length-1) ? "bottomradius" : "";
-           
-           $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + html.from[i].aa + "-" + html.from[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.from[i].ddt.substring(11,16) + "<br/>ARR " + html.from[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
-          }
+    var commit = $(this).attr("id");
+    $.ajax({
+      type: "GET",
+      url: "/flight/findFlights",
+      data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
+     success: 
+     function(html){
+       $("#recentResults").empty();
+       
+       for(i=0;i<html.to.length; i++){
+         console.log(html.to[i].ddt);
+         console.log(setNewDate(html.to[i].ddt));
+         // console.log("SUBSTRING" + html.to[i].ddt.substring(0,10));
+         // console.log("AA" + new Date(html.to[i].ddt));
+         // console.log("BB" + new Date(html.to[i].ddt.substring(0,9)));
+         // console.log("honeylet!" + getWeekDay(new Date(html.to[i].ddt.substring(0,9))));
+         
+         // var ddt = new Date(html.to[i].ddt);
+         // var adt = new Date(html.to[i].adt);
+         var ddt = setNewDate(html.to[i].ddt);
+         var adt = setNewDate(html.to[i].adt);
+         var top = (i==0) ? "topradius" : "";
+         var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
+         
+         $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.to[i].ddt.substring(11,16) + "<br/>ARR " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
        }
-      });
-    }
-    
+       
+       for(i=0;i<html.from.length; i++){
+         var ddt = setNewDate(html.from[i].ddt);
+         var adt = setNewDate(html.from[i].adt);
+         var top = (html.to.length==0 && i==html.from.length-1) ? "topradius" : "";
+         var bottom = (i==html.from.length-1) ? "bottomradius" : "";
+         
+         $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + html.to[i].aa + "-" + html.to[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.from[i].ddt.substring(11,16) + "<br/>ARR " + html.from[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
+        }
+     }
+    });
+
     return false;
   });
-  
 });
 
 // Calendar-specific functions - START
