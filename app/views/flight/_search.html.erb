@@ -13,7 +13,7 @@
   
   <div data-role="content"> 
     <div id="searchPage" class="contentWrap left">
-      <div id="geolocation" class="left geoneararea">
+      <div id="geolocation" class="left geoneararea nearestairport<%= q.camelize%>">
         <div id="geoLocWrap" class="left fullwidth">
           <span class="boxLeft left"></span>
           <span id="geolocationTxt" class="left">
@@ -23,6 +23,7 @@
           </span>
           <span class="boxRight right"></span>
         </div>
+        
       </div>
       <div id="airportLst<%= q.camelize%>" class=" searchResults left fullwidth">
         <span id="searchHeader" class="searchHeaderbox">Search airports via City or Airport Code</span>
