@@ -29,10 +29,12 @@ $(document).ready(function() {
   $("#origin_airport").click(function (){
     search_mode = "From";
     $("#search_mode").text(search_mode);
+    $(".geolocret").hide();
   });
   $("#dest_airport").click(function (){
     search_mode = "To";
     $("#search_mode").text(search_mode);
+    $(".geolocret").hide();
   });
 
   // Device orientation handler
@@ -227,8 +229,12 @@ $(document).ready(function() {
       $(".searchResults").css("margin-top","0");
     }
   });
-    $(".geoneararea").click(function (){
-    findClosestAirport(centerLatitude, centerLongitude);
+  
+    $(".nearestairportFrom").click(function (){
+    findClosestAirport(centerLatitude, centerLongitude,"from");
+  });
+    $(".nearestairportTo").click(function (){
+    findClosestAirport(centerLatitude, centerLongitude,"to");
   });
   
   
@@ -240,7 +246,21 @@ $(document).ready(function() {
       type: "GET",
       url: "/flight/findFlights",
       data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
-     success: function(html){ // this happens after we get results
+     success: 
+     function(html){
+       for(i=0;i<html.to.length; i++){
+         var ddt = new Date(html.to[i].ddt);
+         var adt = new Date(html.to[i].adt);
+         var top = (i==0) ? "topradius" : "";
+         $("#recentResults").append("<li class='left'><a href='#' class='borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>ATD " + html.to[i].ddt.substring(11,16) + "<br/>ATA " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
+       }
+       
+       for(i=0;i<html.from.length; i++){
+         var ddt = new Date(html.from[i].ddt);
+         var adt = new Date(html.from[i].adt);
+         var bottom = (i==html.from.length-1) ? "bottomradius" : "";
+         $("#recentResults").append("<li class='left'><a href='#' class='borderBottomGray " + bottom + "'><span class='resultTitle floatLeft'>" + html.to[i].aa + "-" + html.to[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>ATD " + html.to[i].ddt.substring(11,16) + "<br/>ATA " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
+        }
      }
     });
 
@@ -269,7 +289,7 @@ function tagReturn(targetDate) {
 }
 // Calendar-specific functions - END
 
-function findClosestAirport(lat, lng){
+function findClosestAirport(lat, lng, fromto){
   $.ajax({
     type: "GET",
     url: "/flight/findClosestAirports?lat="+ lat + "&lng=" + lng, 
@@ -284,13 +304,22 @@ function findClosestAirport(lat, lng){
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
         }
-        
-        $("#origin_short").html(data[0].a.split(";")[0] );
-        $("#origin_city").html(data[0].a.split(";")[1]);
+          if(fromto == "from"){
+            $("#origin_short").html(data[0].a.split(";")[0] );
+            $("#origin_city").html(data[0].a.split(";")[1]);
+          }
+          else if(fromto == "to"){
+            $("#dest_short").html(data[0].a.split(";")[0] );
+            $("#dest_city").html(data[0].a.split(";")[1]);
+          }
         $(".selectClosestAirport").click(function(e){
           e.preventDefault();
-          $("#search_from_hidden").val($(this).html());
-          $("#search_to_hidden").val($(this).html());
+            if(fromto == "from"){
+              $("#search_from_hidden").val($(this).html());
+            }
+            else if(fromto == "to"){
+              $("#search_to_hidden").val($(this).html());
+            }
           $.mobile.changePage("#flightIndex");
           //$("#flightForm").submit();
         });
@@ -304,12 +333,22 @@ function findClosestAirport(lat, lng){
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
         }
-        $("#origin_short").html(data[0].a.split(";")[0]);
-        $("#origin_city").html(data[0].a.split(";")[1]);
+          if(fromto == "from"){
+            $("#origin_short").html(data[0].a.split(";")[0] );
+            $("#origin_city").html(data[0].a.split(";")[1]);
+          }
+          else if(fromto == "to"){
+            $("#dest_short").html(data[0].a.split(";")[0] );
+            $("#dest_city").html(data[0].a.split(";")[1]);
+          }
         $(".selectClosestAirport").click(function(e){
           e.preventDefault();
-          $("#search_from_hidden").val($(this).html());
-          $("#search_to_hidden").val($(this).html());
+            if(fromto == "from"){
+              $("#search_from_hidden").val($(this).html());
+            }
+            else if(fromto == "to"){
+              $("#search_to_hidden").val($(this).html());
+            }
           $.mobile.changePage("#flightIndex");
           //$("#flightForm").submit();
         });
