@@ -248,18 +248,26 @@ $(document).ready(function() {
       data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
      success: 
      function(html){
+       $("#recentResults").empty();
+       console.log(html.to.length);
+       console.log(html.from.length);
+       
        for(i=0;i<html.to.length; i++){
          var ddt = new Date(html.to[i].ddt);
          var adt = new Date(html.to[i].adt);
          var top = (i==0) ? "topradius" : "";
-         $("#recentResults").append("<li class='left'><a href='#' class='borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>ATD " + html.to[i].ddt.substring(11,16) + "<br/>ATA " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
+         var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
+         
+         $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>ATD " + html.to[i].ddt.substring(11,16) + "<br/>ATA " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
        }
        
        for(i=0;i<html.from.length; i++){
          var ddt = new Date(html.from[i].ddt);
          var adt = new Date(html.from[i].adt);
+         var top = (html.to.length==0 && i==html.from.length-1) ? "topradius" : "";
          var bottom = (i==html.from.length-1) ? "bottomradius" : "";
-         $("#recentResults").append("<li class='left'><a href='#' class='borderBottomGray " + bottom + "'><span class='resultTitle floatLeft'>" + html.to[i].aa + "-" + html.to[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>ATD " + html.to[i].ddt.substring(11,16) + "<br/>ATA " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
+         
+         $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + html.to[i].aa + "-" + html.to[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>ATD " + html.to[i].ddt.substring(11,16) + "<br/>ATA " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
         }
      }
     });
@@ -294,12 +302,10 @@ function findClosestAirport(lat, lng, fromto){
     type: "GET",
     url: "/flight/findClosestAirports?lat="+ lat + "&lng=" + lng, 
     success: function(data){
-      console.log(data[0].a);
       if(data.length == 1){
         if ($(".geoneararea").length) {
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
-            // console.log(data[i])
             str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
           }
           $(".geolocret").remove();
