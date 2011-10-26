@@ -78,6 +78,7 @@ $(document).ready(function() {
   
   // Calendar Call, make sure dp_source and rp_source have a value
   $("#calLink").click(function (){
+    $(this).addClass('bluebg');
     dp_source = $("#dpSource_f").html();
     rp_source = $("#rpSource_f").html();
     
