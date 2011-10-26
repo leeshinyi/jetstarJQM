@@ -172,7 +172,7 @@ var ITEM_OFFSET = parseInt(37);
 			$('#uipv_left_'+targetId).css({
 				'width': '4px',
 				'height': '0px',
-				'background': 'transparent url(' + data.options.imgRoot + 'uipv_left_bg.png) no-repeat top',
+				
 				'float': 'left',
 				'position': 'absolute',
 				'margin': '0px',
@@ -181,7 +181,7 @@ var ITEM_OFFSET = parseInt(37);
 			$('#uipv_top_'+targetId).css({
 				'width': controlWidth-8 + 'px',
 				'height': '0px',
-				'background': 'transparent url(' + data.options.imgRoot + 'uipv_top_bg.png) repeat-x top',
+				
 				'float': 'left',
 				'position': 'absolute',
 				'margin-left': '4px',
@@ -190,7 +190,7 @@ var ITEM_OFFSET = parseInt(37);
 			$('#uipv_bottom_'+targetId).css({
 				'width': controlWidth-8 + 'px',
 				'height': '0px',
-				'background': 'transparent url(' + data.options.imgRoot + 'uipv_bottom_bg.png) repeat-x top',
+				
 				'float': 'left',
 				'position': 'absolute',
 				'margin-top': '80px',
@@ -200,7 +200,7 @@ var ITEM_OFFSET = parseInt(37);
 			$('#uipv_right_'+targetId).css({
 				'width': '4px',
 				'height': '0px',
-				'background': 'transparent url(' + data.options.imgRoot + 'uipv_right_bg.png) no-repeat top', 
+				
 				'float': 'right',
 				'position': 'absolute',
 				'margin-left': controlWidth-4 + 'px',
@@ -209,7 +209,7 @@ var ITEM_OFFSET = parseInt(37);
 			$('#uipv_bar_'+targetId).css({
 				'width': '0px',
 				'height': '35px',
-				'background': 'transparent url(' + data.options.imgRoot + 'uipv_bar_bg.png) repeat-x top',
+				
 				'float': 'left',
 				'position': 'absolute',
 				'margin-top': '11px',
