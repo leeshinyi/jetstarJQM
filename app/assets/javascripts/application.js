@@ -213,13 +213,18 @@ $(document).ready(function() {
     }
   });
   
-  $(".clearSearchbox").click(function(){
+  function clearsearchfields (){
     $(".searchField").val("");
     $(".geoneararea").slideDown();
     $(".searchResults").css("margin-top","0");
     $(".searchHeaderbox").show();
     $(".geolocret").hide();
-  });
+  }
+  
+  $("#dest_airport").click(clearsearchfields);
+  $("#origin_airport").click(clearsearchfields);  
+  $(".clearSearchbox").click(fclearsearchfields);
+  
     $(".searchField").focus(function(){
     $(".geoneararea").slideUp();
   });
