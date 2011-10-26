@@ -23,11 +23,15 @@ $(document).ready(function() {
   $("#dpDay_c, #dpDay").text(new Date().getDate());
   var d1 = new Date();
   d1.setDate(new Date().getDate() + 1);
+  var today = new Date();
   $("#rpDay_c, #rpDay").text(d1.getDate());
   $(".rpMonth").text(getMonthName(d1));
   $(".rpWeek").text(getWeekDay(d1));
   $("#dpSource_c").text(new Date().toDateString());
-  $("#rpSource_c").text(new Date().toDateString());
+//   $("#rpSource_c").text(new Date().toDateString());
+  $("#rpSource_c, #rpSource").text(d1.toDateString());
+  $("#dpSource_f").text(today.getMonth()+1 + "/" + today.getDate() + "/" + today.getFullYear());
+  $("#rpSource_f").text(d1.getMonth()+1 + "/" + d1.getDate() + "/" + d1.getFullYear());
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
   $("input.searchField").click(function() {
@@ -40,6 +44,7 @@ $(document).ready(function() {
 
    $("#adults").bind("change", function() {
      var a = $('#adults').val();
+     console.log(a);
      if(a >= 2){
         for (var i = 5; i < 10; i++){
             $("#uipv_ul_child").append('<li id="uipv_ul_child_'+i+'" value="'+i+'" style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">'+ i + '</li>');
