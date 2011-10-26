@@ -145,7 +145,7 @@ var ITEM_OFFSET = parseInt(37);
 				$('#'+mainId).attr('class', classAttr);
 			}
 			$('#'+mainId).css({
-				'width': '80%',
+				'width': '100%',
 				'height': '60px',
 				'position': 'relative',
 				'float': 'left',
@@ -249,7 +249,7 @@ var ITEM_OFFSET = parseInt(37);
 						'line-height': '37px',
 						'text-align': 'right',
 						'display': 'block',
-						'padding': '0px',
+						'padding': '0 10px 0 0',
 						'margin': '0px'
 					});
 				}

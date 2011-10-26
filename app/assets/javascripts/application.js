@@ -11,11 +11,12 @@
 var dp_source = $("#dpSource").html();
 var rp_source = $("#rpSource").html();
 
-// $(document).bind("mobileinit", function(){
-//   $.extend($.mobile, {
-//     metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
-//   });
-// });
+$(document).bind("mobileinit", function(){
+  // $.mobile.defaultPageTransition = 'none';
+  // $.extend($.mobile, {
+  //     metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
+  //   });
+});
 
 $(document).ready(function() {
   $(".dpMN").text(getMonthName(new Date()));
