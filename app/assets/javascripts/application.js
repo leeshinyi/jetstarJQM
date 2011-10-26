@@ -34,7 +34,7 @@ $(document).ready(function() {
      var a = $('#adults').val();
 
 
-     if(a == 2 ){
+     if(a >= 2){
         for (var i = 5; i < 10; i++){
             $("#uipv_ul_child").append('<li style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; "value="'+i+'" id="uipv_ul_child_'+i+'">'+ i + '</li>')
 
@@ -248,25 +248,37 @@ $(document).ready(function() {
     $(".geolocret").hide();
   }
   
-  $("#dest_airport").click(clearsearchfields);
-  $("#origin_airport").click(clearsearchfields);  
+  $("#dest_airport").click(function (){
+    clearsearchfields
+    $(".geolocationHeaderclass").text("Show nearest Return airports");
+  });
+  $("#origin_airport").click(function (){
+    clearsearchfields
+    $(".geolocationHeaderclass").text("Show nearest Departure airports");
+  });  
   $(".clearSearchbox").click(clearsearchfields);
   
-    $(".searchField").focus(function(){
+  $(".searchField").focus(function(){
     $(".geoneararea").slideUp();
+    $(".searchHeaderbox").hide();
   });
   $(".searchField").blur(function(){
     if($(this).val() == ""){
       $(".geoneararea").slideDown();
       $(".searchResults").css("margin-top","0");
+      $(".searchHeaderbox").show();
     }
   });
   
     $(".nearestairportFrom").click(function (){
     findClosestAirport(centerLatitude, centerLongitude,"from");
+    $(".searchHeaderbox").slideUp();
+    $(".geolocationHeaderclass").text("Airports nearest your current location");
   });
     $(".nearestairportTo").click(function (){
     findClosestAirport(centerLatitude, centerLongitude,"to");
+    $(".searchHeaderbox").slideUp();
+    $(".geolocationHeaderclass").text("Airports nearest your current location");
   });
   
   
@@ -283,8 +295,17 @@ $(document).ready(function() {
        $("#recentResults").empty();
        
        for(i=0;i<html.to.length; i++){
-         var ddt = new Date(html.to[i].ddt);
-         var adt = new Date(html.to[i].adt);
+         console.log(html.to[i].ddt);
+         console.log(setNewDate(html.to[i].ddt));
+         // console.log("SUBSTRING" + html.to[i].ddt.substring(0,10));
+         // console.log("AA" + new Date(html.to[i].ddt));
+         // console.log("BB" + new Date(html.to[i].ddt.substring(0,9)));
+         // console.log("honeylet!" + getWeekDay(new Date(html.to[i].ddt.substring(0,9))));
+         
+         // var ddt = new Date(html.to[i].ddt);
+         // var adt = new Date(html.to[i].adt);
+         var ddt = setNewDate(html.to[i].ddt);
+         var adt = setNewDate(html.to[i].adt);
          var top = (i==0) ? "topradius" : "";
          var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
          
@@ -292,8 +313,8 @@ $(document).ready(function() {
        }
        
        for(i=0;i<html.from.length; i++){
-         var ddt = new Date(html.from[i].ddt);
-         var adt = new Date(html.from[i].adt);
+         var ddt = setNewDate(html.from[i].ddt);
+         var adt = setNewDate(html.from[i].adt);
          var top = (html.to.length==0 && i==html.from.length-1) ? "topradius" : "";
          var bottom = (i==html.from.length-1) ? "bottomradius" : "";
          
@@ -336,7 +357,7 @@ function findClosestAirport(lat, lng, fromto){
         if ($(".geoneararea").length) {
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' >" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
@@ -365,7 +386,7 @@ function findClosestAirport(lat, lng, fromto){
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
             // console.log(data[i])
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' >" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
@@ -437,3 +458,10 @@ function getWeekDay(day){
   }
 }
 
+function setNewDate(date){
+  var now = new Date();
+  now.setYear(date.substring(0,4));
+  now.setMonth(date.substring(5,7)-1);
+  now.setDate(date.substring(8,10));
+  return now
+}

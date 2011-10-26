@@ -43,11 +43,17 @@
   <body>
     <div id="container" data-role="page">
       <div data-role="header" class="header">
-        <%= yield :header%>
+          <div id="findFlights">
+            <div id="midHeader"><h2>Demo</h2></div>
+          </div>
       </div>
       
       <div id="main" data-role="content">
-        <%= yield %>
+        <div id="introWrap">
+          <div id="intro">
+            <%= link_to "Find Flights", "#flightIndex", "data-transition" => "slide"%>
+          </div>
+        </div>
       </div>
       
       <footer class="left">

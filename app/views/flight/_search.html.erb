@@ -7,7 +7,7 @@
          <span class="clearSearchbox" id="clearSearch"><span class="hidden">Clear Search</span></span>
        </span>
        <%= hidden_field_tag q, "", :id => "search_#{q}_hidden" %>
-       <a href="#flightIndex" class="doneBtn" <%= q.eql?("from") ? "data-direction='reverse'" : "data-transition='slide'"%>>Done</a>
+       <a href="#flightIndex" class="doneBtn" data-direction='reverse'>Done</a>
      </div>
   </div>
   
@@ -18,7 +18,7 @@
           <span class="boxLeft left"></span>
           <span id="geolocationTxt" class="left">
             <span id="plane" class="left"></span>
-            <span id="geolocationHeader">Show nearest <%= (q == "from")?  "Departure" : "Return" %> airports</span>
+            <span id="geolocationHeader" class="geolocationHeaderclass">Show nearest <%= (q == "from")?  "Departure" : "Return" %> airports</span>
             <span id="pen" class="right"></span>
           </span>
           <span class="boxRight right"></span>
