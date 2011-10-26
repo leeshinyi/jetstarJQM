@@ -96,6 +96,7 @@ table.ui-datepicker-calendar tbody tr td span
   line-height: 30px;
   font-weight: bold !important;
   text-shadow: 1px 1px #eeeeee;
+  -webkit-tap-highlight-color: #b8d4fb;
 }
 
 .ui-state-disabled .ui-state-default {

@@ -86,8 +86,6 @@ $(document).ready(function() {
     //     console.log("RET: " + rp_source);
     
     // Reload the calendars
-    $("#datepickerD * a.ui-btn-active").click();
-    $("#datepickerR * a.ui-btn-active").click();
     $("#datepickerR").datepicker( "refresh" );
     $("#datepickerD").datepicker( "refresh" );
   });
