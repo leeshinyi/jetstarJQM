@@ -21,7 +21,7 @@ $(document).ready(function() {
   $(".rpMonth").text(getMonthName(d1));
   $(".rpWeek").text(getWeekDay(d1));
   $("#dpSource_c").text(new Date().toDateString());
-  $("#rpSource_c").text(new Date().toDateString());
+  $("#rpSource_c, #rpSource").text(d1.toDateString());
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
   $("input.searchField").click(function() {
@@ -78,6 +78,7 @@ $(document).ready(function() {
   
   // Calendar Call, make sure dp_source and rp_source have a value
   $("#calLink").click(function (){
+    $(this).addClass('bluebg');
     dp_source = $("#dpSource_f").html();
     rp_source = $("#rpSource_f").html();
     
@@ -85,6 +86,8 @@ $(document).ready(function() {
     //     console.log("RET: " + rp_source);
     
     // Reload the calendars
+    $("#datepickerD * a.ui-btn-active").click();
+    $("#datepickerR * a.ui-btn-active").click();
     $("#datepickerR").datepicker( "refresh" );
     $("#datepickerD").datepicker( "refresh" );
   });
@@ -108,10 +111,10 @@ $(document).ready(function() {
   if ($("#datepickerD").length){
   //  console.log("DEPARTURE VALUE: " + rp_source);
     $( "#datepickerD" ).datepicker({
-      minDate: new Date(),
+      minDate: 0,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      defaultDate: $("#dpSource").html(),
+      defaultDate: 0,
       beforeShowDay: tagReturn,
       onSelect: function(dateText, inst) {
         $("#dpDay_c").text(dateText.split("/")[1]);
@@ -126,10 +129,10 @@ $(document).ready(function() {
   if ($("#datepickerR").length) {
   //  console.log("RETURN VALUE: " + rp_source);
     $( "#datepickerR").datepicker({
-      minDate: new Date($("#dpSource_c").text()),
+      minDate: 0,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
-      defaultDate: $("#rpSource").html(),
+      defaultDate: 1,
       beforeShowDay: tagDepart,
       onSelect: function(dateText, inst) {
         $("#rpDay_c").text(dateText.split("/")[1]);
@@ -279,7 +282,11 @@ $(document).ready(function() {
     $(".geolocationHeaderclass").text("Airports nearest your current location");
   });
   
-  
+  if ($("#dest_short").text() == '') {
+    $("#recentResults").hide();
+    $("#downIcon").hide();
+    $("#recentSearches").append("<p>No recent searches yet.</p>");
+  }  
   
   $("#exactDates, #lowestFares").click(function(event) {
     event.preventDefault();
@@ -287,21 +294,23 @@ $(document).ready(function() {
     if($("#dest_short").text()=='' || $("#origin_short").text()==''){
       return false;
     }else{
-      var commit = $(this).attr("id");
+      var commit = $(this).attr("id");      
+      $("#downIcon").css("background","url('../images/upIcon.jpg') no-repeat 0 4px");
+      $("#recentResults").show();
+      $("#downIcon").show();
+      $("#recentSearches p").remove();
       $.ajax({
         type: "GET",
         url: "/flight/findFlights",
         data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
        success: 
-       function(html){
+       function(html){         
          $("#recentResults").empty();
-
          for(i=0;i<html.to.length; i++){
            var ddt = setNewDate(html.to[i].ddt);
            var adt = setNewDate(html.to[i].adt);
            var top = (i==0) ? "topradius" : "";
-           var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
-
+           var bottom = (html.from.length==0 && html.to.length == 0) ? "bottomradius" : "";
            $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.to[i].ddt.substring(11,16) + "<br/>ARR " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
          }
 
@@ -318,6 +327,16 @@ $(document).ready(function() {
     }
     
     return false;
+  });
+
+  $("#downIcon").click(function() {
+    if ($("#recentResults").is(":hidden")) {
+      $(this).css("background","url('/images/upIcon.jpg') no-repeat 0 4px");             
+    }
+    else {
+      $(this).css("background","url('/images/downIcon.jpg') no-repeat 0 4px");
+    }
+    $("#recentResults").slideToggle();             
   });
   
 });
@@ -352,7 +371,7 @@ function findClosestAirport(lat, lng, fromto){
         if ($(".geoneararea").length) {
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' >" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' data-direction='reverse'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
@@ -401,7 +420,7 @@ function findClosestAirport(lat, lng, fromto){
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
             // console.log(data[i])
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' >" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' data-direction='reverse'>" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
