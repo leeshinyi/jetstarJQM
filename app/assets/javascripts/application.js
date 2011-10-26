@@ -266,8 +266,17 @@ $(document).ready(function() {
        $("#recentResults").empty();
        
        for(i=0;i<html.to.length; i++){
-         var ddt = new Date(html.to[i].ddt);
-         var adt = new Date(html.to[i].adt);
+         console.log(html.to[i].ddt);
+         console.log(setNewDate(html.to[i].ddt));
+         // console.log("SUBSTRING" + html.to[i].ddt.substring(0,10));
+         // console.log("AA" + new Date(html.to[i].ddt));
+         // console.log("BB" + new Date(html.to[i].ddt.substring(0,9)));
+         // console.log("honeylet!" + getWeekDay(new Date(html.to[i].ddt.substring(0,9))));
+         
+         // var ddt = new Date(html.to[i].ddt);
+         // var adt = new Date(html.to[i].adt);
+         var ddt = setNewDate(html.to[i].ddt);
+         var adt = setNewDate(html.to[i].adt);
          var top = (i==0) ? "topradius" : "";
          var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
          
@@ -275,8 +284,8 @@ $(document).ready(function() {
        }
        
        for(i=0;i<html.from.length; i++){
-         var ddt = new Date(html.from[i].ddt);
-         var adt = new Date(html.from[i].adt);
+         var ddt = setNewDate(html.from[i].ddt);
+         var adt = setNewDate(html.from[i].adt);
          var top = (html.to.length==0 && i==html.from.length-1) ? "topradius" : "";
          var bottom = (i==html.from.length-1) ? "bottomradius" : "";
          
@@ -420,3 +429,10 @@ function getWeekDay(day){
   }
 }
 
+function setNewDate(date){
+  var now = new Date();
+  now.setYear(date.substring(0,4));
+  now.setMonth(date.substring(5,7)-1);
+  now.setDate(date.substring(8,10));
+  return now
+}
