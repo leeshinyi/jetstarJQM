@@ -34,7 +34,7 @@ $(document).ready(function() {
      var a = $('#adults').val();
 
 
-     if(a == 2 ){
+     if(a >= 2){
         for (var i = 5; i < 10; i++){
             $("#uipv_ul_child").append('<li style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; "value="'+i+'" id="uipv_ul_child_'+i+'">'+ i + '</li>')
 
