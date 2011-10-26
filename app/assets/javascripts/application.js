@@ -30,26 +30,24 @@ $(document).ready(function() {
     $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
   });
 
-  $("#adults").bind("change", function() {
+
+
+  // Passenger area handling
+  $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
+    e.preventDefault();
+  });
+
+   $("#adults").bind("change", function() {
      var a = $('#adults').val();
-
-
      if(a >= 2){
         for (var i = 5; i < 10; i++){
-            $("#uipv_ul_child").append('<li style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; "value="'+i+'" id="uipv_ul_child_'+i+'">'+ i + '</li>')
-
+            $("#uipv_ul_child").append('<li style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; "value="'+i+'" id="uipv_ul_child_'+i+'">'+ i + '</li>');
         }
      }
      else
       for (var i = 5; i < 10; i++){
             $("ul#uipv_ul_child li#uipv_ul_child_"+i).remove();
-
         }
-  });
-
-  // Passenger area handling
-  $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
-    e.preventDefault();
   });
   
   // Search Trace
