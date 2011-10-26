@@ -258,11 +258,11 @@ $(document).ready(function() {
   }
 
   $("#dest_airport").click(function (){
-    clearsearchfields
+    clearsearchfields();
     $(".geolocationHeaderclass").text("Show nearest Return airports");
   });
   $("#origin_airport").click(function (){
-    clearsearchfields
+    clearsearchfields();
     $(".geolocationHeaderclass").text("Show nearest Departure airports");
   });
   $(".clearSearchbox").click(clearsearchfields);
