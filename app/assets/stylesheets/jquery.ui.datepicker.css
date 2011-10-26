@@ -140,8 +140,8 @@ table.ui-datepicker-calendar tbody tr td span
 
 .ui-state-active {
   background: #ff5115 !important;
-  text-shadow: 1px 1px #ff7444 !important;
-  color: #000000 !important;
+  text-shadow: 1px 1px #e54a15 !important;
+  color: #ffffff !important;
 }
 
 .ui-datepicker-prev, .ui-datepicker-next {
