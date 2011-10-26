@@ -382,6 +382,26 @@ function findClosestAirport(lat, lng, fromto){
             $("#dest_short").html(data[0].a.split(";")[0] );
             $("#dest_city").html(data[0].a.split(";")[1]);
           }
+          
+        if($("#search_from_hidden").val() == ''){
+          $("#search_from_hidden").val(data[0].a.split(";")[1] + " (" + data[0].a.split(";")[0] +")");
+          //call 
+          $.ajax({
+             url: "/flight/findDestinationAirports",
+             data: "o=" + $("#search_from_hidden").val(),
+             type: "GET",
+             success:function(d){
+               item = []
+               for(i=0; i<d.length; i++){
+                 item.push(d[i][0]);
+               }
+               //destination_airports = d;
+               $('ul.ui-autocomplete').empty();
+               $('#search_to').autocomplete("option", { source: item });
+             }
+           });    
+        }
+        
         $(".selectClosestAirport").click(function(e){
           e.preventDefault();
             if(fromto == "from"){
@@ -411,6 +431,26 @@ function findClosestAirport(lat, lng, fromto){
             $("#dest_short").html(data[0].a.split(";")[0] );
             $("#dest_city").html(data[0].a.split(";")[1]);
           }
+          
+          if($("#search_from_hidden").val() == ''){
+            $("#search_from_hidden").val(data[0].a.split(";")[1] + " (" + data[0].a.split(";")[0] +")");
+            //call 
+            $.ajax({
+               url: "/flight/findDestinationAirports",
+               data: "o=" + $("#search_from_hidden").val(),
+               type: "GET",
+               success:function(d){
+                 item = []
+                 for(i=0; i<d.length; i++){
+                   item.push(d[i][0]);
+                 }
+                 //destination_airports = d;
+                 $('ul.ui-autocomplete').empty();
+                 $('#search_to').autocomplete("option", { source: item });
+               }
+             });    
+          }
+          
         $(".selectClosestAirport").click(function(e){
           e.preventDefault();
             if(fromto == "from"){
