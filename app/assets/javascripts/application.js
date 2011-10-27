@@ -270,10 +270,11 @@ $(document).ready(function() {
   $(".clearSearchbox").click(clearsearchfields);
 
   $(".searchField").focus(function(){
-    $(".geoneararea").hide();
+
     $(".searchField").keypress(function() {
         $(".searchHeaderbox").hide();
     });
+        $(".geoneararea").hide();
   });
   
   
