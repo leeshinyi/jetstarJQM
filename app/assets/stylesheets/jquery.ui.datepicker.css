@@ -38,14 +38,7 @@ div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0
 }
 
 .ui-datepicker-header {
-  border-radius-topleft: 2px !important; 
-  -moz-border-radius-topleft: 2px !important; 
-  -webkit-border-radius-topleft: 2px !important; 
-  -o-border-radius-topleft: 2px !important;
-  border-radius-topright: 2px !important; 
-  -moz-border-radius-topright: 2px !important; 
-  -webkit-border-radius-topright: 2px !important; 
-  -o-border-radius-topright: 2px !important;  
+  border-radius: 0em !important; -moz-border-radius: 0em !important; -webkit-border-radius: 0em !important; -o-border-radius: 0em !important;
   background-color: #383838 !important;
   padding: 1px 0px 1px 0px !important;
 }
@@ -92,8 +85,8 @@ table.ui-datepicker-calendar tbody tr td span
   display: block !important;
   text-align: center;
   width: auto !important;
-  height: 28px !important;
-  line-height: 30px;
+  height: 23px !important;
+  line-height: 25px;
   font-weight: bold !important;
   text-shadow: 1px 1px #eeeeee;
   -webkit-tap-highlight-color: #b8d4fb;
@@ -146,13 +139,20 @@ table.ui-datepicker-calendar tbody tr td span
 }
 
 .ui-datepicker-prev, .ui-datepicker-next {
-  padding: 0px !important;
+  width: 40px;
+  height: 25px;
+  padding: 6px 0px 0px 0px !important;
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   -o-box-shadow: none !important;
   box-shadow: none !important;
   border: none !important;
-  margin-top: 0px !important;
+  margin-top: -6px !important;
+}
+
+/* Next arrow fix for datepicker due to increased tappable width */
+.ui-datepicker-next * .ui-icon-arrow-r {
+  margin-left: 22px !important;
 }
 
 .ui-datepicker-prev .ui-icon { left:2px; background: url("calendarArrows.jpg") no-repeat !important; }
@@ -174,4 +174,9 @@ table.ui-datepicker-calendar tbody tr td span
 .ui-datepicker-header * .ui-btn-inner,.ui-datepicker-header * .ui-btn-corner-all {
   background: none transparent !important;
   border: none !important;
+}
+
+/* Departure and Return Swap Colors */
+tr td.dDate a {
+  background: #808080 !important;
 }
