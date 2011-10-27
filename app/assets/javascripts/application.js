@@ -346,6 +346,29 @@ $(document).ready(function() {
 
     return false;
   });
+
+  //------------------------- change background images on tap of buttons in flight index search by
+  $("#lowestFares").mousedown(function() {
+    $(this).css("background","url('/images/tap-lowfare.png') no-repeat");
+    $(this).css("width","144px");
+    $(this).css("height","41px");
+  });
+  $("#lowestFares").mouseup(function() {
+    $(this).css("background","url('/images/searchBtn.jpg') no-repeat");
+    $(this).css("width","141px");
+    $(this).css("height","38px");
+  });
+
+  $("#exactDates").mousedown(function() {
+    $(this).css("background","url('/images/tap-exactdate.png') no-repeat");
+    $(this).css("width","144px");
+    $(this).css("height","41px");
+  });
+  $("#exactDates").mouseup(function() {
+    $(this).css("background","url('/images/searchBtn.jpg') 0 -38px no-repeat");
+    $(this).css("width","141px");
+    $(this).css("height","38px");
+  });
 });
 
 // Calendar-specific functions - START
