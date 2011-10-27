@@ -45,7 +45,9 @@ $(document).ready(function() {
 
   $("#calLink").live("tap", function(event){
    $("#drWrap").css("border", "none");
-   $("#calLink").css("background-image", "url('../images/tap-cal.png')");
+   //$("#calLink").css("background-image", "url('../images/tap-cal.png')");
+   $("#calLink").css("background-color", "#58c6ff");
+   $("#calLink").css("border-radius", "5px");
   });
   $("#lowestFares").live("tap", function(event){
     $("#lowestFares").css("background-image", "url('../images/tap-lowfare.png')");
@@ -54,8 +56,7 @@ $(document).ready(function() {
     $("#exactDates").css("background", "url('../images/tap-exactdate.png')");
   });
   $("#retFlightNav").live("tap", function(event){
-    $("#retFlightNav").css("color", "#fff");
-    $("#retFlightNav").css("background", "url('../images/tab-tap.png')")    
+    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
   });
   //------------------------- change background images on tap of buttons in flight index search by
   $("#lowestFares").mousedown(function() {
@@ -156,12 +157,15 @@ $(document).ready(function() {
     
     //Change the background of origin to destination back to original
     $("#drWrap").css("border", "1px solid #d5d5d5");
-    $("#calLink").css("background-image", "none");
+    $("#calLink").css("background-color", "transparent");
+    $("#calLink").css("border-radius", "0");
+
   })
   
   $("#cancelFrmCal").click(function (){
     $("#drWrap").css("border", "1px solid #d5d5d5");
-    $("#calLink").css("background-image", "none");
+    $("#calLink").css("background-color", "transparent");
+    $("#calLink").css("border-radius", "0");
   });
 
 
