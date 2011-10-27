@@ -231,42 +231,37 @@ $(document).ready(function() {
      }
    });
 
-   $('#search_to').autocomplete({
-     source: destination_airports,
-     minLength: 1,
-     appendTo: $("#airportLstTo")
+  $('#search_to').autocomplete({
+    source: destination_airports,
+    minLength: 1,
+    appendTo: $("#airportLstTo"),
+    select:function(event, ui){
+      $("#search_to_hidden").val(ui.item.value);
+       str = ui.item.value.toString();
+       $("#flightIndex #dest_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
+       $("#flightIndex #dest_city").text(str.substring(0, str.indexOf("(")));
+       $.mobile.changePage("#flightIndex");
+  
+       $("#originToDest").text($("#flightIndex #origin_short").text() + " to " + $("#flightIndex #dest_short").text());
+       $("#destToOrgin").text($("#flightIndex #dest_short").text() + " to " + $("#flightIndex #origin_short").text())
+    },
+    open: function(event, ui) {
+      $(".geoneararea").hide();
+      $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstTo').show();
+      $(".searchHeaderbox").hide();
+    },
+    close:function(event,ui){
+      $("#airportLstTxt").show();
+      $("ul.ui-autocomplete").show();
+    }
   });
-
-  // $('#search_to').autocomplete({
-  //   source: destination_airports,
-  //   minLength: 1,
-  //   select:function(event, ui){
-  //     $("#search_to_hidden").val(ui.item.value);
-  //      str = ui.item.value.toString();
-  //      $("#flightIndex #dest_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
-  //      $("#flightIndex #dest_city").text(str.substring(0, str.indexOf("(")));
-  //      $.mobile.changePage("#flightIndex");
-  // 
-  //      $("#originToDest").text($("#flightIndex #origin_short").text() + " to " + $("#flightIndex #dest_short").text());
-  //      $("#destToOrgin").text($("#flightIndex #dest_short").text() + " to " + $("#flightIndex #origin_short").text())
-  //   },
-  //   open: function(event, ui) {
-  //     $(".geoneararea").hide();
-  //     $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstTo').show();
-  //     $(".searchHeaderbox").hide();
-  //   },
-  //   close:function(event,ui){
-  //     $("#airportLstTxt").show();
-  //     $("ul.ui-autocomplete").show();
-  //   }
-  // });
 
   function clearsearchfields (){
     $(".searchField").val("");
     $(".geoneararea").slideDown();
     $(".searchResults").css("margin-top","0");
     $(".searchHeaderbox").show();
-    $(".geolocret").slideDown();
+    $(".geolocret").slideUp();
     $('ul.ui-autocomplete').empty();
   }
 
@@ -320,6 +315,7 @@ $(document).ready(function() {
      success:
      function(html){
        $("#recentResults").empty();
+       $("#recentResults").removeClass("hidden");
 
        for(i=0;i<html.to.length; i++){
          var ddt = setNewDate(html.to[i].ddt);
@@ -347,6 +343,29 @@ $(document).ready(function() {
 
     return false;
   });
+
+  //------------------------- change background images on tap of buttons in flight index search by
+  $("#lowestFares").mousedown(function() {
+    $(this).css("background","url('/images/tap-lowfare.png') no-repeat");
+    $(this).css("width","144px");
+    $(this).css("height","41px");
+  });
+  $("#lowestFares").mouseup(function() {
+    $(this).css("background","url('/images/searchBtn.jpg') no-repeat");
+    $(this).css("width","141px");
+    $(this).css("height","38px");
+  });
+
+  $("#exactDates").mousedown(function() {
+    $(this).css("background","url('/images/tap-exactdate.png') no-repeat");
+    $(this).css("width","144px");
+    $(this).css("height","41px");
+  });
+  $("#exactDates").mouseup(function() {
+    $(this).css("background","url('/images/searchBtn.jpg') 0 -38px no-repeat");
+    $(this).css("width","141px");
+    $(this).css("height","38px");
+  });
 });
 
 // Calendar-specific functions - START
@@ -361,7 +380,7 @@ function tagDepart(targetDate) {
 }
 
 function tagReturn(targetDate) {
-  // console.log("In RET search...");
+  console.log(Date.parse(rp_source));
   if (Date.parse(rp_source) == Date.parse(targetDate)){
     return [true, 'dDate'];
   } else {
