@@ -179,7 +179,11 @@ $(document).ready(function() {
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
       defaultDate: 0,
-      beforeShowDay: tagReturn,
+      beforeShow: function(input, inst) {
+        console.log(input);
+        console.log(inst);
+      },
+      //beforeShowDay: tagReturn,
       onSelect: function(dateText, inst) {
         $("#dpDay_c").text(dateText.split("/")[1]);
         $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
@@ -197,7 +201,11 @@ $(document).ready(function() {
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
       defaultDate: 1,
-      beforeShowDay: tagDepart,
+      //beforeShowDay: tagDepart,
+      beforeShow: function(input, inst) {
+        console.log(input);
+        console.log(inst);
+      },
       onSelect: function(dateText, inst) {
         $("#rpDay_c").text(dateText.split("/")[1]);
         $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
@@ -244,8 +252,8 @@ $(document).ready(function() {
      select:function(event, ui){
        $("#search_from_hidden").val(ui.item.value);
        str = ui.item.value.toString();
-       $("#flightIndex #origin_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
-       $("#flightIndex #origin_city").text(str.substring(0, str.indexOf("(")));
+       $("#flightIndex #origin_short").text(str.substring(str.lastIndexOf("(")+1, str.length -1 ));
+       $("#flightIndex #origin_city").text(str.substring(0, str.lastIndexOf("(")));
 
        $("#flightIndex #dest_short").text("");
        $("#flightIndex #dest_city").html("Choose your<br />destination");
@@ -269,21 +277,23 @@ $(document).ready(function() {
      },
 
      open: function(event, ui) {
-       console.log(event);
-       console.log(ui);
        $(".geoneararea").hide();
        $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstFrom').show();
        $.each($("#airportLstFrom a"), function() {
          str = $(this).text();
-         $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.substring(0, str.indexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.indexOf("(")+1, str.length -1) +"</span>"  + "</a>");
+         $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span>"  + "</a>");
        });
        $(".selectClosestAirport").click(function(e){
          e.preventDefault();
-         $("#search_from_hidden").val($(this).html());
+         console.log($(this).children()[0]);
+         ap =  $($(this).children()[0]).text()
+         ap += " (" +  $($(this).children()[1]).text() + ")";
+         $("#search_from_hidden").val(ap);
          $.mobile.changePage("#flightIndex");
+         $("#origin_short").html($($(this).children()[1]).text());
+         $("#origin_city").html($($(this).children()[0]).text());
        });
-       $("#origin_short").html(str.substring(str.indexOf("(")+1, str.length -1));
-       $("#origin_city").html(str.substring(0, str.indexOf("(")-1));
+
 
        $(".searchHeaderbox").slideUp();
      },
@@ -300,8 +310,8 @@ $(document).ready(function() {
     select:function(event, ui){
       $("#search_to_hidden").val(ui.item.value);
        str = ui.item.value.toString();
-       $("#flightIndex #dest_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
-       $("#flightIndex #dest_city").text(str.substring(0, str.indexOf("(")));
+       $("#flightIndex #dest_short").text(str.substring(str.lastIndexOf("(")+1, str.length -1 ));
+       $("#flightIndex #dest_city").text(str.substring(0, str.lastIndexOf("(")));
        $.mobile.changePage("#flightIndex");
   
        $("#originToDest").text($("#flightIndex #origin_short").text() + " to " + $("#flightIndex #dest_short").text());
@@ -313,15 +323,19 @@ $(document).ready(function() {
       $(".searchHeaderbox").hide();
       $.each($("#airportLstTo a"), function() {
          str = $(this).text();
-         $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.substring(0, str.indexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.indexOf("(")+1, str.length -1) +"</span>"  + "</a>");
+         $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span>"  + "</a>");
       });
       $(".selectClosestAirport").click(function(e){
         e.preventDefault();
-        $("#search_to_hidden").val($(this).html());
+        console.log($($(this).children()[0]));
+        ap =  $($(this).children()[0]).text();
+        ap += " (" +  $($(this).children()[1]).text() + ")";
+        $("#search_from_hidden").val(ap);
         $.mobile.changePage("#flightIndex");
+        $("#dest_short").html($($(this).children()[1]).text());
+        $("#dest_city").html($($(this).children()[0]).text());
+        
       });
-      $("#dest_short").html(str.substring(str.indexOf("(")+1, str.length -1));
-       $("#dest_city").html(str.substring(0, str.indexOf("(")-1));
     },
     close:function(event,ui){
       $("#airportLstTxt").show();
@@ -450,6 +464,15 @@ function tagReturn(targetDate) {
   } else {
     return [true, ''];
   }
+}
+function tagReturnHighlight(input, inst) {
+  console.log(input);
+  console.log(inst);
+  // if (Date.parse(rp_source) == Date.parse(targetDate)){
+  //     return [true, 'dDate'];
+  //   } else {
+  //     return [true, ''];
+  //   }
 }
 // Calendar-specific functions - END
 
