@@ -348,7 +348,7 @@ function tagDepart(targetDate) {
 }
 
 function tagReturn(targetDate) {
-  // console.log("In RET search...");
+  console.log(Date.parse(rp_source));
   if (Date.parse(rp_source) == Date.parse(targetDate)){
     return [true, 'dDate'];
   } else {
