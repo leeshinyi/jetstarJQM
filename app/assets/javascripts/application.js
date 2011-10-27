@@ -18,6 +18,10 @@ $(document).bind("mobileinit", function(){
   //   });
 });
 
+$("#calLink").bind("tap", function(event, ui){
+ $("#calLink").addClass("caltap");
+});
+
 $(document).ready(function() {
   $(".dpMN").text(getMonthName(new Date()));
   $(".dpWD").text(getWeekDay(new Date()));
