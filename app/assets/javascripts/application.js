@@ -41,6 +41,7 @@ $(document).ready(function() {
     $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
   });
 
+
   // Passenger area handling
 
    // $("#adults").bind("change", function() {
@@ -374,6 +375,25 @@ function findClosestAirport(lat, lng, fromto){
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
         }
+        
+          if($("#search_from_hidden").val()==""){
+            $("#search_from_hidden").val(data[0].a.split(";")[1] + " (" + data[0].a.split(";")[0] +")");
+            $.ajax({
+               url: "/flight/findDestinationAirports",
+               data: "o=" + $("#search_from_hidden").val(),
+               type: "GET",
+               success:function(d){
+                 item = []
+                 for(i=0; i<d.length; i++){
+                   item.push(d[i][0]);
+                 }
+                 //destination_airports = d;
+                 $('ul.ui-autocomplete').empty();
+                 $('#search_to').autocomplete("option", { source: item });
+               }
+            });
+          }
+        
           if(fromto == "from"){
             $("#origin_short").html(data[0].a.split(";")[0] );
             $("#origin_city").html(data[0].a.split(";")[1]);
@@ -398,11 +418,30 @@ function findClosestAirport(lat, lng, fromto){
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
             // console.log(data[i])
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' >" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' ><span style='font-weight:bold !important'>" + data[i].a.split(";")[1] + " </span><span class='upper right'>" + data[i].a.split(";")[0] +"</span>"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
         }
+        
+          if($("#search_from_hidden").val()==""){
+            $("#search_from_hidden").val(data[0].a.split(";")[1] + " (" + data[0].a.split(";")[0] +")");
+            $.ajax({
+               url: "/flight/findDestinationAirports",
+               data: "o=" + $("#search_from_hidden").val(),
+               type: "GET",
+               success:function(d){
+                 item = []
+                 for(i=0; i<d.length; i++){
+                   item.push(d[i][0]);
+                 }
+                 //destination_airports = d;
+                 $('ul.ui-autocomplete').empty();
+                 $('#search_to').autocomplete("option", { source: item });
+               }
+            });
+          }
+        
           if(fromto == "from"){
             $("#origin_short").html(data[0].a.split(";")[0] );
             $("#origin_city").html(data[0].a.split(";")[1]);
