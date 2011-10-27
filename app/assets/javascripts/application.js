@@ -358,29 +358,38 @@ $(document).ready(function() {
      success:
      function(html){
        $("#recentResults").empty();
-       $("#recentResults").removeClass("hidden");
-
-       for(i=0;i<html.to.length; i++){
-         var ddt = setNewDate(html.to[i].ddt);
-         var adt = setNewDate(html.to[i].adt);
-         var top = (i==0) ? "topradius" : "";
-         var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
-         $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.to[i].ddt.substring(11,16) + "<br/>ARR " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
+       if(html.from.length!=0 || html.to.length!=0){
+         $("#recentResults").removeClass("hidden");
+       }else{
+         $("#recentResults").addClass("hidden");
+       }
+       
+       if(html.to.length!=0){
+         for(i=0;i<html.to.length; i++){
+           var ddt = setNewDate(html.to[i].ddt);
+           var adt = setNewDate(html.to[i].adt);
+           var top = (i==0) ? "topradius" : "";
+           var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
+           $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.to[i].ddt.substring(11,16) + "<br/>ARR " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
+         }
        }
 
-       for(i=0;i<html.from.length; i++){
-         var ddt = setNewDate(html.from[i].ddt);
-         var adt = setNewDate(html.from[i].adt);
-         var top = (html.to.length==0 && i==html.from.length-1) ? "topradius" : "";
-         var bottom = (i==html.from.length-1) ? "bottomradius" : "";
-         $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + html.to[i].aa + "-" + html.to[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.from[i].ddt.substring(11,16) + "<br/>ARR " + html.from[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
+        if(html.from!=0){
+          for(i=0;i<html.from.length; i++){
+            var ddt = setNewDate(html.from[i].ddt);
+            var adt = setNewDate(html.from[i].adt);
+            var top = (html.to.length==0 && i==0) ? "topradius" : "";
+            var bottom = (i==html.from.length-1) ? "bottomradius" : "";
+            $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + html.from[i].da + "-" + html.from[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.from[i].ddt.substring(11,16) + "<br/>ARR " + html.from[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
+           }
         }
-        if ((html.to.length <= 0) || (html.from.length <= 0)) {
-          //$("#recentResults").text(" No flight schedule found.");
-        } else {
-          $("#recentResults").removeClass("hidden");
-          $("#recentResults").show();
-        }
+
+        // if ((html.to.length <= 0) || (html.from.length <= 0)) {          
+        //   //$("#recentResults").text(" No flight schedule found.");
+        // } else {
+        //   $("#recentResults").removeClass("hidden");
+        //   $("#recentResults").show();
+        // }
       }
     });
 
@@ -402,7 +411,7 @@ function tagDepart(targetDate) {
 }
 
 function tagReturn(targetDate) {
-  console.log(Date.parse(rp_source));
+  // console.log(Date.parse(rp_source));
   if (Date.parse(rp_source) == Date.parse(targetDate)){
     return [true, 'dDate'];
   } else {
