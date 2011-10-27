@@ -219,7 +219,7 @@ $(document).ready(function() {
         $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
         $("#rpSource_c").html(dateText);
         $("#datepickerD").datepicker({
-          maxDate: format_date('return', r_date, 'min');
+          maxDate: format_date('return', r_date, 'min')
         });
         rp_source = dateText;
         r_date = dateText;
