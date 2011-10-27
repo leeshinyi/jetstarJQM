@@ -375,6 +375,25 @@ function findClosestAirport(lat, lng, fromto){
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
         }
+        
+          if($("#search_from_hidden").val()==""){
+            $("#search_from_hidden").val(data[0].a.split(";")[1] + " (" + data[0].a.split(";")[0] +")");
+            $.ajax({
+               url: "/flight/findDestinationAirports",
+               data: "o=" + $("#search_from_hidden").val(),
+               type: "GET",
+               success:function(d){
+                 item = []
+                 for(i=0; i<d.length; i++){
+                   item.push(d[i][0]);
+                 }
+                 //destination_airports = d;
+                 $('ul.ui-autocomplete').empty();
+                 $('#search_to').autocomplete("option", { source: item });
+               }
+            });
+          }
+        
           if(fromto == "from"){
             $("#origin_short").html(data[0].a.split(";")[0] );
             $("#origin_city").html(data[0].a.split(";")[1]);
@@ -404,6 +423,25 @@ function findClosestAirport(lat, lng, fromto){
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
         }
+        
+          if($("#search_from_hidden").val()==""){
+            $("#search_from_hidden").val(data[0].a.split(";")[1] + " (" + data[0].a.split(";")[0] +")");
+            $.ajax({
+               url: "/flight/findDestinationAirports",
+               data: "o=" + $("#search_from_hidden").val(),
+               type: "GET",
+               success:function(d){
+                 item = []
+                 for(i=0; i<d.length; i++){
+                   item.push(d[i][0]);
+                 }
+                 //destination_airports = d;
+                 $('ul.ui-autocomplete').empty();
+                 $('#search_to').autocomplete("option", { source: item });
+               }
+            });
+          }
+        
           if(fromto == "from"){
             $("#origin_short").html(data[0].a.split(";")[0] );
             $("#origin_city").html(data[0].a.split(";")[1]);
