@@ -18,9 +18,7 @@ $(document).bind("mobileinit", function(){
   //   });
 });
 
-$("#calLink").bind("tap", function(event, ui){
- $("#calLink").addClass("caltap");
-});
+
 
 $(document).ready(function() {
   $(".dpMN").text(getMonthName(new Date()));
@@ -45,7 +43,10 @@ $(document).ready(function() {
     $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
   });
 
-
+  $("#calLink").live("tap", function(event){
+   $("#drWrap").css("border", "none");
+   $("#calLink").css("background-image", "url('../images/tap-cal.png')");
+  });
   // Passenger area handling
 
    // $("#adults").bind("change", function() {

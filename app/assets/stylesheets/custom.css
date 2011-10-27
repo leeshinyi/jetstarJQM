@@ -729,6 +729,8 @@ span.ret {
 a#calLink {
   text-decoration:none;
   color:#000;
+  display:block;
+  height:77px;
 }
 .tapable {
   border:2px solid #fff;
@@ -1164,4 +1166,8 @@ input.ui-input-text, textarea.ui-input-text {
 #uipv_content_infants{
     position:relative;
     top:-13px
+}
+.caltap {
+  background: transparent url("tap-cal.png") no-repeat !important;
+  height:79px !important;
 }
