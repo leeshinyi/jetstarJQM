@@ -54,7 +54,7 @@ class FlightController < ApplicationController
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["wrapper"]["results"].each do |airport|
       if airport.class == Hash
-        airports << {:a => "#{airport["iataCode"]}; #{airport["name"].gusb(/[\(\)]/, '')}"}
+        airports << {:a => "#{airport["iataCode"]}; #{airport["name"].gsub(/[\(\)]/, '')}"}
       else
         str = case(airport[0])
           when "name"
@@ -65,7 +65,7 @@ class FlightController < ApplicationController
       end
     end  if parsed_json["wrapper"]["results"]
     if !name.blank? && !iataCode.blank?
-      airports << {:a => "#{iataCode}; #{name.gusb(/[\(\)]/, '')};"}
+      airports << {:a => "#{iataCode}; #{name.gsub(/[\(\)]/, '')};"}
     end
 
     render :json => airports
@@ -80,7 +80,7 @@ class FlightController < ApplicationController
     }
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["wrapper"]["results"].each do |airport|
-      airports << ["#{ airport["name"].gusb(/[\(\)]/, '')} (#{airport["iataCode"]})"]
+      airports << ["#{ airport["name"].gsub(/[\(\)]/, '')} (#{airport["iataCode"]})"]
     end if parsed_json["wrapper"]["results"]
     
     airports
@@ -101,7 +101,7 @@ class FlightController < ApplicationController
     end
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["wrapper"]["results"].each do |airport|
-      airports << ["#{ airport["name"].gusb(/[\(\)]/, '')} (#{airport["iataCode"]})"]
+      airports << ["#{ airport["name"].gsub(/[\(\)]/, '')} (#{airport["iataCode"]})"]
     end if parsed_json["wrapper"]["results"]
     
     airports
