@@ -47,6 +47,40 @@ $(document).ready(function() {
    $("#drWrap").css("border", "none");
    $("#calLink").css("background-image", "url('../images/tap-cal.png')");
   });
+  $("#lowestFares").live("tap", function(event){
+    $("#lowestFares").css("background-image", "url('../images/tap-lowfare.png')");
+  });
+  $("#exactDates").live("tap", function(event){
+    $("#exactDates").css("background", "url('../images/tap-exactdate.png')");
+  });
+  $("#retFlightNav").live("tap", function(event){
+    $("#retFlightNav").css("color", "#fff");
+    $("#retFlightNav").css("background", "url('../images/tab-tap.png')")    
+  });
+  //------------------------- change background images on tap of buttons in flight index search by
+  $("#lowestFares").mousedown(function() {
+    $(this).css("background","url('../images/tap-lowfare.png') no-repeat");
+    $(this).css("width","144px");
+    $(this).css("height","41px");
+  });
+  $("#lowestFares").mouseup(function() {
+    $(this).css("background","url('../images/searchBtn.jpg') no-repeat");
+    $(this).css("width","141px");
+    $(this).css("height","38px");
+  });
+
+  $("#exactDates").mousedown(function() {
+    $(this).css("background","url('../images/tap-exactdate.png') no-repeat");
+    $(this).css("width","144px");
+    $(this).css("height","41px");
+  });
+  $("#exactDates").mouseup(function() {
+    $(this).css("background","url('../images/searchBtn.jpg') 0 -38px no-repeat");
+    $(this).css("width","141px");
+    $(this).css("height","38px");
+  });
+  
+  
   // Passenger area handling
 
    // $("#adults").bind("change", function() {
@@ -119,7 +153,16 @@ $(document).ready(function() {
 
     $("#rpDate").html($("#rpDate_c").html());
     $("#rpDay").text($("#rpDay_c").text());
+    
+    //Change the background of origin to destination back to original
+    $("#drWrap").css("border", "1px solid #d5d5d5");
+    $("#calLink").css("background-image", "none");
   })
+  
+  $("#cancelFrmCal").click(function (){
+    $("#drWrap").css("border", "1px solid #d5d5d5");
+    $("#calLink").css("background-image", "none");
+  });
 
 
   // Calendar Functionality - START
@@ -344,28 +387,7 @@ $(document).ready(function() {
     return false;
   });
 
-  //------------------------- change background images on tap of buttons in flight index search by
-  $("#lowestFares").mousedown(function() {
-    $(this).css("background","url('/images/tap-lowfare.png') no-repeat");
-    $(this).css("width","144px");
-    $(this).css("height","41px");
-  });
-  $("#lowestFares").mouseup(function() {
-    $(this).css("background","url('/images/searchBtn.jpg') no-repeat");
-    $(this).css("width","141px");
-    $(this).css("height","38px");
-  });
-
-  $("#exactDates").mousedown(function() {
-    $(this).css("background","url('/images/tap-exactdate.png') no-repeat");
-    $(this).css("width","144px");
-    $(this).css("height","41px");
-  });
-  $("#exactDates").mouseup(function() {
-    $(this).css("background","url('/images/searchBtn.jpg') 0 -38px no-repeat");
-    $(this).css("width","141px");
-    $(this).css("height","38px");
-  });
+  
 });
 
 // Calendar-specific functions - START
