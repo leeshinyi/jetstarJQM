@@ -85,8 +85,8 @@ table.ui-datepicker-calendar tbody tr td span
   display: block !important;
   text-align: center;
   width: auto !important;
-  height: 28px !important;
-  line-height: 30px;
+  height: 23px !important;
+  line-height: 25px;
   font-weight: bold !important;
   text-shadow: 1px 1px #eeeeee;
   -webkit-tap-highlight-color: #b8d4fb;
