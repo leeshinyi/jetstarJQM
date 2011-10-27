@@ -104,10 +104,11 @@ class FlightController < ApplicationController
       airports << ["#{ airport["name"].gsub(/[\(\)]/, '')} (#{airport["iataCode"]})"]
     end if parsed_json["wrapper"]["results"]
     
-    airports
+    
     if request.xhr?
       render :json => airports
     end
+    airports
   end
     
   def findFlights
