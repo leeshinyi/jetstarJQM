@@ -11,11 +11,12 @@
 var dp_source = $("#dpSource").html();
 var rp_source = $("#rpSource").html();
 
-// $(document).bind("mobileinit", function(){
-//   $.extend($.mobile, {
-//     metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
-//   });
-// });
+$(document).bind("mobileinit", function(){
+  // $.mobile.defaultPageTransition = 'none';
+  // $.extend($.mobile, {
+  //     metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
+  //   });
+});
 
 $(document).ready(function() {
   $(".dpMN").text(getMonthName(new Date()));
@@ -42,19 +43,19 @@ $(document).ready(function() {
 
   // Passenger area handling
 
-   $("#adults").bind("change", function() {
-     var a = $('#adults').val();
-     console.log(a);
-     if(a >= 2){
-        for (var i = 5; i < 10; i++){
-            $("#uipv_ul_child").append('<li id="uipv_ul_child_'+i+'" value="'+i+'" style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">'+ i + '</li>');
-        }
-     }
-     else
-      for (var i = 5; i < 10; i++){
-            $("ul#uipv_ul_child li#uipv_ul_child_"+i).remove();
-        }
-   });
+   // $("#adults").bind("change", function() {
+   //   var a = $('#adults').val();
+   //   console.log(a);
+   //   if(a >= 2){
+   //      for (var i = 5; i < 10; i++){
+   //          $("#uipv_ul_child").append('<li id="uipv_ul_child_'+i+'" value="'+i+'" style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">'+ i + '</li>');
+   //      }
+   //   }
+   //   else
+   //    for (var i = 5; i < 10; i++){
+   //          $("ul#uipv_ul_child li#uipv_ul_child_"+i).remove();
+   //      }
+   // });
 
    $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
@@ -312,20 +313,10 @@ $(document).ready(function() {
        $("#recentResults").empty();
 
        for(i=0;i<html.to.length; i++){
-         console.log(html.to[i].ddt);
-         console.log(setNewDate(html.to[i].ddt));
-         // console.log("SUBSTRING" + html.to[i].ddt.substring(0,10));
-         // console.log("AA" + new Date(html.to[i].ddt));
-         // console.log("BB" + new Date(html.to[i].ddt.substring(0,9)));
-         // console.log("honeylet!" + getWeekDay(new Date(html.to[i].ddt.substring(0,9))));
-
-         // var ddt = new Date(html.to[i].ddt);
-         // var adt = new Date(html.to[i].adt);
          var ddt = setNewDate(html.to[i].ddt);
          var adt = setNewDate(html.to[i].adt);
          var top = (i==0) ? "topradius" : "";
          var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
-
          $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + html.to[i].da + "-" + html.to[i].aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.to[i].ddt.substring(11,16) + "<br/>ARR " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
        }
 
@@ -334,10 +325,12 @@ $(document).ready(function() {
          var adt = setNewDate(html.from[i].adt);
          var top = (html.to.length==0 && i==html.from.length-1) ? "topradius" : "";
          var bottom = (i==html.from.length-1) ? "bottomradius" : "";
-
          $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + html.to[i].aa + "-" + html.to[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.from[i].ddt.substring(11,16) + "<br/>ARR " + html.from[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
         }
-     }
+        if ((html.to.length <= 0) || (html.from.length <= 0)) {
+          $("#recentResults").text(" No flight schedule found.");
+        }
+      }
     });
 
     return false;

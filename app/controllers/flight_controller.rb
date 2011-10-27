@@ -112,14 +112,7 @@ class FlightController < ApplicationController
   def findFlights
     @flights = []
     @return_flights = []
-    #session[:depart] ||= Date.today.strftime("%m/%d/%Y")
-    #session[:return] ||= (Date.today + 1).strftime("%m/%d/%Y")
-    
-    #if session[:origin] && session[:dest]
-      #session[:adults] ||= 0
-      #o = session[:origin][-4..-2]
-      #d = session[:dest][-4..-2]
-      #{"f"=>"ADL", "t"=>"SYD", "d"=>"10/25/2011", "a"=>"10/26/2011", "c"=>"0", "i"=>"0", "p"=>"1"}
+
       date = params[:d].split('/')
       rDate = "#{date[2]}#{date[0]}#{date[1]}"
 
