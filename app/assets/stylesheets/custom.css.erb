@@ -198,6 +198,20 @@ only screen and (min-device-pixel-ratio: 1.5) {
     -moz-border-radius-topleft:10px;
     -moz-border-radius-topright:10px;
   }
+  .tnav-tap {
+    height:33px;
+    display:block;
+    color:#000;
+    font-size:15px;
+    text-decoration:none;
+    line-height:33px;
+    background-color: #29a8e8;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#59c6ff), to(#0290d5), color-stop(.5,#29a8e8));
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    -moz-border-radius-topleft:10px;
+    -moz-border-radius-topright:10px;
+  }
   #main ul#flightNav li a.current {
     color:#ffffff;
     background-color: #FF4500;
@@ -472,7 +486,6 @@ only screen and (min-device-pixel-ratio: 1.5) {
     font-size: 13px;
     line-height: 0;
     width: 100%;
-    text-align:center;
   }
   .ui-autocomplete .ui-menu-item a, .ui-autocomplete2 .ui-menu-item a {
     font-family: arial;
@@ -730,7 +743,7 @@ a#calLink {
   color:#000;
   display:block;
   height:77px;
-/*  -webkit-tap-highlight-color: #b8d4fb;*/
+  /*-webkit-tap-highlight-color: #b8d4fb;*/
 }
 .caltap {
   background: transparent url("tap-cal.png") no-repeat !important;
@@ -1007,7 +1020,7 @@ input.ui-input-text, textarea.ui-input-text {
   float: left;
   height: 18px;
   padding: 7px 28px 7px 6px !important;
-  min-width:53% !important;
+  min-width:52% !important;
   width:0 !important;
 }
 #flightSearchFrom .ui-content, #flightSearchTo .ui-content {
@@ -1180,3 +1193,4 @@ input.ui-input-text, textarea.ui-input-text {
   -webkit-tap-highlight-color: #b8d4fb;
 }
 
+#ffDest {max-width:88%;}
