@@ -180,3 +180,8 @@ table.ui-datepicker-calendar tbody tr td span
 tr td.dDate a {
   background: #808080 !important;
 }
+
+/* Override for Departure and Return Tabs */
+#dpDay, #rpDay, #dpDay_c, #rpDay_c {
+  font-size: 35px;
+}
