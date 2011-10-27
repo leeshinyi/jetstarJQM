@@ -41,6 +41,7 @@ $(document).ready(function() {
     $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
   });
 
+
   // Passenger area handling
 
    // $("#adults").bind("change", function() {
