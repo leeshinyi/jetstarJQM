@@ -59,6 +59,7 @@ $(document).ready(function() {
   $("#retFlightNav").live("tap", function(event){
     $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
   });
+  
   //------------------------- change background images on tap of buttons in flight index search by
   $("#lowestFares").mousedown(function() {
     $(this).css("background","url('/assets/tap-lowfare.png') no-repeat");
@@ -168,7 +169,6 @@ $(document).ready(function() {
     $("#calLink").css("background-color", "transparent");
     $("#calLink").css("border-radius", "0");
   });
-
 
   // Calendar Functionality - START
   // NOTE: check tagDepart() and tagReturn() on how these integrates
@@ -406,7 +406,11 @@ $(document).ready(function() {
     $(".geolocationHeaderclass").text("Airports nearest your current location");
   });
 
-
+  if ($("#dest_short").text() == '') {
+    $("#recentResults").hide();
+    $("#downIcon").hide();
+    $("#recentSearches").append("<p>No recent searches yet.</p>");
+  }  
 
   $("#exactDates, #lowestFares").click(function(event) {
     event.preventDefault();
@@ -423,6 +427,10 @@ $(document).ready(function() {
        }else{
          $("#recentResults").addClass("hidden");
        }
+
+       $("#recentResults").show();
+       $("#downIcon").show();
+       $("#recentSearches p").remove();       
        
        if(html.to.length!=0){
          for(i=0;i<html.to.length; i++){
@@ -460,6 +468,17 @@ $(document).ready(function() {
     });
 
     return false;
+  });
+
+  $("#downIcon").click(function() {
+    if ($("#recentResults").is(":hidden")) {
+      $("#recentResults").slideDown();
+      $(this).css("background","url('../images/upIcon.jpg') no-repeat 0 4px");
+    }
+    else {
+      $("#recentResults").slideUp();
+      $(this).css("background","url('../images/downIcon.jpg') no-repeat 0 4px");
+    }
   });
 
   
