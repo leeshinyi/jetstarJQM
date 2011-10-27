@@ -18,6 +18,10 @@ $(document).bind("mobileinit", function(){
   //   });
 });
 
+$("#calLink").bind("tap", function(event, ui){
+ $("#calLink").addClass("caltap");
+});
+
 $(document).ready(function() {
   $(".dpMN").text(getMonthName(new Date()));
   $(".dpWD").text(getWeekDay(new Date()));
@@ -226,31 +230,35 @@ $(document).ready(function() {
      }
    });
 
-
-
-  $('#search_to').autocomplete({
-    source: destination_airports,
-    minLength: 1,
-    select:function(event, ui){
-      $("#search_to_hidden").val(ui.item.value);
-       str = ui.item.value.toString();
-       $("#flightIndex #dest_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
-       $("#flightIndex #dest_city").text(str.substring(0, str.indexOf("(")));
-       $.mobile.changePage("#flightIndex");
-
-       $("#originToDest").text($("#flightIndex #origin_short").text() + " to " + $("#flightIndex #dest_short").text());
-       $("#destToOrgin").text($("#flightIndex #dest_short").text() + " to " + $("#flightIndex #origin_short").text())
-    },
-    open: function(event, ui) {
-      $(".geoneararea").hide();
-      $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstTo').show();
-      $(".searchHeaderbox").hide();
-    },
-    close:function(event,ui){
-      $("#airportLstTxt").show();
-      $("ul.ui-autocomplete").show();
-    }
+   $('#search_to').autocomplete({
+     source: destination_airports,
+     minLength: 1,
+     appendTo: $("#airportLstTo")
   });
+
+  // $('#search_to').autocomplete({
+  //   source: destination_airports,
+  //   minLength: 1,
+  //   select:function(event, ui){
+  //     $("#search_to_hidden").val(ui.item.value);
+  //      str = ui.item.value.toString();
+  //      $("#flightIndex #dest_short").text(str.substring(str.indexOf("(")+1, str.length -1 ));
+  //      $("#flightIndex #dest_city").text(str.substring(0, str.indexOf("(")));
+  //      $.mobile.changePage("#flightIndex");
+  // 
+  //      $("#originToDest").text($("#flightIndex #origin_short").text() + " to " + $("#flightIndex #dest_short").text());
+  //      $("#destToOrgin").text($("#flightIndex #dest_short").text() + " to " + $("#flightIndex #origin_short").text())
+  //   },
+  //   open: function(event, ui) {
+  //     $(".geoneararea").hide();
+  //     $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstTo').show();
+  //     $(".searchHeaderbox").hide();
+  //   },
+  //   close:function(event,ui){
+  //     $("#airportLstTxt").show();
+  //     $("ul.ui-autocomplete").show();
+  //   }
+  // });
 
   function clearsearchfields (){
     $(".searchField").val("");
