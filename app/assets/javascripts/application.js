@@ -18,6 +18,10 @@ $(document).bind("mobileinit", function(){
   //   });
 });
 
+$("#calLink").bind("tap", function(event, ui){
+ $("#calLink").addClass("caltap");
+});
+
 $(document).ready(function() {
   $(".dpMN").text(getMonthName(new Date()));
   $(".dpWD").text(getWeekDay(new Date()));
@@ -256,7 +260,7 @@ $(document).ready(function() {
     $(".geoneararea").slideDown();
     $(".searchResults").css("margin-top","0");
     $(".searchHeaderbox").show();
-    $(".geolocret").slideDown();
+    $(".geolocret").slideUp();
     $('ul.ui-autocomplete').empty();
   }
 
@@ -310,6 +314,7 @@ $(document).ready(function() {
      success:
      function(html){
        $("#recentResults").empty();
+       $("#recentResults").removeClass("hidden");
 
        for(i=0;i<html.to.length; i++){
          var ddt = setNewDate(html.to[i].ddt);
@@ -351,7 +356,7 @@ function tagDepart(targetDate) {
 }
 
 function tagReturn(targetDate) {
-  // console.log("In RET search...");
+  console.log(Date.parse(rp_source));
   if (Date.parse(rp_source) == Date.parse(targetDate)){
     return [true, 'dDate'];
   } else {
