@@ -271,10 +271,11 @@ $(document).ready(function() {
   $(".clearSearchbox").click(clearsearchfields);
 
   $(".searchField").focus(function(){
-    $(".geoneararea").hide();
+
     $(".searchField").keypress(function() {
         $(".searchHeaderbox").hide();
     });
+        $(".geoneararea").hide();
   });
   
   
@@ -327,7 +328,10 @@ $(document).ready(function() {
          $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + html.to[i].aa + "-" + html.to[i].da + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.from[i].ddt.substring(11,16) + "<br/>ARR " + html.from[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
         }
         if ((html.to.length <= 0) || (html.from.length <= 0)) {
-          $("#recentResults").text(" No flight schedule found.");
+          //$("#recentResults").text(" No flight schedule found.");
+        } else {
+          $("#recentResults").removeClass("hidden");
+          $("#recentResults").show();
         }
       }
     });
