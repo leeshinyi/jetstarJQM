@@ -220,6 +220,7 @@ $(document).ready(function() {
         $("#rpSource_c").html(dateText);
         $("#datepickerD").datepicker({
           maxDate: format_date('return', r_date, 'min')
+
         });
         rp_source = dateText;
         r_date = dateText;
