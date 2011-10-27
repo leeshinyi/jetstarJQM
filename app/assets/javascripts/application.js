@@ -41,6 +41,7 @@ $(document).ready(function() {
     $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
   });
 
+
   // Passenger area handling
 
    // $("#adults").bind("change", function() {
@@ -256,7 +257,7 @@ $(document).ready(function() {
     $(".geoneararea").slideDown();
     $(".searchResults").css("margin-top","0");
     $(".searchHeaderbox").show();
-    $(".geolocret").hide();
+    $(".geolocret").slideDown();
     $('ul.ui-autocomplete').empty();
   }
 
@@ -271,11 +272,10 @@ $(document).ready(function() {
   $(".clearSearchbox").click(clearsearchfields);
 
   $(".searchField").focus(function(){
-
+    $(".geoneararea").slideUp();
     $(".searchField").keypress(function() {
-        $(".searchHeaderbox").hide();
+        $(".searchHeaderbox").slideUp();
     });
-        $(".geoneararea").hide();
   });
   
   
@@ -370,7 +370,7 @@ function findClosestAirport(lat, lng, fromto){
         if ($(".geoneararea").length) {
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' >" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' ><span style='font-weight:bold !important'>" + data[i].a.split(";")[1] + " </span><span class='upper right'>" + data[i].a.split(";")[0] +"</span>"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
@@ -418,7 +418,7 @@ function findClosestAirport(lat, lng, fromto){
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
             // console.log(data[i])
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' >" + data[i].a.split(";")[1] + " (" + data[i].a.split(";")[0] +")"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' ><span style='font-weight:bold !important'>" + data[i].a.split(";")[1] + " </span><span class='upper right'>" + data[i].a.split(";")[0] +"</span>"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");

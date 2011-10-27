@@ -41,6 +41,7 @@ class FlightController < ApplicationController
   end
   
   def findClosestAirports
+    #{"altitude":-1,"city":"Tokyo","country":"Japan","countryCode":"JP","daylightSaving":78,"iataCode":"NRT","icaoCode":"NRT","latitude":-1,"longitude":-1,"name":"Tokyo (Narita Airport)","origin":true,"timeZoneOffset":-1}
     url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/airports/near/#{params[:lat]}/#{params[:lng]}/100")
     req = Net::HTTP::Get.new(url.path)
     res = Net::HTTP.start(url.host, url.port) {|http|
@@ -53,7 +54,7 @@ class FlightController < ApplicationController
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["wrapper"]["results"].each do |airport|
       if airport.class == Hash
-        airports << {:a => "#{airport["iataCode"]}; #{(airport["name"].index("("))?  airport["name"][0..airport["name"].index("(")-1] : airport["name"]}"}
+        airports << {:a => "#{airport["iataCode"]}; #{airport["name"].gsub(/[\(\)]/, '')}"}
       else
         str = case(airport[0])
           when "name"
@@ -64,7 +65,7 @@ class FlightController < ApplicationController
       end
     end  if parsed_json["wrapper"]["results"]
     if !name.blank? && !iataCode.blank?
-      airports << {:a => "#{iataCode};#{ (name.index("("))?  name[0..name.index("(")-1] : name};"}
+      airports << {:a => "#{iataCode}; #{name.gsub(/[\(\)]/, '')};"}
     end
 
     render :json => airports
@@ -79,7 +80,7 @@ class FlightController < ApplicationController
     }
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["wrapper"]["results"].each do |airport|
-      airports << ["#{ (airport["name"].index("("))?  airport["name"][0..airport["name"].index("(")-1] : airport["name"]} (#{airport["iataCode"]})"]
+      airports << ["#{ airport["name"].gsub(/[\(\)]/, '')} (#{airport["iataCode"]})"]
     end if parsed_json["wrapper"]["results"]
     
     airports
@@ -100,7 +101,7 @@ class FlightController < ApplicationController
     end
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["wrapper"]["results"].each do |airport|
-      airports << ["#{ (airport["name"].index("("))?  airport["name"][0..airport["name"].index("(")-1] : airport["name"]} (#{airport["iataCode"]})"]
+      airports << ["#{ airport["name"].gsub(/[\(\)]/, '')} (#{airport["iataCode"]})"]
     end if parsed_json["wrapper"]["results"]
     
     airports
