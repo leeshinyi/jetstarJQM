@@ -257,7 +257,7 @@ $(document).ready(function() {
     $(".geoneararea").slideDown();
     $(".searchResults").css("margin-top","0");
     $(".searchHeaderbox").show();
-    $(".geolocret").slideDown();
+    $(".geolocret").slideUp();
     $('ul.ui-autocomplete').empty();
   }
 
@@ -311,6 +311,7 @@ $(document).ready(function() {
      success:
      function(html){
        $("#recentResults").empty();
+       $("#recentResults").removeClass("hidden");
 
        for(i=0;i<html.to.length; i++){
          var ddt = setNewDate(html.to[i].ddt);
