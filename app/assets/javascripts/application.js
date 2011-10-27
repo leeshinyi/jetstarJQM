@@ -285,13 +285,14 @@ $(document).ready(function() {
        });
        $(".selectClosestAirport").click(function(e){
          e.preventDefault();
-         console.log($(this).children()[0]);
          ap =  $($(this).children()[0]).text()
          ap += " (" +  $($(this).children()[1]).text() + ")";
          $("#search_from_hidden").val(ap);
          $.mobile.changePage("#flightIndex");
          $("#origin_short").html($($(this).children()[1]).text());
-         $("#origin_city").html($($(this).children()[0]).text());
+         city = $($(this).children()[0]).text();
+         
+         $("#origin_city").html(city.substring(0, city.indexOf("(")-1));
        });
 
 
@@ -327,13 +328,14 @@ $(document).ready(function() {
       });
       $(".selectClosestAirport").click(function(e){
         e.preventDefault();
-        console.log($($(this).children()[0]));
         ap =  $($(this).children()[0]).text();
         ap += " (" +  $($(this).children()[1]).text() + ")";
         $("#search_from_hidden").val(ap);
         $.mobile.changePage("#flightIndex");
         $("#dest_short").html($($(this).children()[1]).text());
-        $("#dest_city").html($($(this).children()[0]).text());
+        //$("#dest_city").html($($(this).children()[0]).text());
+        city = $($(this).children()[0]).text();
+        $("#dest_city").html(city.substring(0, city.indexOf("(")-1));
         
       });
     },
