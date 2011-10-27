@@ -292,7 +292,14 @@ $(document).ready(function() {
          $("#origin_short").html($($(this).children()[1]).text());
          city = $($(this).children()[0]).text();
          
-         $("#origin_city").html(city.substring(0, city.indexOf("(")-1));
+         //$("#origin_city").html(city.substring(0, city.indexOf("(")+1));
+         city = $($(this).children()[0]).text();
+
+         if(city.lastIndexOf("(") != -1)
+            $("#origin_city").html(city.substring(0,city.lastIndexOf("(")+1));
+         else
+            $("#origin_city").html(city);
+            
        });
 
 
@@ -335,7 +342,14 @@ $(document).ready(function() {
         $("#dest_short").html($($(this).children()[1]).text());
         //$("#dest_city").html($($(this).children()[0]).text());
         city = $($(this).children()[0]).text();
-        $("#dest_city").html(city.substring(0, city.indexOf("(")-1));
+        if(city.lastIndexOf("(") != -1)
+           $("#dest_city").html(city.substring(0, city.lastIndexOf("(")-1));
+        else
+           $("#dest_city").html(city);
+           
+           
+           
+        //$("#dest_city").html(city.substring(0, city.indexOf("(")+1));
         
       });
     },
