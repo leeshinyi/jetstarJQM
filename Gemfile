@@ -22,6 +22,11 @@ gem 'sqlite3'
 gem 'rake', '0.8.7'
 gem 'execjs'
 
+gem 'jquery-rails'
+
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
+
 if HOST_OS =~ /linux/i
   gem 'therubyracer', '>= 0.8.2'
 end

@@ -183,5 +183,5 @@ tr td.dDate a {
 
 /* Override for Departure and Return Tabs */
 #dpDay, #rpDay, #dpDay_c, #rpDay_c {
-  font-size: 35px;
+  font-size: 35px !important;
 }

@@ -21,12 +21,15 @@ $(document).bind("mobileinit", function(){
 
 
 $(document).ready(function() {
+  var d1 = new Date();
+  var today = d1;
+  var d_date = parseInt(today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
+  var r_date = parseInt(today.getMonth() + 1) + "/" + parseInt(today.getDate() + 1) + "/" + today.getFullYear();
+
   $(".dpMN").text(getMonthName(new Date()));
   $(".dpWD").text(getWeekDay(new Date()));
   $("#dpDay_c, #dpDay").text(new Date().getDate());
-  var d1 = new Date();
   d1.setDate(new Date().getDate() + 1);
-  var today = new Date();
   $("#rpDay_c, #rpDay").text(d1.getDate());
   $(".rpMonth").text(getMonthName(d1));
   $(".rpWeek").text(getWeekDay(d1));
@@ -175,9 +178,12 @@ $(document).ready(function() {
   if ($("#datepickerD").length){
   //  console.log("DEPARTURE VALUE: " + rp_source);
     $( "#datepickerD" ).datepicker({
-      minDate: 0,
+      minDate: format_date('departure', d_date, 'min'),
+      maxDate: format_date('departure', r_date, 'min'),
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
+      defaultDate: format_date('departure', d_date, 'min'),
+      beforeShowDay: tagReturn,
       defaultDate: 0,
       beforeShow: function(input, inst) {
         console.log(input);
@@ -188,8 +194,8 @@ $(document).ready(function() {
         $("#dpDay_c").text(dateText.split("/")[1]);
         $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
         $("#dpSource_c").html(dateText);
-        $("#datepickerR").datepicker("option","minDate",$("#dpSource_c").text());
         dp_source = dateText;
+        d_date = dateText;
       }
     });
   }
@@ -197,9 +203,11 @@ $(document).ready(function() {
   if ($("#datepickerR").length) {
   //  console.log("RETURN VALUE: " + rp_source);
     $( "#datepickerR").datepicker({
-      minDate: 0,
+      minDate: format_date('return', r_date, 'min'),
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
+      defaultDate: format_date('departure', r_date, 'min'),
+      beforeShowDay: tagDepart,
       defaultDate: 1,
       //beforeShowDay: tagDepart,
       beforeShow: function(input, inst) {
@@ -210,7 +218,12 @@ $(document).ready(function() {
         $("#rpDay_c").text(dateText.split("/")[1]);
         $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
         $("#rpSource_c").html(dateText);
+        $("#datepickerD").datepicker({
+          maxDate: format_date('return', r_date, 'min')
+
+        });
         rp_source = dateText;
+        r_date = dateText;
       }
     });
   }
@@ -666,4 +679,37 @@ function setNewDate(date){
   now.setMonth(date.substring(5,7)-1);
   now.setDate(date.substring(8,10));
   return now
+}
+
+function format_date(datepicker, date, min_max) {
+  var m_re = /^\d\//
+  var d_re = /\/\d\//
+  var D = date
+  
+  if(m_re.test(date)) {
+    n = m_re.exec(date).toString().replace(/\//g, '')
+    if(n < 10) {
+      D = date.replace(m_re, '0' + n + '/')
+    }  
+  }
+
+  if(d_re.test(date)) {
+    n = d_re.exec(date).toString().replace(/\//g, '')
+    if(datepicker == "departure") {
+      if(min_max == "min") { 
+      } else {
+        n = n - 1
+      }
+    // datepicker == "return" 
+    } else { 
+      if(min_max == "min") {
+        n = n + 1
+      } else {
+      }
+    }
+    if(n < 10) {
+      D = D.replace(d_re, '/0' + n + '/')
+    }  
+  }
+  return D
 }
