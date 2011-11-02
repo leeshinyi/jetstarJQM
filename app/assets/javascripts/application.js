@@ -11,6 +11,9 @@
 var dp_source = $("#dpSource").html();
 var rp_source = $("#rpSource").html();
 
+var r_date = ""
+var d_date = ""
+
 $(document).bind("mobileinit", function(){
   // $.mobile.defaultPageTransition = 'none';
   // $.extend($.mobile, {
@@ -23,21 +26,20 @@ $(document).bind("mobileinit", function(){
 $(document).ready(function() {
   var d1 = new Date();
   var today = d1;
-  var d_date = parseInt(today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
-  var r_date = parseInt(today.getMonth() + 1) + "/" + parseInt(today.getDate() + 1) + "/" + today.getFullYear();
+  d_date = parseInt(today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
+  r_date = parseInt(today.getMonth() + 1) + "/" + parseInt(today.getDate() + 1) + "/" + today.getFullYear();
 
+  d1.setDate(new Date().getDate() + 1);
   $(".dpMN").text(getMonthName(new Date()));
   $(".dpWD").text(getWeekDay(new Date()));
   $("#dpDay_c, #dpDay").text(new Date().getDate());
-  d1.setDate(new Date().getDate() + 1);
   $("#rpDay_c, #rpDay").text(d1.getDate());
   $(".rpMonth").text(getMonthName(d1));
   $(".rpWeek").text(getWeekDay(d1));
-  $("#dpSource_c").text(new Date().toDateString());
-//   $("#rpSource_c").text(new Date().toDateString());
+  $("#dpSource_c").text(today.toDateString());
   $("#rpSource_c, #rpSource").text(d1.toDateString());
-  $("#dpSource_f").text(today.getMonth()+1 + "/" + today.getDate() + "/" + today.getFullYear());
-  $("#rpSource_f").text(d1.getMonth()+1 + "/" + d1.getDate() + "/" + d1.getFullYear());
+  $("#dpSource_f").text(d_date);
+  $("#rpSource_f").text(r_date);
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
   $("input.searchField").click(function() {
@@ -48,12 +50,10 @@ $(document).ready(function() {
 
   $("#calLink").live("tap", function(event){
    $("#drWrap").css("border", "none");
-   //$("#calLink").css("background-image", "url('../images/tap-cal.png')");
    $("#calLink").css("background-color", "#58c6ff");
    $("#calLink").css("border-radius", "5px");
   });
   $("#lowestFares").live("tap", function(event){
-    //$("#lowestFares").css("background-image", "url('../images/tap-lowfare.png')");
     $("#lowestFares").css("background-image", "url('/assets/tap-lowfare.png')");
   });
   $("#exactDates").live("tap", function(event){
@@ -176,24 +176,22 @@ $(document).ready(function() {
   // Calendar Functionality - START
   // NOTE: check tagDepart() and tagReturn() on how these integrates
   if ($("#datepickerD").length){
-  //  console.log("DEPARTURE VALUE: " + rp_source);
     $( "#datepickerD" ).datepicker({
       minDate: format_date('departure', d_date, 'min'),
-      maxDate: format_date('departure', r_date, 'min'),
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
       defaultDate: format_date('departure', d_date, 'min'),
       beforeShowDay: tagReturn,
       defaultDate: 0,
-      beforeShow: function(input, inst) {
-        console.log(input);
-        console.log(inst);
-      },
-      //beforeShowDay: tagReturn,
+      
       onSelect: function(dateText, inst) {
         $("#dpDay_c").text(dateText.split("/")[1]);
         $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
         $("#dpSource_c").html(dateText);
+        x = new Date(Date.parse($("#rpSource_c").text()) + 86400000)
+        $("#rpSource_c").text("")
+        $("#datepickerR").datepicker("option","minDate",x);
+        $("#datepickerR").datepicker("option","defaultDate",x);
         dp_source = dateText;
         d_date = dateText;
       }
@@ -201,27 +199,19 @@ $(document).ready(function() {
   }
 
   if ($("#datepickerR").length) {
-  //  console.log("RETURN VALUE: " + rp_source);
     $( "#datepickerR").datepicker({
       minDate: format_date('return', r_date, 'min'),
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       firstDay: 1,
       defaultDate: format_date('departure', r_date, 'min'),
       beforeShowDay: tagDepart,
-      defaultDate: 1,
-      //beforeShowDay: tagDepart,
-      beforeShow: function(input, inst) {
-        console.log(input);
-        console.log(inst);
-      },
+      beforeShow: tagReturnHighlight,
       onSelect: function(dateText, inst) {
         $("#rpDay_c").text(dateText.split("/")[1]);
         $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
         $("#rpSource_c").html(dateText);
-        $("#datepickerD").datepicker({
-          maxDate: format_date('return', r_date, 'min')
-
-        });
+        $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
+        $("#datepickerD").datepicker("refresh")
         rp_source = dateText;
         r_date = dateText;
       }
@@ -507,7 +497,7 @@ function tagDepart(targetDate) {
 }
 
 function tagReturn(targetDate) {
-  if (Date.parse(rp_source) == Date.parse(targetDate)){
+  if (Date.parse($("#rpSource_c").text()) == Date.parse(targetDate)){
     return [true, 'dDate'];
   } else {
     return [true, ''];
@@ -681,6 +671,7 @@ function setNewDate(date){
   return now
 }
 
+// this formats the date of type m/d/yyyy to mm/dd/yyyy if m < 10 or d < 10; 9/9/9999 to 09/09/9999
 function format_date(datepicker, date, min_max) {
   var m_re = /^\d\//
   var d_re = /\/\d\//

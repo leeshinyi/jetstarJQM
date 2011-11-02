@@ -63,7 +63,7 @@ class FlightController < ApplicationController
             then iataCode = airport[1]
           end
       end
-    end  if parsed_json["wrapper"]["results"]
+    end  if parsed_json["results"]
     if !name.blank? && !iataCode.blank?
       airports << {:a => "#{iataCode}; #{name};"}
     end
@@ -79,9 +79,9 @@ class FlightController < ApplicationController
       http.request(req)
     }
     parsed_json = ActiveSupport::JSON.decode(res.body)
-    parsed_json["wrapper"]["results"].each do |airport|
+    parsed_json["results"].each do |airport|
       airports << ["#{ airport["name"]} (#{airport["iataCode"]})"]
-    end if parsed_json["wrapper"]["results"]
+    end if parsed_json["results"]
     
     airports
   end
@@ -100,9 +100,9 @@ class FlightController < ApplicationController
       http.request(req)
     end
     parsed_json = ActiveSupport::JSON.decode(res.body)
-    parsed_json["wrapper"]["results"].each do |airport|
+    parsed_json["results"].each do |airport|
       airports << ["#{ airport["name"]} (#{airport["iataCode"]})"]
-    end if parsed_json["wrapper"]["results"]
+    end if parsed_json["results"]
     
     
     if request.xhr?
