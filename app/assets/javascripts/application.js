@@ -76,7 +76,7 @@ $(document).ready(function() {
     $(this).css("color","#fff !important");
   });
   $('#retFlightNav').bind('touchend',function(e){
-    $("a#retFlightNav").delay(2000).removeClass("tnav-tap").addClass("current");
+    $("a#retFlightNav").delay(3000).removeClass("tnav-tap").addClass("current");
     $(this).css("color","#fff !important");
   });
   
@@ -94,32 +94,32 @@ $(document).ready(function() {
   
   // change background images on tap of buttons in flight index search by
   $('#lowestFares').bind('mousedown',function(e){
-    $(this).css("background","url('/assets/tap-lowfare.png') no-repeat");
+    $(this).css("background","url('/assets/tap-lowfare.png') no-repeat").delay(3000);
     $(this).css("width","144px");
     $(this).css("height","41px");
   });
   $('#lowestFares').bind('mouseup',function(e){
-    $(this).delay(2000).css("background","url('/assets/searchBtn.jpg') no-repeat");
+    $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') no-repeat");
     $(this).css("width","141px");
     $(this).css("height","38px");
   });
 
   $('#exactDates').bind('mousedown',function(e){
-    $(this).css("background","url('/assets/tap-exactdate.png') no-repeat");
+    $(this).css("background","url('/assets/tap-exactdate.png') no-repeat").delay(3000);
     $(this).css("width","144px");
     $(this).css("height","41px");
   });
   $('#exactDates').bind('mouseup',function(e){
-    $(this).delay(2000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
+    $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
     $(this).css("width","141px");
     $(this).css("height","38px");
   });
 
-  $('#intro a').bind('mousedown',function(e){
-    $(this).css("background-color","#30ADEB");
+  $('#intro a').bind('touchstart',function(e){
+    $(this).css("background-color","#30ADEB").delay(3000);
   });
-  $('#intro a').bind('mouseup',function(e){
-    $(this).delay(2000).css("background-color","#30ADEB");
+  $('#intro a').bind('touchend',function(e){
+    $(this).delay(3000).css("background-color","#FF5216");
     $(this).css("color","#fff !important");
   });
   
@@ -127,14 +127,14 @@ $(document).ready(function() {
     $(this).css("background","url('/assets/done.png') no-repeat");
   });
   $("#findFlights .doneBtn").mouseup(function() {
-    $(this).delay(2000).css("background","url('/assets/doneBtn.jpg') no-repeat");
+    $(this).delay(3000).css("background","url('/assets/doneBtn.jpg') no-repeat");
   });
   
   $(".footer a").bind('mousedown',function(e){
     $(this).css("background-color","#30ADEB");
   });
   $(".footer a").bind('mouseup',function(e){
-    $(this).delay(2000).css("background-color","#383838");
+    $(this).delay(3000).css("background-color","#383838");
   });
   
   $("#findFlights .doneBtn, #airportLstTo").click(function() {
