@@ -109,12 +109,18 @@ $(document).ready(function() {
     $(this).css("height","38px");
   });
   
-
   $("#findFlights .doneBtn").mousedown(function() {
     $(this).css("background","url('/assets/done.png') no-repeat");
   });
   $("#findFlights .doneBtn").mouseup(function() {
-    $(this).css("background","url('/assets/doneBtn.jpg') no-repeat");
+    $(this).delay(2000).css("background","url('/assets/doneBtn.jpg') no-repeat");
+  });
+  
+  $(".footer a").bind('mousedown',function(e){
+    $(this).css("background-color","#30ADEB");
+  });
+  $(".footer a").bind('mouseup',function(e){
+    $(this).delay(2000).css("background-color","#383838");
   });
   
   $("#findFlights .doneBtn, #airportLstTo").click(function() {
