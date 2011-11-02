@@ -8,20 +8,11 @@
 //= require jquery_ujs
 //= require jqueryui
 
-var dp_source = $("#dpSource").html();
-var rp_source = $("#rpSource").html();
+// var dp_source = $("#dpSource").html();
+// var rp_source = $("#rpSource").html();
 
 var r_date = ""
 var d_date = ""
-
-$(document).bind("mobileinit", function(){
-  // $.mobile.defaultPageTransition = 'none';
-  // $.extend($.mobile, {
-  //     metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
-  //   });
-});
-
-
 
 $(document).ready(function() {
   var d1 = new Date();
@@ -29,17 +20,19 @@ $(document).ready(function() {
   d_date = parseInt(today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
   r_date = parseInt(today.getMonth() + 1) + "/" + parseInt(today.getDate() + 1) + "/" + today.getFullYear();
 
-  //d1.setDate(new Date().getDate() + 1);
+  d1.setDate(new Date().getDate() + 1);
+  
+  // Display Elements
   $(".dpMN").text(getMonthName(new Date()));
-  $(".dpWD").text(getWeekDay(new Date()));
+  $(".dpWD").text(getWeekDay(new Date()));   
   $("#dpDay_c, #dpDay").text(new Date().getDate());
   $("#rpDay_c, #rpDay").text(d1.getDate());
-  $(".rpMonth").text(getMonthName(d1));
-  $(".rpWeek").text(getWeekDay(d1));
-  $("#dpSource_c").text(today.toDateString());
-  $("#rpSource_c, #rpSource").text(d1.toDateString());
+
+  $("#dpSource_c").text(d_date); // $("#dpSource_c").text(today.toDateString());
+  $("#rpSource_c").text(r_date); // removed #rpSource
   $("#dpSource_f").text(d_date);
   $("#rpSource_f").text(r_date);
+
   $('#adults,#child,#infants').iPhonePicker({ width: '80px', imgRoot: 'images/' });
 
   $("input.searchField").click(function() {
@@ -49,16 +42,19 @@ $(document).ready(function() {
   });
 
   $("#calLink").live("tap", function(event){
-   $("#drWrap").css("border", "none");
-   $("#calLink").css("background-color", "#58c6ff");
-   $("#calLink").css("border-radius", "5px");
+    $("#drWrap").css("border", "none");
+    $("#calLink").css("background-color", "#58c6ff");
+    $("#calLink").css("border-radius", "5px");
   });
+
   $("#lowestFares").live("tap", function(event){
     $("#lowestFares").css("background-image", "url('/assets/tap-lowfare.png')");
   });
+  
   $("#exactDates").live("tap", function(event){
     $("#exactDates").css("background", "url('/assets/tap-exactdate.png')");
   });
+  
   $("#retFlightNav").live("tap", function(event){
     $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
   });
@@ -122,25 +118,21 @@ $(document).ready(function() {
 
   // Calendar Call, make sure dp_source and rp_source have a value
   $("#calLink").click(function (){
-    dp_source = $("#dpSource_f").html();
-    rp_source = $("#rpSource_f").html();
-
     // Reload the calendars
     $("#datepickerD * a.ui-btn-active").click();
     $("#datepickerR * a.ui-btn-active").click();
-    $("#datepickerR").datepicker( "refresh" );
-    $("#datepickerD").datepicker( "refresh" );
+    $("#datepickerR").datepicker("refresh");
+    $("#datepickerD").datepicker("refresh");
   });
 
   // Update the flight page with the new values
   $("#setDates").click(function (){
-    $("#dpSource_f").html($("#dpSource_c").text());
-    $("#rpSource_f").html($("#rpSource_c").text());
+    $("#dpSource_f").html(d_date);
+    $("#rpSource_f").html(r_date);
 
-    //Load it now visually...
+    //Assign Calendar's tab view values to Find Flight's view
     $("#dpDate").html($("#dpDate_c").html());
     $("#dpDay").text($("#dpDay_c").text());
-
     $("#rpDate").html($("#rpDate_c").html());
     $("#rpDay").text($("#rpDay_c").text());
     
