@@ -122,6 +122,20 @@ $(document).ready(function() {
     $(this).delay(3000).css("background-color","#FF5216");
     $(this).css("color","#fff !important");
   });
+
+  $('#geoLocWrap').bind('touchstart',function(e){
+    $(this).css("background","url('/assets/searchGeoBgTap.png') repeat-x").delay(3000);
+  });
+  $('#geoLocWrap').bind('touchend',function(e){
+    $(this).delay(3000).css("background","url('/assets/searchGeoBg.png') repeat-x");
+  });
+
+  $('#searchesHeader').bind('touchstart',function(e){
+    $(this).css("background-color","#30ADEB").delay(3000);
+  });
+  $('#searchesHeader').bind('touchend',function(e){
+    $(this).delay(3000).css("background-color","#e7e7e7");
+  });
   
   $("#findFlights .doneBtn").mousedown(function() {
     $(this).css("background","url('/assets/done.png') no-repeat");
@@ -130,11 +144,13 @@ $(document).ready(function() {
     $(this).delay(3000).css("background","url('/assets/doneBtn.jpg') no-repeat");
   });
   
-  $(".footer a").bind('mousedown',function(e){
+  $("footer a").bind('mousedown',function(e){
     $(this).css("background-color","#30ADEB");
+    $(this).css("color","#fff !important");
   });
-  $(".footer a").bind('mouseup',function(e){
-    $(this).delay(3000).css("background-color","#383838");
+  $("footer a").bind('mouseup',function(e){
+    $(this).delay(3000).css("background-color","#383838");    
+    $(this).css("color","#b0b0b0 !important");
   });
   
   $("#findFlights .doneBtn, #airportLstTo").click(function() {
