@@ -201,12 +201,12 @@ only screen and (min-device-pixel-ratio: 1.5) {
   .tnav-tap {
     height:33px;
     display:block;
-    color:#000;
+    color:#fff !important;
     font-size:15px;
     text-decoration:none;
     line-height:33px;
     background-color: #29a8e8;
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#59c6ff), to(#0290d5), color-stop(.5,#29a8e8));
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#59c6ff), to(#0290d5), color-stop(.5,#30ADEB)) !important;
     border-top-left-radius:10px;
     border-top-right-radius:10px;
     -moz-border-radius-topleft:10px;
@@ -606,6 +606,14 @@ h2#findFlights {
   display:block;
   float:left;
   height:56px;
+  margin-right:5px;
+}
+.tap-tfl {
+  background:transparent url("arrow-left.png") repeat-x;
+  width:3px;
+  display:block;
+  float:left;
+  height:54px;
   margin-right:5px;
 }
 .tfr {

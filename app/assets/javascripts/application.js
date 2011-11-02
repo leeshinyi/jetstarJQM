@@ -54,13 +54,24 @@ $(document).ready(function() {
    $("#calLink").css("border-radius", "5px");
   });
   $("#lowestFares").live("tap", function(event){
-    $("#lowestFares").css("background-image", "url('/assets/tap-lowfare.png')");
+    $(this).css("background", "url('/assets/tap-lowfare.png')");
   });
   $("#exactDates").live("tap", function(event){
-    $("#exactDates").css("background", "url('/assets/tap-exactdate.png')");
+    $(this).css("background", "url('/assets/tap-exactdate.png')");
   });
-  $("#retFlightNav").live("tap", function(event){
-    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
+  //$("#retFlightNav").live("tap", function(event){
+  //  $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
+  //  $(this).css("color","#fff !important");
+  //});
+  $("#toContent").live("tap", function(event){
+    $("#toContent a span.tfl").css("background", "url('/assets/htfl.png')");
+    $("#toContent a span.tfr").css("background", "url('/assets/htfr.png')");
+    $(this).css("background","transparent url('/assets/htfbg.png') repeat-x");
+  });  
+  $("#origin_airport").live("tap", function(event){
+    $("#ffOrig").css("background", "transparent url('/assets/arrow-right.png') top right no-repeat");
+    $("#origin_airport span.tfl").removeClass("tfl").addClass("tap-tfl");
+    $("#fromContent").css("background", "url('/assets/arrow-mid.png') repeat-x");
   });
   
   //------------------------- change background images on tap of buttons in flight index search by
@@ -86,7 +97,27 @@ $(document).ready(function() {
     $(this).css("height","38px");
   });
   
+  $("#retFlightNav").mousedown(function() {
+    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
+    $(this).css("color","#fff !important");
+  });
+  $("#retFlightNav").mouseup(function() {
+    $("a#retFlightNav").removeClass("tnav-tap").addClass("current");
+    $(this).css("color","#fff !important");
+  });
   
+  $("#findFlights .doneBtn, #airportLstTo").click(function() {
+    $("#toContent a span.tfl").css("background", "url('/assets/tfl.png')");
+    $("#toContent a span.tfr").css("background", "url('/assets/tfr.png')");
+    $("#toContent").css("background","transparent url('/assets/tfbg.png') repeat-x");
+  });
+
+  $("#findFlights .doneBtn, #airportLstFrom").click(function() {
+    $("#ffOrig").css("background", "transparent url('/assets/departEdge.png') top right no-repeat");
+    $("#origin_airport span.tap-tfl").removeClass("tap-tfl").addClass("tfl");
+    $("#fromContent").css("background", "url('/assets/tfbg.png') repeat-x");
+  });
+    
   // Passenger area handling
 
    // $("#adults").bind("change", function() {
