@@ -23,10 +23,16 @@ $(document).ready(function() {
   d1.setDate(new Date().getDate() + 1);
   
   // Display Elements
+  $(".dpWD").text(getWeekDay(new Date()));
   $(".dpMN").text(getMonthName(new Date()));
-  $(".dpWD").text(getWeekDay(new Date()));   
+  
+  $("#rpDate .dpWD").text('Weekday'); 
+  $("#rpDate .dpMN").text('Month');
+  $("#rpDate_c .dpWD").text('Weekday'); 
+  $("#rpDate_c .dpMN").text('Month');
+
   $("#dpDay_c, #dpDay").text(format_date("departure", d_date, "min").split('/')[1]);
-  $("#rpDay_c, #rpDay").text(format_date("departure", r_date, "min").split('/')[1]);
+  $("#rpDay_c, #rpDay").text('00');
 
   $("#dpSource_c").text(d_date);
   $("#rpSource_c").text(r_date);
@@ -171,11 +177,11 @@ $(document).ready(function() {
     }).trigger('orientationchange');
   }
 
-  // Calendar Call, make sure dp_source and rp_source have a value
+  //Find Flights to Calendar event
   $("#calLink").click(function (){
     // Reload the calendars
     $("#datepickerD * a.ui-btn-active").click();
-    $("#datepickerR * a.ui-btn-active").click();
+    //$("#datepickerR * a.ui-btn-active").click(); //comment to default value to 00
     $("#datepickerR").datepicker("refresh");
     $("#datepickerD").datepicker("refresh");
   });
@@ -188,8 +194,11 @@ $(document).ready(function() {
     //Assign Calendar's tab view values to Find Flight's view
     $("#dpDate").html($("#dpDate_c").html());
     $("#dpDay").text($("#dpDay_c").text());
-    $("#rpDate").html($("#rpDate_c").html());
-    $("#rpDay").text($("#rpDay_c").text());
+
+    if($("#rpDay_c").text() != '00') {
+      $("#rpDate").html($("#rpDate_c").html());
+      $("#rpDay").text($("#rpDay_c").text());
+    }
     
     //Change the background of origin to destination back to original
     $("#drWrap").css("border", "1px solid #d5d5d5");
@@ -229,11 +238,15 @@ $(document).ready(function() {
     minDate: format_date('return', d_date, 'min'),
     dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     firstDay: 1,
-    defaultDate: 1,
+    defaultDate: '00/00/0000',
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
-      $("#rpDay_c").text(dateText.split("/")[1]);
-      $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+      $("#rpDay_c").text(dateText.split("/")[1]);  
+      if($("#rpDay_c").html() != '00') {
+        $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+      } else {
+        $("#rpDate_c").html("<div class='dpWD'>Weekday</div><div class='dpMN'>Month</div>");
+      }
       $("#rpSource_c").html(dateText);
       $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
       $("#datepickerD").datepicker("refresh")
