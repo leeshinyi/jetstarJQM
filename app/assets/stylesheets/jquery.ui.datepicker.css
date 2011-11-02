@@ -150,6 +150,11 @@ table.ui-datepicker-calendar tbody tr td span
   margin-top: -6px !important;
 }
 
+.ui-datepicker-prev.ui-state-disabled {
+  filter: alpha("opacity=30");
+  opacity: 0.3;
+}
+
 /* Next arrow fix for datepicker due to increased tappable width */
 .ui-datepicker-next * .ui-icon-arrow-r {
   margin-left: 22px !important;
