@@ -59,10 +59,6 @@ $(document).ready(function() {
     $(this).css("background", "url('/assets/tap-exactdate.png')");
   });
   
-  $("#retFlightNav").live("tap", function(event){
-    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
-  });
-
   /* 
     DO NOT DELETE!!! 
     - to be used on the tabs in the Find Flights section
@@ -73,6 +69,15 @@ $(document).ready(function() {
   //  $(this).css("color","#fff !important");
   //});
 
+  $('#retFlightNav').bind('touchstart',function(e){
+    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
+    $(this).css("color","#fff !important");
+  });
+  $('#retFlightNav').bind('touchend',function(e){
+    $("a#retFlightNav").delay(2000).removeClass("tnav-tap").addClass("current");
+    $(this).css("color","#fff !important");
+  });
+  
   $("#toContent").live("tap", function(event){
     $("#toContent a span.tfl").css("background", "url('/assets/htfl.png')");
     $("#toContent a span.tfr").css("background", "url('/assets/htfr.png')");
@@ -86,44 +91,40 @@ $(document).ready(function() {
   });
   
   // change background images on tap of buttons in flight index search by
-  $("#lowestFares").mousedown(function() {
+  $('#lowestFares').bind('mousedown',function(e){
     $(this).css("background","url('/assets/tap-lowfare.png') no-repeat");
     $(this).css("width","144px");
     $(this).css("height","41px");
   });
-
-  $("#lowestFares").mouseup(function() {
-    $(this).css("background","url('/assets/searchBtn.jpg') no-repeat");
+  $('#lowestFares').bind('mouseup',function(e){
+    $(this).delay(2000).css("background","url('/assets/searchBtn.jpg') no-repeat");
     $(this).css("width","141px");
     $(this).css("height","38px");
   });
 
-  $("#exactDates").mousedown(function() {
+  $('#exactDates').bind('mousedown',function(e){
     $(this).css("background","url('/assets/tap-exactdate.png') no-repeat");
     $(this).css("width","144px");
     $(this).css("height","41px");
   });
-
-  $("#exactDates").mouseup(function() {
-    $(this).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
+  $('#exactDates').bind('mouseup',function(e){
+    $(this).delay(2000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
     $(this).css("width","141px");
     $(this).css("height","38px");
   });
+  
 
-  $("#retFlightNav").mousedown(function() {
-    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
-    $(this).css("color","#fff !important");
+  $("#findFlights .doneBtn").mousedown(function() {
+    $(this).css("background","url('/assets/done.png') no-repeat");
   });
-
-  $("#retFlightNav").mouseup(function() {
-    $("a#retFlightNav").removeClass("tnav-tap").addClass("current");
-    $(this).css("color","#fff !important");
+  $("#findFlights .doneBtn").mouseup(function() {
+    $(this).css("background","url('/assets/doneBtn.jpg') no-repeat");
   });
   
   $("#findFlights .doneBtn, #airportLstTo").click(function() {
     $("#toContent a span.tfl").css("background", "url('/assets/tfl.png')");
     $("#toContent a span.tfr").css("background", "url('/assets/tfr.png')");
-    $("#toContent").css("background","transparent url('/assets/tfbg.png') repeat-x");
+    $("#toContent").css("background","transparent url('/assets/tfbg.png') repeat-x");    
   });
 
   $("#findFlights .doneBtn, #airportLstFrom").click(function() {
@@ -134,7 +135,7 @@ $(document).ready(function() {
     
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
-  });
+  });  
 
   // Search Trace
   $("#origin_airport").click(function (){
@@ -447,27 +448,31 @@ $(document).ready(function() {
        
        if(html.to.length!=0){
          for(i=0;i<html.to.length; i++){
-           var ddt = setNewDate(html.to[i].ddt);
-           var adt = setNewDate(html.to[i].adt);
+           // var ddt = setNewDate(html.to[i].ddt);
+           // var adt = setNewDate(html.to[i].adt);
+           var ddt = new Date(html.to[i].ddt);
+           var adt = new Date(html.to[i].adt);
            var top = (i==0) ? "topradius" : "";
            var bottom = (html.from.length==0 && i==html.to.length-1) ? "bottomradius" : "";
            var da = html.to[i].da=="" ? $("#origin_short").text() : html.to[i].da
            var aa = html.to[i].aa=="" ? $("#dest_short").text() : html.to[i].aa
            
-           $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + da + "-" + aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.to[i].ddt.substring(11,16) + "<br/>ARR " + html.to[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
+           $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + da + "-" + aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + getNewTime(ddt) + "<br/>ARR " + getNewTime(adt) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
          }
        }
 
         if(html.from!=0){
           for(i=0;i<html.from.length; i++){
-            var ddt = setNewDate(html.from[i].ddt);
-            var adt = setNewDate(html.from[i].adt);
+            // var ddt = setNewDate(html.from[i].ddt);
+            // var adt = setNewDate(html.from[i].adt);
+            var ddt = new Date(html.from[i].ddt);
+            var adt = new Date(html.from[i].adt);
             var top = (html.to.length==0 && i==0) ? "topradius" : "";
             var bottom = (i==html.from.length-1) ? "bottomradius" : "";
             var da = html.from[i].da=="" ? $("#dest_short").text() : html.from[i].da
             var aa = html.from[i].aa=="" ? $("#origin_short").text() : html.from[i].aa
             
-            $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + da + "-" + aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + html.from[i].ddt.substring(11,16) + "<br/>ARR " + html.from[i].adt.substring(11,16) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
+            $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + da + "-" + aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + getNewTime(ddt) + "<br/>ARR " + getNewTime(adt) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
            }
         }
 
@@ -668,39 +673,44 @@ function setNewDate(date){
   now.setYear(date.substring(0,4));
   now.setMonth(date.substring(5,7)-1);
   now.setDate(date.substring(8,10));
-  return now
+  return now;
+}
+
+function getNewTime(date){
+ time = date.getHours() + ":" + date.getMinutes();
+ return time;
 }
 
 // this formats the date of type m/d/yyyy to mm/dd/yyyy if m < 10 or d < 10; 9/9/9999 to 09/09/9999
 function format_date(datepicker, date, min_max) {
-  var m_re = /^\d\//
-  var d_re = /\/\d\//
-  var D = date
+  var m_re = /^\d\//;
+  var d_re = /\/\d\//;
+  var D = date;
   
   if(m_re.test(date)) {
-    n = m_re.exec(date).toString().replace(/\//g, '')
+    n = m_re.exec(date).toString().replace(/\//g, '');
     if(n < 10) {
-      D = date.replace(m_re, '0' + n + '/')
+      D = date.replace(m_re, '0' + n + '/');
     }  
   }
 
   if(d_re.test(date)) {
-    n = d_re.exec(date).toString().replace(/\//g, '')
+    n = d_re.exec(date).toString().replace(/\//g, '');
     if(datepicker == "departure") {
       if(min_max == "min") { 
       } else {
-        n = n - 1
+        n = n - 1;
       }
     // datepicker == "return" 
     } else { 
       if(min_max == "min") {
-        n = n + 1
+        n = n + 1;
       } else {
       }
     }
     if(n < 10) {
-      D = D.replace(d_re, '/0' + n + '/')
+      D = D.replace(d_re, '/0' + n + '/');
     }  
   }
-  return D
+  return D;
 }

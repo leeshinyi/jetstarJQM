@@ -1,8 +1,8 @@
 require 'net/http'
 class FlightController < ApplicationController
   def index
-    @origins = findOriginAirports
-    @destination = findDestinationAirports
+    #@origins = findOriginAirports
+    #@destination = findDestinationAirports
   end
 
   def create
@@ -52,7 +52,7 @@ class FlightController < ApplicationController
     name = ""
     iataCode = ""
     parsed_json = ActiveSupport::JSON.decode(res.body)
-    parsed_json["wrapper"]["results"].each do |airport|
+    parsed_json["results"].each do |airport|
       if airport.class == Hash
         airports << {:a => "#{airport["iataCode"]}; #{airport["name"]}"}
       else
@@ -113,13 +113,15 @@ class FlightController < ApplicationController
     
   def findFlights
     @flights = []
-    @return_flights = []
+    # @return_flights = []
 
-      date = params[:d].split('/')
-      rDate = "#{date[2]}#{date[0]}#{date[1]}"
+      depart = params[:d].split('/')
+      dDate = "#{depart[2]}#{depart[0]}#{depart[1]}"
+      arrive = params[:a].split('/')
+      aDate = "#{arrive[2]}#{arrive[0]}#{arrive[1]}"
 
       str = ((params[:commit].downcase.index("exact"))? "exact" : "flexible")
-      url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/flights/#{str}Dates/#{params[:f]}/#{params[:t]}/#{rDate}/#{params[:p]}/#{params[:c]}/#{params[:i]}")
+      url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/flights/#{str}Dates/#{params[:f]}/#{params[:t]}/#{dDate}/#{aDate}/#{params[:p]}/#{params[:c]}/#{params[:i]}")
       logger.info url
       req = Net::HTTP::Get.new(url.path)
       res = Net::HTTP.start(url.host, url.port) do |http|
@@ -128,11 +130,11 @@ class FlightController < ApplicationController
       logger.info res.body
       parsed_json = ActiveSupport::JSON.decode(res.body)
       
-      if parsed_json["wrapper"]["results"]
+      if parsed_json["results"]
         tmp = {}
-        parsed_json["wrapper"]["results"].each do |flight|
+        parsed_json["results"].each do |flight|
           if flight.class == Hash
-            @flights << {:aa => flight["arrivalAirport"], :adt => flight["arrivalDateTime"].upcase, :bc => flight["businessClassAvailable"], :c => flight["currency"], :da => flight["departureAirport"], :ddt => flight["departureDateTime"].upcase, :flight => flight["flightDesignator"], :stop => flight["numStops"], :price => flight["price"]}
+            @flights << {:aa => flight["arrivalAirport"], :adt => flight["arrivalDateTime"], :bc => flight["businessClassAvailable"], :c => flight["currency"], :da => flight["departureAirport"], :ddt => flight["departureDateTime"], :flight => flight["flightDesignator"], :stop => flight["numStops"], :price => flight["price"]}
           else
             str = case(flight[0])
               when "arrivalAirport"
@@ -160,65 +162,25 @@ class FlightController < ApplicationController
         if !tmp.empty?
           @flights << tmp 
         end
+        
+        @f = []
+        @rf = []
+        @flights.each do |f|
+          if f[:da] == params[:f]
+            @f << f
+          elsif f[:da] == params[:t]
+            @rf << f
+          end
+        end
       end 
 
       # return flights
       #o = session[:dest][-4..-2]
       #d = session[:origin][-4..-2]
       #{"f"=>"ADL", "t"=>"SYD", "d"=>"10/25/2011", "a"=>"10/26/2011", "c"=>"0", "i"=>"0", "p"=>"1"}
-      date = params[:a].split('/')
-      rDate = "#{date[2]}#{date[0]}#{date[1]}"
-
-      str = ((params[:commit].downcase.index("exact"))? "exact" : "flexible")
-
-      url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/flights/#{str}Dates/#{params[:t]}/#{params[:f]}/#{rDate}/#{params[:p]}/#{params[:c]}/#{params[:i]}")
-      logger.info url      
-      req = Net::HTTP::Get.new(url.path)
-      res = Net::HTTP.start(url.host, url.port) {|http|
-        http.request(req)
-      }
-      logger.info res.body
-      parsed_json = ActiveSupport::JSON.decode(res.body)
-
-      if parsed_json["wrapper"]["results"]
-        tmp = {} 
-        parsed_json["wrapper"]["results"].each do |flight|
-          if flight.class == Hash
-            @return_flights << {:aa => flight["arrivalAirport"], :adt => flight["arrivalDateTime"].upcase, :bc => flight["businessClassAvailable"], :c => flight["currency"], :da => flight["departureAirport"], :ddt => flight["departureDateTime"].upcase, :flight => flight["flightDesignator"], :stop => flight["numStops"], :price => flight["price"]}
-          else
-            str = case(flight[0])
-              when "arrivalAirport"
-                then :aa
-              when "arrivalDateTime"
-                then :adt
-              when "businessClassAvailable"
-                then :bc
-              when "currency"
-                then :c
-              when "departureAirport"
-                then :da
-              when "departureDateTime"
-                then :ddt
-              when "flightDesignator"
-                then :flight
-              when "numStops"
-                then :stop
-              when "price"
-                then :price
-              end
-              
-              tmp.store(str, flight[1]) if str
-          end
-
-        end 
-        if !tmp.empty?
-          @return_flights << tmp 
-        end
-
-      end
 
     #end
-    render :json => {:to => @flights, :from => @return_flights}
+    render :json => {:to => @f, :from => @rf}
   end
   
   def reset
