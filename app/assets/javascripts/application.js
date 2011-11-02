@@ -86,26 +86,9 @@ $(document).ready(function() {
     $(this).css("height","38px");
   });
   
-  
-  // Passenger area handling
-
-   // $("#adults").bind("change", function() {
-   //   var a = $('#adults').val();
-   //   console.log(a);
-   //   if(a >= 2){
-   //      for (var i = 5; i < 10; i++){
-   //          $("#uipv_ul_child").append('<li id="uipv_ul_child_'+i+'" value="'+i+'" style="height: 37px; line-height: 37px; text-align: right; display: block; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">'+ i + '</li>');
-   //      }
-   //   }
-   //   else
-   //    for (var i = 5; i < 10; i++){
-   //          $("ul#uipv_ul_child li#uipv_ul_child_"+i).remove();
-   //      }
-   // });
-
-   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
+  $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
-   });
+  });
 
   // Search Trace
   $("#origin_airport").click(function (){
@@ -172,7 +155,7 @@ $(document).ready(function() {
 
   // Calendar Functionality - START
   // NOTE: check tagDepart() and tagReturn() on how these integrates
-  $( "#datepickerD" ).datepicker({
+  $("#datepickerD").datepicker({
     minDate: format_date('departure', d_date, 'min'),
     dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     firstDay: 1,
@@ -474,7 +457,7 @@ $(document).ready(function() {
 
 // Calendar-specific functions - START
 function tagDepart(targetDate) {
-  if (Date.parse(dp_source) == Date.parse(targetDate)){
+  if (Date.parse(d_date) == Date.parse(targetDate)){
     return [true, 'dDate'];
   } else {
     return [true, ''];
@@ -482,20 +465,20 @@ function tagDepart(targetDate) {
 }
 
 function tagReturn(targetDate) {
-  if (Date.parse($("#rpSource_c").text()) == Date.parse(targetDate)){
+  if (Date.parse(r_date) == Date.parse(targetDate)){
     return [true, 'dDate'];
   } else {
     return [true, ''];
   }
 }
 function tagReturnHighlight(input, inst) {
-  console.log(input);
-  console.log(inst);
-  // if (Date.parse(rp_source) == Date.parse(targetDate)){
-  //     return [true, 'dDate'];
-  //   } else {
-  //     return [true, ''];
-  //   }
+  // console.log(input);
+  // console.log(inst);
+  // // if (Date.parse(rp_source) == Date.parse(targetDate)){
+  // //     return [true, 'dDate'];
+  // //   } else {
+  // //     return [true, ''];
+  // //   }
 }
 // Calendar-specific functions - END
 
