@@ -229,28 +229,22 @@ $(document).ready(function() {
       $("#datepickerR").datepicker("option","minDate", dateText);
       $("#datepickerR").datepicker("option","defaultDate", dateText);
       $("#datepickerR").datepicker("refresh")
-      // dp_source = dateText;
       d_date = dateText;
     }
   });
 
   $( "#datepickerR").datepicker({
-    minDate: format_date('return', d_date, 'min'),
+    minDate: format_date('departure', d_date, 'min'),
     dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     firstDay: 1,
-    defaultDate: '00/00/0000',
+    defaultDate: 0,
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
       $("#rpDay_c").text(dateText.split("/")[1]);  
-      if($("#rpDay_c").html() != '00') {
-        $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-      } else {
-        $("#rpDate_c").html("<div class='dpWD'>Weekday</div><div class='dpMN'>Month</div>");
-      }
+      $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
       $("#rpSource_c").html(dateText);
       $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
       $("#datepickerD").datepicker("refresh")
-      // rp_source = dateText;
       r_date = dateText;
     }
   });
@@ -523,7 +517,10 @@ function tagDepart(targetDate) {
 
 function tagReturn(targetDate) {
   if (Date.parse(r_date) == Date.parse(targetDate)){
-    return [true, 'dDate'];
+    if($("#rpDay_c").html() != "00")
+      return [true, 'dDate'];
+    else
+      return [true, ''];
   } else {
     return [true, ''];
   }
