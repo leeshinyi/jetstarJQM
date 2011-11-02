@@ -230,14 +230,14 @@ $(document).ready(function() {
     defaultDate: format_date('departure', d_date, 'min'),
     beforeShowDay: tagReturn,
     onSelect: function(dateText, inst) {
-      $("#dpDay_c").text(dateText.split("/")[1]);
-      $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-      $("#dpSource_c").html(dateText);
-      $("#rpSource_c").text("")
-      $("#datepickerR").datepicker("option","minDate", dateText);
-      $("#datepickerR").datepicker("option","defaultDate", dateText);
-      $("#datepickerR").datepicker("refresh")
       d_date = dateText;
+      $("#dpDay_c").text(d_date.split("/")[1]);
+      $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(d_date) + "</div><div class='dpMN'>" + getMonthName(d_date) + "</div>");
+      $("#dpSource_c").html(d_date);
+      $("#rpSource_c").text("");
+      $("#datepickerR").datepicker("option","minDate", d_date);
+      $("#datepickerR").datepicker("option","defaultDate", d_date);
+      $("#datepickerR").datepicker("refresh")
     }
   });
 
@@ -248,13 +248,12 @@ $(document).ready(function() {
     defaultDate: 0,
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
-      check_return_date();
-      $("#rpDay_c").text(dateText.split("/")[1]);  
-      $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-      $("#rpSource_c").html(dateText);
+      r_date = check_return_date(dateText);
+      $("#rpDay_c").text(r_date.split("/")[1]);  
+      $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(r_date) + "</div><div class='dpMN'>" + getMonthName(r_date) + "</div>");
+      $("#rpSource_c").html(r_date);
       $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
-      $("#datepickerD").datepicker("refresh")
-      r_date = dateText;
+      $("#datepickerD").datepicker("refresh");
     }
   });
 
@@ -733,9 +732,14 @@ function format_date(datepicker, date, min_max) {
   return D
 }
 
-// ...
-function check_return_date() {
-  console.log("DEPARTURE DATE: " + d_date + "\n")
-  console.log("RETURN DATE: " + r_date + "\n")
-  console.log(Date.parse(r_date) < Date.parse(d_date) + "\n")
+function check_return_date(new_r_date) {
+  if(Date.parse(new_r_date) < Date.parse(d_date)) {
+    alert("RETURN Date can NOT be before the DEPARTURE DATE");
+    if(Date.parse(r_date) < Date.parse(d_date)) {
+      r_date = format_date("return", d_date, "max");
+    }
+    return r_date;
+  } else {
+    return new_r_date;
+  }
 }
