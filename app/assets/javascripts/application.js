@@ -115,11 +115,18 @@ $(document).ready(function() {
     $("a#retFlightNav").removeClass("tnav-tap").addClass("current");
     $(this).css("color","#fff !important");
   });
+
+  $("#findFlights .doneBtn").mousedown(function() {
+    $(this).css("background","url('/assets/done.png') no-repeat");
+  });
+  $("#findFlights .doneBtn").mouseup(function() {
+    $(this).css("background","url('/assets/done.jpg') no-repeat");
+  });
   
   $("#findFlights .doneBtn, #airportLstTo").click(function() {
     $("#toContent a span.tfl").css("background", "url('/assets/tfl.png')");
     $("#toContent a span.tfr").css("background", "url('/assets/tfr.png')");
-    $("#toContent").css("background","transparent url('/assets/tfbg.png') repeat-x");
+    $("#toContent").css("background","transparent url('/assets/tfbg.png') repeat-x");    
   });
 
   $("#findFlights .doneBtn, #airportLstFrom").click(function() {
