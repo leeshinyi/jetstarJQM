@@ -55,10 +55,6 @@ $(document).ready(function() {
     $(this).css("background", "url('/assets/tap-exactdate.png')");
   });
   
-  $("#retFlightNav").live("tap", function(event){
-    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
-  });
-
   /* 
     DO NOT DELETE!!! 
     - to be used on the tabs in the Find Flights section
@@ -106,21 +102,11 @@ $(document).ready(function() {
     $(this).css("height","38px");
   });
 
-  $("#retFlightNav").mousedown(function() {
-    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
-    $(this).css("color","#fff !important");
-  });
-
-  $("#retFlightNav").mouseup(function() {
-    $("a#retFlightNav").removeClass("tnav-tap").addClass("current");
-    $(this).css("color","#fff !important");
-  });
-
   $("#findFlights .doneBtn").mousedown(function() {
     $(this).css("background","url('/assets/done.png') no-repeat");
   });
   $("#findFlights .doneBtn").mouseup(function() {
-    $(this).css("background","url('/assets/done.jpg') no-repeat");
+    $(this).css("background","url('/assets/doneBtn.jpg') no-repeat");
   });
   
   $("#findFlights .doneBtn, #airportLstTo").click(function() {
@@ -137,6 +123,15 @@ $(document).ready(function() {
     
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
+  });
+
+  $('#retFlightNav').bind('mousedown',function(e){
+    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
+    $(this).css("color","#fff !important");
+  });
+  $('#retFlightNav').bind('mouseup',function(e){
+    $("a#retFlightNav").removeClass("tnav-tap").addClass("current");
+    $(this).css("color","#fff !important");
   });
 
   // Search Trace
