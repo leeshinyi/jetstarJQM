@@ -117,6 +117,10 @@ $(document).ready(function() {
     search_mode = "To";
     $("#search_mode").text(search_mode);
     $(".geolocret").hide();
+    $(".nearestairportTo").hide();
+  });
+  $("#toContent").click(function (){
+    $(".nearestairportTo").hide();
   });
 
   // Device orientation handler
@@ -349,9 +353,10 @@ $(document).ready(function() {
 
   function clearsearchfields (){
     $(".searchField").val("");
-    $(".geoneararea").slideDown();
+    $(".nearestairportFrom").slideDown();
     $(".searchResults").css("margin-top","0");
     $(".searchHeaderbox").show();
+    $(".nearestairportTo").css("display","none");
     $(".geolocret").slideUp();
     $('ul.ui-autocomplete').empty();
   }
@@ -367,7 +372,7 @@ $(document).ready(function() {
   $(".clearSearchbox").click(clearsearchfields);
 
   $(".searchField").focus(function(){
-    $(".geoneararea").slideUp();
+    $(".nearestairportFrom").slideUp();
     $(".searchField").keypress(function() {
         $(".searchHeaderbox").slideUp();
     });
@@ -377,7 +382,8 @@ $(document).ready(function() {
   
   $(".searchField").blur(function(){
     if($(this).val() == ""){
-      $(".geoneararea").slideDown();
+      $(".nearestairportFrom").slideDown();
+      $(".nearestairportTo").hide();
       $(".searchResults").css("margin-top","0");
       $(".searchHeaderbox").show();
     }
