@@ -125,12 +125,12 @@ $(document).ready(function() {
     e.preventDefault();
   });
 
-  $('#retFlightNav').bind('mousedown',function(e){
+  $('#retFlightNav').bind('touchstart',function(e){
     $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
     $(this).css("color","#fff !important");
   });
-  $('#retFlightNav').bind('mouseup',function(e){
-    $("a#retFlightNav").removeClass("tnav-tap").addClass("current");
+  $('#retFlightNav').bind('touchend',function(e){
+    $("a#retFlightNav").delay(2000).removeClass("tnav-tap").addClass("current");
     $(this).css("color","#fff !important");
   });
 
