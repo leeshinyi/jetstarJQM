@@ -114,6 +114,14 @@ $(document).ready(function() {
     $(this).css("width","141px");
     $(this).css("height","38px");
   });
+
+  $('#intro a').bind('mousedown',function(e){
+    $(this).css("background-color","#30ADEB");
+  });
+  $('#intro a').bind('mouseup',function(e){
+    $(this).delay(2000).css("background-color","#30ADEB");
+    $(this).css("color","#fff !important");
+  });
   
   $("#findFlights .doneBtn").mousedown(function() {
     $(this).css("background","url('/assets/done.png') no-repeat");
