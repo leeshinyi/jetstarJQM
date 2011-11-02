@@ -1,5 +1,5 @@
 <div data-role="page" id="flightSearch<%= q.camelize%>">
-  <div data-role="header" class="header">
+  <div data-role="header" class="header" data-position="fixed">
     <div id="findFlights">      
        <span id="searchFieldGroup">
          <strong id="from_to_text"><%= q.camelize%></strong>
@@ -29,7 +29,7 @@
     </div>
   </div>
   
-  <div data-role="footer" class="footer">
+  <div data-role="footer" class="footer" data-position="fixed" data-id="ifooter">
     <%= render "footer" %>
   </div>
 </div>
