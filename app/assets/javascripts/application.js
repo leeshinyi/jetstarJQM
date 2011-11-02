@@ -248,6 +248,7 @@ $(document).ready(function() {
     defaultDate: 0,
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
+      check_return_date();
       $("#rpDay_c").text(dateText.split("/")[1]);  
       $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
       $("#rpSource_c").html(dateText);
@@ -700,34 +701,41 @@ function getNewTime(date){
 
 // this formats the date of type m/d/yyyy to mm/dd/yyyy if m < 10 or d < 10; 9/9/9999 to 09/09/9999
 function format_date(datepicker, date, min_max) {
-  var m_re = /^\d\//;
-  var d_re = /\/\d\//;
-  var D = date;
+  var m_re = /^\d\//
+  var d_re = /\/\d\//
+  var D = date
   
   if(m_re.test(date)) {
-    n = m_re.exec(date).toString().replace(/\//g, '');
+    n = m_re.exec(date).toString().replace(/\//g, '')
     if(n < 10) {
-      D = date.replace(m_re, '0' + n + '/');
+      D = date.replace(m_re, '0' + n + '/')
     }  
   }
 
   if(d_re.test(date)) {
-    n = d_re.exec(date).toString().replace(/\//g, '');
+    n = d_re.exec(date).toString().replace(/\//g, '')
     if(datepicker == "departure") {
       if(min_max == "min") { 
       } else {
-        n = n - 1;
+        n = n - 1
       }
     // datepicker == "return" 
     } else { 
       if(min_max == "min") {
-        n = n + 1;
+        n = n + 1
       } else {
       }
     }
     if(n < 10) {
-      D = D.replace(d_re, '/0' + n + '/');
+      D = D.replace(d_re, '/0' + n + '/')
     }  
   }
-  return D;
+  return D
+}
+
+// ...
+function check_return_date() {
+  console.log("DEPARTURE DATE: " + d_date + "\n")
+  console.log("RETURN DATE: " + r_date + "\n")
+  console.log(Date.parse(r_date) < Date.parse(d_date) + "\n")
 }
