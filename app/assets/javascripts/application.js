@@ -28,6 +28,8 @@ $(document).ready(function() {
   
   $("#rpDate .dpWD").text('Weekday'); 
   $("#rpDate .dpMN").text('Month');
+  $("#rpDate_c .dpWD").text('Weekday'); 
+  $("#rpDate_c .dpMN").text('Month');
 
   $("#dpDay_c, #dpDay").text(format_date("departure", d_date, "min").split('/')[1]);
   $("#rpDay_c, #rpDay").text('00');
@@ -234,7 +236,11 @@ $(document).ready(function() {
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
       $("#rpDay_c").text(dateText.split("/")[1]);  
-      $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+      if($("#rpDay_c").html() != '00') {
+        $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+      } else {
+        $("#rpDate_c").html("<div class='dpWD'>Weekday</div><div class='dpMN'>Month</div>");
+      }
       $("#rpSource_c").html(dateText);
       $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
       $("#datepickerD").datepicker("refresh")
