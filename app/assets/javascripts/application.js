@@ -29,7 +29,7 @@ $(document).ready(function() {
   d_date = parseInt(today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
   r_date = parseInt(today.getMonth() + 1) + "/" + parseInt(today.getDate() + 1) + "/" + today.getFullYear();
 
-  d1.setDate(new Date().getDate() + 1);
+  //d1.setDate(new Date().getDate() + 1);
   $(".dpMN").text(getMonthName(new Date()));
   $(".dpWD").text(getWeekDay(new Date()));
   $("#dpDay_c, #dpDay").text(new Date().getDate());
@@ -148,6 +148,10 @@ $(document).ready(function() {
     search_mode = "To";
     $("#search_mode").text(search_mode);
     $(".geolocret").hide();
+    $(".nearestairportTo").hide();
+  });
+  $("#toContent").click(function (){
+    $(".nearestairportTo").hide();
   });
 
   // Device orientation handler
@@ -168,9 +172,6 @@ $(document).ready(function() {
   $("#calLink").click(function (){
     dp_source = $("#dpSource_f").html();
     rp_source = $("#rpSource_f").html();
-
-    // console.log("DEP: " + dp_source);
-    //     console.log("RET: " + rp_source);
 
     // Reload the calendars
     $("#datepickerD * a.ui-btn-active").click();
@@ -206,73 +207,61 @@ $(document).ready(function() {
 
   // Calendar Functionality - START
   // NOTE: check tagDepart() and tagReturn() on how these integrates
-  if ($("#datepickerD").length){
-    $( "#datepickerD" ).datepicker({
-      minDate: format_date('departure', d_date, 'min'),
-      dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      firstDay: 1,
-      defaultDate: format_date('departure', d_date, 'min'),
-      beforeShowDay: tagReturn,
-      defaultDate: 0,
-      
-      onSelect: function(dateText, inst) {
-        $("#dpDay_c").text(dateText.split("/")[1]);
-        $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-        $("#dpSource_c").html(dateText);
-        x = new Date(Date.parse($("#rpSource_c").text()) + 86400000)
-        $("#rpSource_c").text("")
-        $("#datepickerR").datepicker("option","minDate",x);
-        $("#datepickerR").datepicker("option","defaultDate",x);
-        dp_source = dateText;
-        d_date = dateText;
-      }
-    });
-  }
+  $( "#datepickerD" ).datepicker({
+    minDate: format_date('departure', d_date, 'min'),
+    dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    firstDay: 1,
+    defaultDate: format_date('departure', d_date, 'min'),
+    beforeShowDay: tagReturn,
+    onSelect: function(dateText, inst) {
+      $("#dpDay_c").text(dateText.split("/")[1]);
+      $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+      $("#dpSource_c").html(dateText);
+      $("#rpSource_c").text("")
+      $("#datepickerR").datepicker("option","minDate", dateText);
+      $("#datepickerR").datepicker("option","defaultDate", dateText);
+      $("#datepickerR").datepicker("refresh")
+      dp_source = dateText;
+      d_date = dateText;
+    }
+  });
 
-  if ($("#datepickerR").length) {
-    $( "#datepickerR").datepicker({
-      minDate: format_date('return', r_date, 'min'),
-      dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      firstDay: 1,
-      defaultDate: format_date('departure', r_date, 'min'),
-      beforeShowDay: tagDepart,
-      beforeShow: tagReturnHighlight,
-      onSelect: function(dateText, inst) {
-        $("#rpDay_c").text(dateText.split("/")[1]);
-        $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
-        $("#rpSource_c").html(dateText);
-        $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
-        $("#datepickerD").datepicker("refresh")
-        rp_source = dateText;
-        r_date = dateText;
-      }
-    });
-  }
+  $( "#datepickerR").datepicker({
+    minDate: format_date('return', d_date, 'min'),
+    dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    firstDay: 1,
+    defaultDate: null,
+    beforeShowDay: tagDepart,
+    beforeShow: tagReturnHighlight,
+    onSelect: function(dateText, inst) {
+      $("#rpDay_c").text(dateText.split("/")[1]);
+      $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(dateText) + "</div><div class='dpMN'>" + getMonthName(dateText) + "</div>");
+      $("#rpSource_c").html(dateText);
+      $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
+      $("#datepickerD").datepicker("refresh")
+      rp_source = dateText;
+      r_date = dateText;
+    }
+  });
 
-  $("#rd").click (function (){
+  $("#rd").click(function (){
     $("#datepickerD").toggleClass("hidden");
     $("#datepickerR").toggleClass("hidden");
-
     $("#datepickerR").datepicker( "refresh" );
-
     $(this).toggleClass("tapable");
     $("#dd").toggleClass("tapable");
-
     if ($("#originToDest").length) {
       $("#destToOrgin").toggleClass("hidden");
       $("#originToDest").toggleClass("hidden");
     }
   });
 
-  $("#dd").click (function (){
+  $("#dd").click(function (){
     $("#datepickerD").toggleClass("hidden");
     $("#datepickerR").toggleClass("hidden");
-
     $("#datepickerD").datepicker( "refresh" );
-
     $(this).toggleClass("tapable");
     $("#rd").toggleClass("tapable");
-
     if ($("#originToDest").length) {
       $("#destToOrgin").toggleClass("hidden");
       $("#originToDest").toggleClass("hidden");
@@ -395,9 +384,10 @@ $(document).ready(function() {
 
   function clearsearchfields (){
     $(".searchField").val("");
-    $(".geoneararea").slideDown();
+    $(".nearestairportFrom").slideDown();
     $(".searchResults").css("margin-top","0");
     $(".searchHeaderbox").show();
+    $(".nearestairportTo").css("display","none");
     $(".geolocret").slideUp();
     $('ul.ui-autocomplete').empty();
   }
@@ -413,7 +403,7 @@ $(document).ready(function() {
   $(".clearSearchbox").click(clearsearchfields);
 
   $(".searchField").focus(function(){
-    $(".geoneararea").slideUp();
+    $(".nearestairportFrom").slideUp();
     $(".searchField").keypress(function() {
         $(".searchHeaderbox").slideUp();
     });
@@ -423,7 +413,8 @@ $(document).ready(function() {
   
   $(".searchField").blur(function(){
     if($(this).val() == ""){
-      $(".geoneararea").slideDown();
+      $(".nearestairportFrom").slideDown();
+      $(".nearestairportTo").hide();
       $(".searchResults").css("margin-top","0");
       $(".searchHeaderbox").show();
     }
