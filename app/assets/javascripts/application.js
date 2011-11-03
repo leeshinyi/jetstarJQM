@@ -234,10 +234,25 @@ $(document).ready(function() {
   });
 
   // Calendar Functionality - START
-  $("#datepickerD * .ui-state-active").click(function(){
-    alert(1)
+
+  // sets the date colors in between dates.. :|
+  $("#datepickerD").click(function(){
+    begin = parseInt(d_date.split("/")[1].replace("0","")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
+    end   = parseInt($(".dDate a").html())
     if(Date.parse(d_date) < Date.parse(r_date)) {
-      //$("#datepickerD * a.ui-state-active").siblings().css({"color": "#ff0000"}).nextUntil(".dDate")
+      if(d_date.split("/")[0] < r_date.split("/")[0]) { 
+        end = 31
+      }
+      $("a.ui-state-default").each(function(){
+        console.log("BEGIN: " + begin)
+        console.log("END: " + end)
+        for(i = parseInt(begin); i < end; i++) {
+          if(parseInt($(this).html()) == i) {
+            $(this).parent().addClass("ui-range-value");
+            $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
+          }
+        }
+      }); 
     }
   });
 
