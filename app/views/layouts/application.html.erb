@@ -27,6 +27,7 @@
     <%= javascript_include_tag "jquery.mobile.datepicker" %>
     <%= javascript_include_tag "jquery.iphonepicker"%>
 
+
     <%= csrf_meta_tag %>
   
     <%= javascript_include_tag "modernizr-custom"%>
@@ -40,7 +41,7 @@
       var centerLatitude = -38.47;
       var centerLongitude = 144.98;
       var origin_airports = ['<%= @origins.join("\', \'") if @origins %>'];
-      var destination_airports = ['<%= @destination.join("\', \'") if @destination %>'];
+      var destination_airports = [];
     </script>
 
   </head>
@@ -84,10 +85,12 @@
             centerLatitude = -33.870721;
             centerLongitude = 151.204814;
             <%- end -%>
-            findClosestAirport(centerLatitude, centerLongitude, "from");
+            if(destination_airports.length == 0)
+              findClosestAirport(centerLatitude, centerLongitude, "from");
           });
         else {
-          findClosestAirport(centerLatitude, centerLongitude, "from");
+          if(destination_airports.length == 0)
+            findClosestAirport(centerLatitude, centerLongitude, "from");
         }
       });
     </script>

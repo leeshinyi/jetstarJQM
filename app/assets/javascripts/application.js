@@ -21,6 +21,7 @@ $(document).ready(function() {
   r_date = d_date
 
   d1.setDate(new Date().getDate() + 1);
+
   
   // Display Elements
   $(".dpWD").text(getWeekDay(new Date()));
@@ -155,6 +156,13 @@ $(document).ready(function() {
     $(this).css("color","#b0b0b0 !important");
   });
 
+  $(".selectClosestAirport").live('mousedown',function(e){
+    $(this).parent("li").css("background-color","#30ADEB").delay(3000);
+  });
+  $(".selectClosestAirport").live('mouseup',function(e){
+    $(this).parent("li").delay(3000).css("background-color","#e9e9e9");
+  });
+        
   // passenger
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
@@ -294,19 +302,17 @@ $(document).ready(function() {
      source: origin_airports,
      minLength: 1,
      select:function(event, ui){
+       /* is this even being called? */
        $("#search_from_hidden").val(ui.item.value);
        str = ui.item.value.toString();
        $("#flightIndex #origin_short").text(str.substring(str.lastIndexOf("(")+1, str.length -1 ));
        $("#flightIndex #origin_city").text(str.substring(0, str.lastIndexOf("(")));
-
        $("#flightIndex #dest_short").text("");
        $("#flightIndex #dest_city").html("Choose your<br />destination");
 
-       $.mobile.changePage("#flightIndex");
-       // do ajaxy thingy here...
        $.ajax({
           url: "/flight/findDestinationAirports",
-          data: "o=" + str,
+          data: "os=" + str,
           type: "GET",
           success:function(d){
             item = []
@@ -318,6 +324,7 @@ $(document).ready(function() {
             $('#search_to').autocomplete("option", { source: item });
           }
        });
+       $.mobile.changePage("#flightIndex");
      },
 
      open: function(event, ui) {
@@ -328,18 +335,33 @@ $(document).ready(function() {
          $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.split(";")[0].substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span><span class='hidden fullFromName'>" + str + "</span></a>");
        });
        $(".selectClosestAirport").click(function(e){
-         e.preventDefault();
+         //console.log("fakkkk");
+         //e.preventDefault();
          ap =  $($(this).children()[2]).text();
          $("#search_from_hidden").val(ap);
          $.mobile.changePage("#flightIndex");
 
          $("#searchOrigin").val($($(this).children()[1]).text());
          city = $($(this).children()[0]).text();
-         $("#origin_city").html(ap.split(";")[1].substring(0, ap.split(";")[1].indexOf("(")-1));
+         $("#origin_short").html(ap.split(";")[1].substring(0, ap.split(";")[1].indexOf("(")-1));
          if(city.lastIndexOf("(") != -1)
-            $("#origin_short").html(city.substring(0,city.lastIndexOf("(")+1));
+            $("#origin_city").html(city.substring(0,city.lastIndexOf("(")+1));
          else
-            $("#origin_short").html(city);
+            $("#origin_city").html(city);
+
+        $.ajax({
+            url: "/flight/findDestinationAirports",
+            data: "o=" + $("#searchOrigin").val(),
+            type: "GET",
+            success:function(d){
+              item = []
+              for(i=0; i<d.length; i++)
+                if (d[i][0].split(";")[1].indexOf($("#searchOrigin").val()) == -1)
+                  item.push(d[i][0]);
+              $('ul.ui-autocomplete').empty();
+              $('#search_to').autocomplete("option", { source: item });
+            }
+         });
        });
 
 
@@ -381,11 +403,11 @@ $(document).ready(function() {
         $.mobile.changePage("#flightIndex");
         $("#searchDestination").val($($(this).children()[1]).text());
         city = $($(this).children()[0]).text();
-        $("#dest_city").html(ap.split(";")[1].substring(0, ap.split(";")[1].indexOf("(")-1));
+        $("#dest_short").html(ap.split(";")[1].substring(0, ap.split(";")[1].indexOf("(")-1));
         if(city.lastIndexOf("(") != -1)
-           $("#dest_short").html(city.substring(0, city.lastIndexOf("(")-1));
+           $("#dest_city").html(city.substring(0, city.lastIndexOf("(")-1));
         else
-           $("#dest_short").html(city);
+           $("#dest_city").html(city);
       });
     },
     close:function(event,ui){
@@ -569,9 +591,10 @@ function findClosestAirport(lat, lng, fromto){
                type: "GET",
                success:function(d){
                  item = []
-                 for(i=0; i<d.length; i++){
-                   item.push(d[i][0]);
-                 }
+                 for(i=0; i<d.length; i++)
+                   if(d[i][0].indexOf(data[0].a.split(";")[0]) == -1)
+                    item.push(d[i][0]);
+                 
                  //destination_airports = d;
                  $('ul.ui-autocomplete').empty();
                  $('#search_to').autocomplete("option", { source: item });
@@ -587,7 +610,8 @@ function findClosestAirport(lat, lng, fromto){
             $("#dest_short").html(data[0].a.split(";")[0] );
             $("#dest_city").html(data[0].a.split(";")[1]);
           }
-        $(".selectClosestAirport").click(function(e){
+        
+        $(".selectClosestAirport").click(function(e){          
           e.preventDefault();
             if(fromto == "from"){
               $("#search_from_hidden").val($(this).html());
@@ -617,9 +641,10 @@ function findClosestAirport(lat, lng, fromto){
                type: "GET",
                success:function(d){
                  item = []
-                 for(i=0; i<d.length; i++){
-                   item.push(d[i][0]);
-                 }
+                 for(i=0; i<d.length; i++)
+                   if(d[i][0].indexOf(data[0].a.split(";")[0]) == -1)
+                     item.push(d[i][0]);
+
                  //destination_airports = d;
                  $('ul.ui-autocomplete').empty();
                  $('#search_to').autocomplete("option", { source: item });
@@ -763,5 +788,3 @@ function check_picked_date(new_date, datepicker) {
     }
   }
 }
-
-
