@@ -234,6 +234,13 @@ $(document).ready(function() {
   });
 
   // Calendar Functionality - START
+  $("#datepickerD * .ui-state-active").click(function(){
+    alert(1)
+    if(Date.parse(d_date) < Date.parse(r_date)) {
+      //$("#datepickerD * a.ui-state-active").siblings().css({"color": "#ff0000"}).nextUntil(".dDate")
+    }
+  });
+
   // NOTE: check tagDepart() and tagReturn() on how these integrates
   $("#datepickerD").datepicker({
     minDate: d_date,
@@ -243,7 +250,6 @@ $(document).ready(function() {
     beforeShowDay: tagReturn,
     onSelect: function(dateText, inst) {
       d_date = dateText;
-      //console.log("Clicked Departure! " + d_date)
       $("#dpDay_c").text(d_date.split("/")[1]);
       $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(d_date) + "</div><div class='dpMN'>" + getMonthName(d_date) + "</div>");
       $("#dpSource_c").html(d_date);
@@ -259,7 +265,6 @@ $(document).ready(function() {
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
       r_date = check_picked_date(dateText, "return");
-      //console.log("Clicked Return! " + r_date);
       $("#rpDay_c").text(r_date.split("/")[1]);
       $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(r_date) + "</div><div class='dpMN'>" + getMonthName(r_date) + "</div>");
       $("#rpSource_c").html(r_date);
@@ -329,8 +334,6 @@ $(document).ready(function() {
          $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.split(";")[0].substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span><span class='hidden fullFromName'>" + str + "</span></a>");
        });
        $(".selectClosestAirport").click(function(e){
-         //console.log("fakkkk");
-         //e.preventDefault();
          ap =  $($(this).children()[2]).text();
          $("#search_from_hidden").val(ap);
          $.mobile.changePage("#flightIndex");
@@ -624,7 +627,6 @@ function findClosestAirport(lat, lng, fromto){
         if ($(".geoneararea").length) {
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
-            // console.log(data[i])
             str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' ><span style='font-weight:bold !important'>" + data[i].a.split(";")[1] + " </span><span class='upper right'>" + data[i].a.split(";")[0] +"</span>"  + "</a></li>"
           }
           $(".geolocret").remove();
