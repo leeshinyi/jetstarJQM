@@ -51,15 +51,7 @@ $(document).ready(function() {
     $("#drWrap").css("border", "none");
     $("#calLink").css("background-color", "#58c6ff");
     $("#calLink").css("border-radius", "5px");
-  });
-
-  $("#lowestFares").live("tap", function(event){
-    $(this).css("background", "url('/assets/tap-lowfare.png')");
-  });
-  
-  $("#exactDates").live("tap", function(event){
-    $(this).css("background", "url('/assets/tap-exactdate.png')");
-  });
+  });  
   
   /* 
     DO NOT DELETE!!! 
@@ -80,18 +72,28 @@ $(document).ready(function() {
     $(this).css("color","#fff !important");
   });
   
-  $("#toContent").live("tap", function(event){
-    $("#toContent a span.tfl").css("background", "url('/assets/htfl.png')");
-    $("#toContent a span.tfr").css("background", "url('/assets/htfr.png')");
-    $(this).css("background","transparent url('/assets/htfbg.png') repeat-x");
+  $('#toContent').bind('mousedown',function(e){
+    $("#toContent a span.tfl").css("background", "url('/assets/htfl.png')").delay(3000);
+    $("#toContent a span.tfr").css("background", "url('/assets/htfr.png')").delay(3000);
+    $(this).css("background","transparent url('/assets/htfbg.png') repeat-x").delay(3000);
+  });
+  $('#toContent').bind('mouseup',function(e){
+    $("#toContent a span.tfl").delay(3000).css("background", "url('/assets/tfl.png')");
+    $("#toContent a span.tfr").delay(3000).css("background", "url('/assets/tfr.png')");
+    $("#toContent").delay(3000).css("background","transparent url('/assets/tfbg.png') repeat-x");    
   });
 
-  $("#origin_airport").live("tap", function(event){
-    $("#ffOrig").css("background", "transparent url('/assets/arrow-right.png') top right no-repeat");
-    $("#origin_airport span.tfl").removeClass("tfl").addClass("tap-tfl");
-    $("#fromContent").css("background", "url('/assets/arrow-mid.png') repeat-x");
+  $('#origin_airport').bind('mousedown',function(e){
+    $("#ffOrig").css("background", "transparent url('/assets/arrow-right.png') top right no-repeat").delay(3000);
+    $("#origin_airport span.tfl").removeClass("tfl").addClass("tap-tfl").delay(3000);
+    $("#fromContent").css("background", "url('/assets/arrow-mid.png') repeat-x").delay(3000);
   });
-  
+  $('#origin_airport').bind('mouseup',function(e){
+    $("#ffOrig").delay(3000).css("background", "transparent url('/assets/departEdge.png') top right no-repeat");
+    $("#origin_airport span.tap-tfl").delay(3000).removeClass("tap-tfl").addClass("tfl");
+    $("#fromContent").delay(3000).css("background", "url('/assets/tfbg.png') repeat-x");   
+  });
+
   // change background images on tap of buttons in flight index search by
   $('#lowestFares').bind('mousedown',function(e){
     $(this).css("background","url('/assets/tap-lowfare.png') no-repeat").delay(3000);
@@ -138,7 +140,7 @@ $(document).ready(function() {
   });
   
   $("#findFlights .doneBtn").mousedown(function() {
-    $(this).css("background","url('/assets/done.png') no-repeat");
+    $(this).css("background","url('/assets/done.png') no-repeat").delay(3000);
   });
   $("#findFlights .doneBtn").mouseup(function() {
     $(this).delay(3000).css("background","url('/assets/doneBtn.jpg') no-repeat");
@@ -151,18 +153,6 @@ $(document).ready(function() {
   $("footer a").bind('mouseup',function(e){
     $(this).delay(3000).css("background-color","#383838");    
     $(this).css("color","#b0b0b0 !important");
-  });
-  
-  $("#findFlights .doneBtn, #airportLstTo").click(function() {
-    $("#toContent a span.tfl").css("background", "url('/assets/tfl.png')");
-    $("#toContent a span.tfr").css("background", "url('/assets/tfr.png')");
-    $("#toContent").css("background","transparent url('/assets/tfbg.png') repeat-x");    
-  });
-
-  $("#findFlights .doneBtn, #airportLstFrom").click(function() {
-    $("#ffOrig").css("background", "transparent url('/assets/departEdge.png') top right no-repeat");
-    $("#origin_airport span.tap-tfl").removeClass("tap-tfl").addClass("tfl");
-    $("#fromContent").css("background", "url('/assets/tfbg.png') repeat-x");
   });
     
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
