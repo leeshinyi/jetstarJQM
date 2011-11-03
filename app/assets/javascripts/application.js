@@ -11,16 +11,6 @@
 // var dp_source = $("#dpSource").html();
 // var rp_source = $("#rpSource").html();
 
-$(function(){
-	positionFooter();
-
-
-	$(window)
-		.scroll(positionFooter)
-		.resize(positionFooter)
-});
-
-
 var r_date = ""
 var d_date = ""
 
@@ -765,8 +755,4 @@ function check_return_date(new_r_date) {
   }
 }
 
-function positionFooter(){
-    if($(document).height() < $(window).height()){
-        $("#footer").css({position: "absolute",top:($(window).scrollTop()+$(window).height()-$("#footer").height())+"px"})
-    }
-}
+
