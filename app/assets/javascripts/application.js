@@ -63,11 +63,11 @@ $(document).ready(function() {
   //  $(this).css("color","#fff !important");
   //});
 
-  $('#retFlightNav').bind('touchstart',function(e){
-    $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
+  $('#retFlightNav').live('tap',function(){
+    $("a#retFlightNav").removeClass("current").addClass("tnav-tap").delay(3000);
     $(this).css("color","#fff !important");
   });
-  $('#retFlightNav').bind('touchend',function(e){
+  $('#retFlightNav').live('taphold',function(){
     $("a#retFlightNav").delay(3000).removeClass("tnav-tap").addClass("current");
     $(this).css("color","#fff !important");
   });
