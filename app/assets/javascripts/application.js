@@ -155,7 +155,14 @@ $(document).ready(function() {
     $(this).delay(3000).css("background-color","#383838");
     $(this).css("color","#b0b0b0 !important");
   });
-  
+
+  $(".selectClosestAirport").live('mousedown',function(e){
+    $(this).parent("li").css("background-color","#30ADEB").delay(3000);
+  });
+  $(".selectClosestAirport").live('mouseup',function(e){
+    $(this).parent("li").delay(3000).css("background-color","#e9e9e9");
+  });
+        
   // passenger
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
@@ -602,13 +609,6 @@ function findClosestAirport(lat, lng, fromto){
             $("#dest_short").html(data[0].a.split(";")[0] );
             $("#dest_city").html(data[0].a.split(";")[1]);
           }
-
-        $(".selectClosestAirport").bind('touchstart',function(e){
-          $(this).parent("li").css("background-color","#30ADEB").delay(3000);
-        });
-        $(".selectClosestAirport").bind('touchend',function(e){
-          $(this).parent("li").delay(3000).css("background-color","#e9e9e9");
-        });
         
         $(".selectClosestAirport").click(function(e){          
           e.preventDefault();
