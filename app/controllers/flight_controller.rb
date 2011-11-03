@@ -90,7 +90,7 @@ class FlightController < ApplicationController
     airports = []
     o = ""
     if !params[:o].blank?
-      o = params[:o][-4..-2]
+      o = params[:o]
     else
       o = "VIZ"
     end
