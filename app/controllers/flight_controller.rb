@@ -82,7 +82,7 @@ class FlightController < ApplicationController
     parsed_json["results"].each do |airport|
       airports << ["#{ airport["name"]};#{airport["city"]} (#{airport["iataCode"]})"]
     end if parsed_json["results"]
-    logger.info airports
+    # logger.info airports
     airports
   end
   
