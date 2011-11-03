@@ -203,9 +203,7 @@ $(document).ready(function() {
   //Find Flights to Calendar event
   $("#calLink").click(function(){
     $("#datepickerR").datepicker("option", "setDate", r_date);
-    $("#datepickerR").datepicker("refresh");
     $("#datepickerD").datepicker("option", "setDate", d_date);
-    $("#datepickerD").datepicker("refresh");
   });
 
   // Update the flight page with the new values
