@@ -151,7 +151,6 @@ table.ui-datepicker-calendar tbody tr td span
 }
 
 .ui-datepicker-prev.ui-state-disabled {
-  filter: alpha("opacity=30");
   opacity: 0.3;
 }
 
