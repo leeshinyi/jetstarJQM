@@ -178,7 +178,8 @@ class FlightController < ApplicationController
       #o = session[:dest][-4..-2]
       #d = session[:origin][-4..-2]
       #{"f"=>"ADL", "t"=>"SYD", "d"=>"10/25/2011", "a"=>"10/26/2011", "c"=>"0", "i"=>"0", "p"=>"1"}
-
+      @f = @f.sort_by { |flight| flight[:ddt] }
+      @rf = @rf.sort_by { |flight| flight[:ddt] }
     #end
     render :json => {:to => @f, :from => @rf}
   end
