@@ -28,7 +28,7 @@ $(document).ready(function() {
   var d1 = new Date();
   var today = d1;
   d_date = parseInt(today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
-  r_date = parseInt(today.getMonth() + 1) + "/" + parseInt(today.getDate() + 1) + "/" + today.getFullYear();
+  r_date = d_date
 
   d1.setDate(new Date().getDate() + 1);
   
@@ -247,14 +247,16 @@ $(document).ready(function() {
     defaultDate: format_date('departure', d_date, 'min'),
     beforeShowDay: tagReturn,
     onSelect: function(dateText, inst) {
-      d_date = dateText;
+      console.log("DEPARTURE DATE: " + format_date("return", d_date, "max") + "\n");   
+      d_date = check_return_date(dateText, "departure");
+      console.log("D_DATE:" + d_date)
       $("#dpDay_c").text(d_date.split("/")[1]);
       $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(d_date) + "</div><div class='dpMN'>" + getMonthName(d_date) + "</div>");
       $("#dpSource_c").html(d_date);
       $("#rpSource_c").text("");
       $("#datepickerR").datepicker("option","minDate", d_date);
       $("#datepickerR").datepicker("option","defaultDate", d_date);
-      $("#datepickerR").datepicker("refresh")
+      $("#datepickerR").datepicker("refresh");
     }
   });
 
@@ -265,12 +267,13 @@ $(document).ready(function() {
     defaultDate: 0,
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
-      r_date = check_return_date(dateText);
+      r_date = check_return_date(dateText, "return");
       $("#rpDay_c").text(r_date.split("/")[1]);  
       $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(r_date) + "</div><div class='dpMN'>" + getMonthName(r_date) + "</div>");
       $("#rpSource_c").html(r_date);
       $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
       $("#datepickerD").datepicker("refresh");
+      console.log("RETURN DATE: " + r_date + "\n");
     }
   });
 
@@ -736,32 +739,45 @@ function format_date(datepicker, date, min_max) {
     n = d_re.exec(date).toString().replace(/\//g, '')
     if(datepicker == "departure") {
       if(min_max == "min") { 
+        n = parseInt(n)
       } else {
-        n = n - 1
+        n = parseInt(n) - 1
       }
     // datepicker == "return" 
     } else { 
       if(min_max == "min") {
-        n = n + 1
+        n = parseInt(n) + 1
       } else {
+        n = parseInt(n)
       }
     }
     if(n < 10) {
-      D = D.replace(d_re, '/0' + n + '/')
+      D = date.replace(d_re, '/0' + n + '/')
     }  
   }
   return D
 }
 
-function check_return_date(new_r_date) {
-  if(Date.parse(new_r_date) < Date.parse(d_date)) {
-    alert("RETURN Date can NOT be before the DEPARTURE DATE");
-    if(Date.parse(r_date) < Date.parse(d_date)) {
-      r_date = format_date("return", d_date, "max");
+function check_return_date(new_date, datepicker) {
+  if(datepicker == "return") {
+    if(Date.parse(new_date) < Date.parse(d_date)) {
+      if(Date.parse(r_date) < Date.parse(d_date)) {
+        alert("RETURN Date can NOT be before the DEPARTURE DATE");
+        r_date = format_date("return", d_date, "max");
+      } else {
+        alert("RETURN Date can NOT be before the DEPARTURE DATE");
+      }
+      return r_date;
+    } else {
+      return new_date;
     }
-    return r_date;
   } else {
-    return new_r_date;
+    if(Date.parse(new_date) < Date.parse(r_date)) {
+      return format_date("return", d_date, "max");
+    } else {
+      console.log("returning d_new_date");
+      return new_date;
+    }   
   }
 }
 
