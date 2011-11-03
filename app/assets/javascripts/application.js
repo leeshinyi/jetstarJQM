@@ -204,6 +204,15 @@ $(document).ready(function() {
   $("#calLink").click(function(){
     $("#datepickerR").datepicker("option", "setDate", r_date);
     $("#datepickerD").datepicker("option", "setDate", d_date);
+    
+    if ($("#flightIndex #origin_letters").text() == "" || $("#flightIndex #dest_letters").text()==""){
+      $("#originToDest").text("Schedule");
+      $("#destToOrgin").text("Schedule");
+    }
+    else{
+      $("#originToDest").text($("#flightIndex #origin_letters").text() + " to " + $("#flightIndex #dest_letters").text());
+      $("#destToOrgin").text($("#flightIndex #dest_letters").text() + " to " + $("#flightIndex #origin_letters").text());
+    }
   });
 
   // Update the flight page with the new values
@@ -371,6 +380,7 @@ $(document).ready(function() {
        $(".selectClosestAirport").click(function(e){
          ap =  $($(this).children()[2]).text();
          $("#search_from_hidden").val(ap);
+         $("#origin_letters").html($($(this).children()[1]).text());
          $.mobile.changePage("#flightIndex");
 
          $("#searchOrigin").val($($(this).children()[1]).text());
@@ -432,6 +442,7 @@ $(document).ready(function() {
         ap =  $($(this).children()[2]).text();
         //ap += " (" +  $($(this).children()[1]).text() + ")";
         $("#search_to_hidden").val(ap);
+        $("#dest_letters").html($($(this).children()[1]).text());
         $.mobile.changePage("#flightIndex");
         $("#searchDestination").val($($(this).children()[1]).text());
         city = $($(this).children()[0]).text();
