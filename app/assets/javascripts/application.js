@@ -63,11 +63,11 @@ $(document).ready(function() {
   //  $(this).css("color","#fff !important");
   //});
 
-  $('#retFlightNav').live('tap',function(event){
+  $('#retFlightNav').live('touchstart',function(event){
     $("a#retFlightNav").removeClass("current").addClass("tnav-tap").delay(3000);
     $(this).css("color","#fff !important");
   });
-  $('#retFlightNav').live('taphold',function(event){
+  $('#retFlightNav').live('touchend',function(event){
     $("a#retFlightNav").delay(3000).removeClass("tnav-tap").addClass("current");
     $(this).css("color","#fff !important");
   });
