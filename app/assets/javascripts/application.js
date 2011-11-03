@@ -156,12 +156,12 @@ $(document).ready(function() {
     $(this).css("color","#b0b0b0 !important");
   });
 
-  $(".selectClosestAirport").live('touchstart',function(e){
-    $(this).parent("li").css("background-color","#30ADEB").delay(3000);
-  });
-  $(".selectClosestAirport").live('touchend',function(e){
-    $(this).parent("li").delay(3000).css("background-color","#e9e9e9");
-  });
+  //$(".selectClosestAirport").live('touchstart',function(e){
+  //  $(this).parent("li").css("background-color","#30ADEB").delay(3000);
+  //});
+  //$(".selectClosestAirport").live('touchend',function(e){
+  //  $(this).parent("li").delay(3000).css("background-color","#e9e9e9");
+  //});
         
   // passenger
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
