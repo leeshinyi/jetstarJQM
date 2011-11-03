@@ -155,9 +155,22 @@ $(document).ready(function() {
     $(this).css("color","#b0b0b0 !important");
   });
     
+  // passenger
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
-  });  
+  });
+
+  // footer position
+  $(function(){
+	positionFooter();
+	function positionFooter(){
+		$("#footer").css({position: "absolute",top:($(window).scrollTop()+$(window).height()-$("#pageFooterOuter").height())+"px"})
+	}
+
+	$(window)
+		.scroll(positionFooter)
+		.resize(positionFooter)
+    });
 
   // Search Trace
   $("#origin_airport").click(function (){
