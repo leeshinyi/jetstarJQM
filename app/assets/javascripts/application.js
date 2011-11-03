@@ -374,6 +374,7 @@ $(document).ready(function() {
        $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstFrom').show();
        $.each($("#airportLstFrom a"), function() {
          str = $(this).text();
+         
          $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.split(";")[0].substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span><span class='hidden fullFromName'>" + str + "</span></a>");
        });
        $(".selectClosestAirport").click(function(e){
@@ -433,7 +434,10 @@ $(document).ready(function() {
       $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstTo').show();
       $(".searchHeaderbox").hide();
       $.each($("#airportLstTo a"), function() {
-         str = $(this).text();
+         var str = $(this).text();
+         // if(str.length!=3){
+         //   str = $("#search_from_hidden").val();
+         // }
          $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.split(";")[0].substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span><span class='hidden fullToName'>" + str + "</span></a>");
       });
       $(".selectClosestAirport").click(function(e){
