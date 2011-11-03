@@ -11,6 +11,16 @@
 // var dp_source = $("#dpSource").html();
 // var rp_source = $("#rpSource").html();
 
+$(function(){
+	positionFooter();
+
+
+	$(window)
+		.scroll(positionFooter)
+		.resize(positionFooter)
+});
+
+
 var r_date = ""
 var d_date = ""
 
@@ -159,18 +169,6 @@ $(document).ready(function() {
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
   });
-
-  // footer position
-  $(function(){
-	positionFooter();
-	function positionFooter(){
-		$("#footer").css({position: "absolute",top:($(window).scrollTop()+$(window).height()-$("#pageFooterOuter").height())+"px"})
-	}
-
-	$(window)
-		.scroll(positionFooter)
-		.resize(positionFooter)
-    });
 
   // Search Trace
   $("#origin_airport").click(function (){
@@ -762,4 +760,10 @@ function check_return_date(new_r_date) {
   } else {
     return new_r_date;
   }
+}
+
+function positionFooter(){
+    if($(document).height() < $(window).height()){
+        $("#footer").css({position: "absolute",top:($(window).scrollTop()+$(window).height()-$("#footer").height())+"px"})
+    }
 }
