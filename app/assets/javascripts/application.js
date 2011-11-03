@@ -10,7 +10,7 @@
 
 // var dp_source = $("#dpSource").html();
 // var rp_source = $("#rpSource").html();
-
+var myScroll;
 var r_date = ""
 var d_date = ""
 
@@ -21,6 +21,7 @@ $(document).ready(function() {
   r_date = parseInt(today.getMonth() + 1) + "/" + parseInt(today.getDate() + 1) + "/" + today.getFullYear();
 
   d1.setDate(new Date().getDate() + 1);
+
   
   // Display Elements
   $(".dpWD").text(getWeekDay(new Date()));
@@ -154,6 +155,13 @@ $(document).ready(function() {
     $(this).delay(3000).css("background-color","#383838");
     $(this).css("color","#b0b0b0 !important");
   });
+
+  $(".ui-autocomplete2 .ui-menu-item a").bind('touchstart',function(event){
+    $(".ui-autocomplete2 .ui-menu-item").css("background-color","#30ADEB").delay(3000);
+  });
+  $(".ui-autocomplete2 .ui-menu-item a").bind('touchend',function(event){
+    $(".ui-autocomplete2 .ui-menu-item").delay(3000).css("background-color","#e9e9e9");
+  });
 
   // passenger
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
@@ -771,4 +779,6 @@ function check_return_date(new_r_date) {
   }
 }
 
-
+function loaded() {
+	myScroll = new iScroll('searchPage');
+}
