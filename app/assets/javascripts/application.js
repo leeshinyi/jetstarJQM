@@ -11,6 +11,16 @@
 // var dp_source = $("#dpSource").html();
 // var rp_source = $("#rpSource").html();
 
+$(function(){
+	positionFooter();
+
+
+	$(window)
+		.scroll(positionFooter)
+		.resize(positionFooter)
+});
+
+
 var r_date = ""
 var d_date = ""
 
@@ -72,46 +82,46 @@ $(document).ready(function() {
     $(this).css("color","#fff !important");
   });
   
-  $('#toContent').bind('mousedown',function(e){
+  $('#toContent').bind('touchstart',function(e){
     $("#toContent a span.tfl").css("background", "url('/assets/htfl.png')").delay(3000);
     $("#toContent a span.tfr").css("background", "url('/assets/htfr.png')").delay(3000);
     $(this).css("background","transparent url('/assets/htfbg.png') repeat-x").delay(3000);
   });
-  $('#toContent').bind('mouseup',function(e){
+  $('#toContent').bind('touchend',function(e){
     $("#toContent a span.tfl").delay(3000).css("background", "url('/assets/tfl.png')");
     $("#toContent a span.tfr").delay(3000).css("background", "url('/assets/tfr.png')");
     $("#toContent").delay(3000).css("background","transparent url('/assets/tfbg.png') repeat-x");    
   });
 
-  $('#origin_airport').bind('mousedown',function(e){
+  $('#origin_airport').bind('touchstart',function(e){
     $("#ffOrig").css("background", "transparent url('/assets/arrow-right.png') top right no-repeat").delay(3000);
     $("#origin_airport span.tfl").removeClass("tfl").addClass("tap-tfl").delay(3000);
     $("#fromContent").css("background", "url('/assets/arrow-mid.png') repeat-x").delay(3000);
   });
-  $('#origin_airport').bind('mouseup',function(e){
+  $('#origin_airport').bind('touchend',function(e){
     $("#ffOrig").delay(3000).css("background", "transparent url('/assets/departEdge.png') top right no-repeat");
     $("#origin_airport span.tap-tfl").delay(3000).removeClass("tap-tfl").addClass("tfl");
     $("#fromContent").delay(3000).css("background", "url('/assets/tfbg.png') repeat-x");   
   });
 
   // change background images on tap of buttons in flight index search by
-  $('#lowestFares').bind('mousedown',function(e){
+  $('#lowestFares').bind('touchstart',function(e){
     $(this).css("background","url('/assets/tap-lowfare.png') no-repeat").delay(3000);
     $(this).css("width","144px");
     $(this).css("height","41px");
   });
-  $('#lowestFares').bind('mouseup',function(e){
+  $('#lowestFares').bind('touchend',function(e){
     $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') no-repeat");
     $(this).css("width","141px");
     $(this).css("height","38px");
   });
 
-  $('#exactDates').bind('mousedown',function(e){
+  $('#exactDates').bind('touchstart',function(e){
     $(this).css("background","url('/assets/tap-exactdate.png') no-repeat").delay(3000);
     $(this).css("width","144px");
     $(this).css("height","41px");
   });
-  $('#exactDates').bind('mouseup',function(e){
+  $('#exactDates').bind('touchend',function(e){
     $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
     $(this).css("width","141px");
     $(this).css("height","38px");
@@ -139,25 +149,26 @@ $(document).ready(function() {
     $(this).delay(3000).css("background-color","#e7e7e7");
   });
   
-  $("#findFlights .doneBtn").mousedown(function() {
+  $("#findFlights .doneBtn").bind('touchstart',function(e){
     $(this).css("background","url('/assets/done.png') no-repeat").delay(3000);
   });
-  $("#findFlights .doneBtn").mouseup(function() {
+  $("#findFlights .doneBtn").bind('touchend',function(e){
     $(this).delay(3000).css("background","url('/assets/doneBtn.jpg') no-repeat");
   });
   
-  $("footer a").bind('mousedown',function(e){
+  $("footer a").bind('touchstart',function(e){
     $(this).css("background-color","#30ADEB");
     $(this).css("color","#fff !important");
   });
-  $("footer a").bind('mouseup',function(e){
+  $("footer a").bind('touchend',function(e){
     $(this).delay(3000).css("background-color","#383838");    
     $(this).css("color","#b0b0b0 !important");
   });
     
+  // passenger
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
-  });  
+  });
 
   // Search Trace
   $("#origin_airport").click(function (){
@@ -749,4 +760,10 @@ function check_return_date(new_r_date) {
   } else {
     return new_r_date;
   }
+}
+
+function positionFooter(){
+    if($(document).height() < $(window).height()){
+        $("#footer").css({position: "absolute",top:($(window).scrollTop()+$(window).height()-$("#footer").height())+"px"})
+    }
 }
