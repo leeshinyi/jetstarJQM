@@ -1,8 +1,8 @@
 require 'net/http'
 class FlightController < ApplicationController
   def index
-    #@origins = findOriginAirports
-    #@destination = findDestinationAirports
+    @origins = findOriginAirports
+    @destination = findDestinationAirports
   end
 
   def create
@@ -50,22 +50,22 @@ class FlightController < ApplicationController
     airports = []
     tmp = {}
     name = ""
-    iataCode = ""
+    city = ""
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["results"].each do |airport|
       if airport.class == Hash
-        airports << {:a => "#{airport["iataCode"]}; #{airport["name"]}"}
+        airports << {:a => "#{airport["city"]}; #{airport["name"]}"}
       else
         str = case(airport[0])
           when "name"
             then name = airport[1]
-          when "iataCode"
-            then iataCode = airport[1]
+          when "city"
+            then city = airport[1]
           end
       end
     end  if parsed_json["results"]
-    if !name.blank? && !iataCode.blank?
-      airports << {:a => "#{iataCode}; #{name};"}
+    if !name.blank? && !city.blank?
+      airports << {:a => "#{city}; #{name};"}
     end
 
     render :json => airports
@@ -80,9 +80,9 @@ class FlightController < ApplicationController
     }
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["results"].each do |airport|
-      airports << ["#{ airport["name"]} (#{airport["iataCode"]})"]
+      airports << ["#{ airport["name"]};#{airport["city"]} (#{airport["iataCode"]})"]
     end if parsed_json["results"]
-    
+    logger.info airports
     airports
   end
   
@@ -101,7 +101,7 @@ class FlightController < ApplicationController
     end
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["results"].each do |airport|
-      airports << ["#{ airport["name"]} (#{airport["iataCode"]})"]
+      airports << ["#{ airport["name"]};#{airport["city"]} (#{airport["iataCode"]})"]
     end if parsed_json["results"]
     
     
