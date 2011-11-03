@@ -151,7 +151,6 @@ table.ui-datepicker-calendar tbody tr td span
 }
 
 .ui-datepicker-prev.ui-state-disabled {
-  filter: alpha("opacity=30");
   opacity: 0.3;
 }
 
@@ -160,8 +159,20 @@ table.ui-datepicker-calendar tbody tr td span
   margin-left: 22px !important;
 }
 
-.ui-datepicker-prev .ui-icon { left:2px; background: url("calendarArrows.jpg") no-repeat !important; }
-.ui-datepicker-next .ui-icon { right:2px; background: url("calendarArrows.jpg") right bottom no-repeat !important; }
+.ui-datepicker-prev .ui-icon { left:2px; background: url("calendar-arrow.png") no-repeat !important; }
+.ui-datepicker-next .ui-icon { right:2px; background: url("calendar-arrow.png") right bottom no-repeat !important; }
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .ui-datepicker-prev .ui-icon {
+    background: url("calendar-arrow@2x.png") top no-repeat !important;
+    background-size: 11px 24px;
+  }
+  .ui-datepicker-next .ui-icon {
+    background: url("calendar-arrow@2x.png") bottom no-repeat !important;
+    background-size: 11px 24px;
+  }
+}
+
 
 .ui-icon {
   width: 13px;
