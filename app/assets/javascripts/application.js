@@ -32,7 +32,7 @@ $(document).ready(function() {
   $("#rpDate_c .dpMN").text('Month');
 
   $("#dpDay_c, #dpDay").text(format_date("departure", d_date, "min").split('/')[1]);
-  $("#rpDay_c, #rpDay").text('00');
+  $("#rpDay_c, #rpDay").text("");
 
   $("#dpSource_c").text(d_date);
   $("#rpSource_c").text(r_date);
@@ -196,7 +196,7 @@ $(document).ready(function() {
   $("#calLink").click(function (){
     // Reload the calendars
     $("#datepickerD * a.ui-btn-active").click();
-    //$("#datepickerR * a.ui-btn-active").click(); //comment to default value to 00
+    //$("#datepickerR * a.ui-btn-active").click(); //comment to default value to ""
     $("#datepickerR").datepicker("refresh");
     $("#datepickerD").datepicker("refresh");
   });
@@ -210,7 +210,7 @@ $(document).ready(function() {
     $("#dpDate").html($("#dpDate_c").html());
     $("#dpDay").text($("#dpDay_c").text());
 
-    if($("#rpDay_c").text() != '00') {
+    if($("#rpDay_c").text() != "") {
       $("#rpDate").html($("#rpDate_c").html());
       $("#rpDay").text($("#rpDay_c").text());
     }
@@ -536,7 +536,7 @@ function tagDepart(targetDate) {
 
 function tagReturn(targetDate) {
   if (Date.parse(r_date) == Date.parse(targetDate)){
-    if($("#rpDay_c").html() != "00")
+    if($("#rpDay_c").html() != "")
       return [true, 'dDate'];
     else
       return [true, ''];
@@ -751,11 +751,12 @@ function format_date(datepicker, date, min_max) {
 function check_return_date(new_date) {
   if(Date.parse(new_date) < Date.parse(d_date)) {
     if(Date.parse(r_date) < Date.parse(d_date)) {
-      alert("RETURN Date can NOT be before the DEPARTURE DATE");
-      r_date = format_date("return", d_date, "max");
-    } else {
-      alert("RETURN Date can NOT be before the DEPARTURE DATE");
+      if($("#rpDay_c").text() == "")
+        alert("You have chosen a date dated before your departure. Setting departure date to return date.")
+      r_date = format_date("return", d_date, "max")
     }
+    if($("#rpDay_c").text() != "")
+      alert("Your return must be a date not before your departure.")
     return r_date;
   } else {
     return new_date;
