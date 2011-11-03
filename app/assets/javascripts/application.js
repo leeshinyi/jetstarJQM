@@ -244,9 +244,7 @@ $(document).ready(function() {
         end = 31
       }
       $("a.ui-state-default").each(function(){
-        console.log("BEGIN: " + begin)
-        console.log("END: " + end)
-        for(i = parseInt(begin); i < end; i++) {
+        for(i = begin; i < end; i++) {
           if(parseInt($(this).html()) == i) {
             $(this).parent().addClass("ui-range-value");
             $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
@@ -258,15 +256,14 @@ $(document).ready(function() {
 
   $("#datepickerR").click(function(){
     end   = parseInt(r_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
-    begin = parseInt($(".dDate a").html())
+    begin = parseInt($("#datepickerR * .dDate a").html())
     if(Date.parse(d_date) < Date.parse(r_date)) {
       if(d_date.split("/")[0] < r_date.split("/")[0]) { 
         begin = 1
       }
+      console.log(begin)
       $("a.ui-state-default").each(function(){
-        console.log("BEGIN: " + begin)
-        console.log("END: " + end)
-        for(i = parseInt(begin); i < end; i++) {
+        for(i = begin; i < end; i++) {
           if(parseInt($(this).html()) == i) {
             $(this).parent().addClass("ui-range-value");
             $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
@@ -317,6 +314,7 @@ $(document).ready(function() {
       $("#destToOrgin").toggleClass("hidden");
       $("#originToDest").toggleClass("hidden");
     }
+    $("#datepickerR").click();
   });
 
   $("#dd").click(function (){
@@ -329,6 +327,7 @@ $(document).ready(function() {
       $("#destToOrgin").toggleClass("hidden");
       $("#originToDest").toggleClass("hidden");
     }
+    $("#datepickerD").click();
   });
   // Calendar Functionality - END
 
