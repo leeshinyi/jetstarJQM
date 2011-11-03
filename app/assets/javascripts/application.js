@@ -675,6 +675,7 @@ function findClosestAirport(lat, lng, fromto){
           e.preventDefault();
             if(fromto == "from"){
               $("#search_from_hidden").val($(this).html());
+              $("#origin_letters").html(data[0].acode);
             }
             else if(fromto == "to"){
               $("#search_to_hidden").val($(this).html());
