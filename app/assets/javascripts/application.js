@@ -155,14 +155,7 @@ $(document).ready(function() {
     $(this).delay(3000).css("background-color","#383838");
     $(this).css("color","#b0b0b0 !important");
   });
-
-  $(".ui-autocomplete2 .ui-menu-item a").bind('touchstart',function(event){
-    $(".ui-autocomplete2 .ui-menu-item").css("background-color","#30ADEB").delay(3000);
-  });
-  $(".ui-autocomplete2 .ui-menu-item a").bind('touchend',function(event){
-    $(".ui-autocomplete2 .ui-menu-item").delay(3000).css("background-color","#e9e9e9");
-  });
-
+  
   // passenger
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
@@ -609,7 +602,15 @@ function findClosestAirport(lat, lng, fromto){
             $("#dest_short").html(data[0].a.split(";")[0] );
             $("#dest_city").html(data[0].a.split(";")[1]);
           }
-        $(".selectClosestAirport").click(function(e){
+
+        $(".selectClosestAirport").bind('touchstart',function(e){
+          $(this).parent("li").css("background-color","#30ADEB").delay(3000);
+        });
+        $(".selectClosestAirport").bind('touchend',function(e){
+          $(this).parent("li").delay(3000).css("background-color","#e9e9e9");
+        });
+        
+        $(".selectClosestAirport").click(function(e){          
           e.preventDefault();
             if(fromto == "from"){
               $("#search_from_hidden").val($(this).html());
