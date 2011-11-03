@@ -18,7 +18,7 @@ $(document).ready(function() {
   var d1 = new Date();
   var today = d1;
   d_date = parseInt(today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
-  r_date = parseInt(today.getMonth() + 1) + "/" + parseInt(today.getDate() + 1) + "/" + today.getFullYear();
+  r_date = d_date
 
   d1.setDate(new Date().getDate() + 1);
 
@@ -32,8 +32,8 @@ $(document).ready(function() {
   $("#rpDate_c .dpWD").text('Weekday'); 
   $("#rpDate_c .dpMN").text('Month');
 
-  $("#dpDay_c, #dpDay").text(format_date("departure", d_date, "min").split('/')[1]);
-  $("#rpDay_c, #rpDay").text('00');
+  $("#dpDay_c, #dpDay").text(format_date(d_date, "").split('/')[1]);
+  $("#rpDay_c, #rpDay").text("");
 
   $("#dpSource_c").text(d_date);
   $("#rpSource_c").text(r_date);
@@ -96,27 +96,27 @@ $(document).ready(function() {
   });
 
   // change background images on tap of buttons in flight index search by
-  $('#lowestFares').bind('touchstart',function(e){
-    $(this).css("background","url('/assets/tap-lowfare.png') no-repeat").delay(3000);
-    $(this).css("width","144px");
-    $(this).css("height","41px");
-  });
-  $('#lowestFares').bind('touchend',function(e){
-    $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') no-repeat");
-    $(this).css("width","141px");
-    $(this).css("height","38px");
-  });
+  // $('#lowestFares').bind('touchstart',function(e){
+  //   $(this).css("background","url('/assets/tap-lowfare.png') no-repeat").delay(3000);
+  //   $(this).css("width","144px");
+  //   $(this).css("height","41px");
+  // });
+  // $('#lowestFares').bind('touchend',function(e){
+  //   $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') no-repeat");
+  //   $(this).css("width","141px");
+  //   $(this).css("height","38px");
+  // });
 
-  $('#exactDates').bind('touchstart',function(e){
-    $(this).css("background","url('/assets/tap-exactdate.png') no-repeat").delay(3000);
-    $(this).css("width","144px");
-    $(this).css("height","41px");
-  });
-  $('#exactDates').bind('touchend',function(e){
-    $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
-    $(this).css("width","141px");
-    $(this).css("height","38px");
-  });
+  // $('#exactDates').bind('touchstart',function(e){
+  //   $(this).css("background","url('/assets/tap-exactdate.png') no-repeat").delay(3000);
+  //   $(this).css("width","144px");
+  //   $(this).css("height","41px");
+  // });
+  // $('#exactDates').bind('touchend',function(e){
+  //   $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
+  //   $(this).css("width","141px");
+  //   $(this).css("height","38px");
+  // });
 
   $('#intro a').bind('touchstart',function(e){
     $(this).css("background-color","#30ADEB").delay(3000);
@@ -201,11 +201,10 @@ $(document).ready(function() {
   }
 
   //Find Flights to Calendar event
-  $("#calLink").click(function (){
-    // Reload the calendars
-    $("#datepickerD * a.ui-btn-active").click();
-    //$("#datepickerR * a.ui-btn-active").click(); //comment to default value to 00
+  $("#calLink").click(function(){
+    $("#datepickerR").datepicker("setDate", r_date);
     $("#datepickerR").datepicker("refresh");
+    $("#datepickerD").datepicker("setDate", d_date);
     $("#datepickerD").datepicker("refresh");
   });
 
@@ -218,7 +217,7 @@ $(document).ready(function() {
     $("#dpDate").html($("#dpDate_c").html());
     $("#dpDay").text($("#dpDay_c").text());
 
-    if($("#rpDay_c").text() != '00') {
+    if($("#rpDay_c").text() != "") {
       $("#rpDate").html($("#rpDate_c").html());
       $("#rpDay").text($("#rpDay_c").text());
     }
@@ -239,36 +238,38 @@ $(document).ready(function() {
   // Calendar Functionality - START
   // NOTE: check tagDepart() and tagReturn() on how these integrates
   $("#datepickerD").datepicker({
-    minDate: format_date('departure', d_date, 'min'),
+    minDate: format_date(d_date, ''),
     dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     firstDay: 1,
-    defaultDate: format_date('departure', d_date, 'min'),
+    defaultDate: format_date(d_date, ''),
     beforeShowDay: tagReturn,
     onSelect: function(dateText, inst) {
       d_date = dateText;
+      console.log("D_DATE:" + d_date)
       $("#dpDay_c").text(d_date.split("/")[1]);
       $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(d_date) + "</div><div class='dpMN'>" + getMonthName(d_date) + "</div>");
       $("#dpSource_c").html(d_date);
       $("#rpSource_c").text("");
       $("#datepickerR").datepicker("option","minDate", d_date);
       $("#datepickerR").datepicker("option","defaultDate", d_date);
-      $("#datepickerR").datepicker("refresh")
+      $("#datepickerR").datepicker("refresh");
     }
   });
 
   $( "#datepickerR").datepicker({
-    minDate: format_date('departure', d_date, 'min'),
+    minDate: format_date(d_date, ''),
     dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     firstDay: 1,
-    defaultDate: 0,
+    defaultDate: format_date(r_date, ''),
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
-      r_date = check_return_date(dateText);
+      r_date = check_picked_date(dateText, "return");
       $("#rpDay_c").text(r_date.split("/")[1]);
       $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(r_date) + "</div><div class='dpMN'>" + getMonthName(r_date) + "</div>");
       $("#rpSource_c").html(r_date);
       $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
       $("#datepickerD").datepicker("refresh");
+      console.log("RETURN DATE: " + r_date + "\n");
     }
   });
 
@@ -555,7 +556,7 @@ function tagDepart(targetDate) {
 
 function tagReturn(targetDate) {
   if (Date.parse(r_date) == Date.parse(targetDate)){
-    if($("#rpDay_c").html() != "00")
+    if($("#rpDay_c").html() != "")
       return [true, 'dDate'];
     else
       return [true, ''];
@@ -735,7 +736,7 @@ function getNewTime(date){
 }
 
 // this formats the date of type m/d/yyyy to mm/dd/yyyy if m < 10 or d < 10; 9/9/9999 to 09/09/9999
-function format_date(datepicker, date, min_max) {
+function format_date(date, min_max) {
   var m_re = /^\d\//
   var d_re = /\/\d\//
   var D = date
@@ -749,33 +750,41 @@ function format_date(datepicker, date, min_max) {
 
   if(d_re.test(date)) {
     n = d_re.exec(date).toString().replace(/\//g, '')
-    if(datepicker == "departure") {
-      if(min_max == "min") {
-      } else {
-        n = n - 1
-      }
-    // datepicker == "return"
+    
+    if(min_max == "min") { 
+      n = parseInt(n) - 1
+    } else if(min_max == "max") {
+      n = parseInt(n) + 1
     } else {
-      if(min_max == "min") {
-        n = n + 1
-      } else {
-      }
+      n = parseInt(n)
     }
+
     if(n < 10) {
-      D = D.replace(d_re, '/0' + n + '/')
-    }
+      D = date.replace(d_re, '/0' + n + '/')
+    }  
   }
   return D
 }
 
-function check_return_date(new_r_date) {
-  if(Date.parse(new_r_date) < Date.parse(d_date)) {
-    alert("RETURN Date can NOT be before the DEPARTURE DATE");
-    if(Date.parse(r_date) < Date.parse(d_date)) {
-      r_date = format_date("return", d_date, "max");
+function check_picked_date(new_date, datepicker) {
+  if(datepicker == "return") {
+    if(Date.parse(new_date) < Date.parse(d_date)) {
+      if(Date.parse(r_date) < Date.parse(d_date)) {
+        if($("#rpDay_c").text() == "")
+          alert("You have chosen a date dated before your departure. Setting departure date to return date.")
+        r_date = format_date(d_date, "max")
+      }
+      if($("#rpDay_c").text() != "")
+        alert("Your return must be a date not before your departure. Your choice was cancelled.")
+      return r_date
+    } else {
+      return new_date
     }
-    return r_date;
   } else {
-    return new_r_date;
+    if(Date.parse(new_date) > Date.parse(r_date)) {
+      return d_date
+    } else {
+      return new_date
+    }
   }
 }
