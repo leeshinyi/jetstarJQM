@@ -11,16 +11,6 @@
 // var dp_source = $("#dpSource").html();
 // var rp_source = $("#rpSource").html();
 
-$(function(){
-	positionFooter();
-
-
-	$(window)
-		.scroll(positionFooter)
-		.resize(positionFooter)
-});
-
-
 var r_date = ""
 var d_date = ""
 
@@ -82,46 +72,46 @@ $(document).ready(function() {
     $(this).css("color","#fff !important");
   });
   
-  $('#toContent').bind('touchstart',function(e){
+  $('#toContent').bind('mousedown',function(e){
     $("#toContent a span.tfl").css("background", "url('/assets/htfl.png')").delay(3000);
     $("#toContent a span.tfr").css("background", "url('/assets/htfr.png')").delay(3000);
     $(this).css("background","transparent url('/assets/htfbg.png') repeat-x").delay(3000);
   });
-  $('#toContent').bind('touchend',function(e){
+  $('#toContent').bind('mouseup',function(e){
     $("#toContent a span.tfl").delay(3000).css("background", "url('/assets/tfl.png')");
     $("#toContent a span.tfr").delay(3000).css("background", "url('/assets/tfr.png')");
     $("#toContent").delay(3000).css("background","transparent url('/assets/tfbg.png') repeat-x");    
   });
 
-  $('#origin_airport').bind('touchstart',function(e){
+  $('#origin_airport').bind('mousedown',function(e){
     $("#ffOrig").css("background", "transparent url('/assets/arrow-right.png') top right no-repeat").delay(3000);
     $("#origin_airport span.tfl").removeClass("tfl").addClass("tap-tfl").delay(3000);
     $("#fromContent").css("background", "url('/assets/arrow-mid.png') repeat-x").delay(3000);
   });
-  $('#origin_airport').bind('touchend',function(e){
+  $('#origin_airport').bind('mouseup',function(e){
     $("#ffOrig").delay(3000).css("background", "transparent url('/assets/departEdge.png') top right no-repeat");
     $("#origin_airport span.tap-tfl").delay(3000).removeClass("tap-tfl").addClass("tfl");
     $("#fromContent").delay(3000).css("background", "url('/assets/tfbg.png') repeat-x");   
   });
 
   // change background images on tap of buttons in flight index search by
-  $('#lowestFares').bind('touchstart',function(e){
+  $('#lowestFares').bind('mousedown',function(e){
     $(this).css("background","url('/assets/tap-lowfare.png') no-repeat").delay(3000);
     $(this).css("width","144px");
     $(this).css("height","41px");
   });
-  $('#lowestFares').bind('touchend',function(e){
+  $('#lowestFares').bind('mouseup',function(e){
     $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') no-repeat");
     $(this).css("width","141px");
     $(this).css("height","38px");
   });
 
-  $('#exactDates').bind('touchstart',function(e){
+  $('#exactDates').bind('mousedown',function(e){
     $(this).css("background","url('/assets/tap-exactdate.png') no-repeat").delay(3000);
     $(this).css("width","144px");
     $(this).css("height","41px");
   });
-  $('#exactDates').bind('touchend',function(e){
+  $('#exactDates').bind('mouseup',function(e){
     $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
     $(this).css("width","141px");
     $(this).css("height","38px");
@@ -149,26 +139,25 @@ $(document).ready(function() {
     $(this).delay(3000).css("background-color","#e7e7e7");
   });
   
-  $("#findFlights .doneBtn").bind('touchstart',function(e){
+  $("#findFlights .doneBtn").mousedown(function() {
     $(this).css("background","url('/assets/done.png') no-repeat").delay(3000);
   });
-  $("#findFlights .doneBtn").bind('touchend',function(e){
+  $("#findFlights .doneBtn").mouseup(function() {
     $(this).delay(3000).css("background","url('/assets/doneBtn.jpg') no-repeat");
   });
   
-  $("footer a").bind('touchstart',function(e){
+  $("footer a").bind('mousedown',function(e){
     $(this).css("background-color","#30ADEB");
     $(this).css("color","#fff !important");
   });
-  $("footer a").bind('touchend',function(e){
+  $("footer a").bind('mouseup',function(e){
     $(this).delay(3000).css("background-color","#383838");    
     $(this).css("color","#b0b0b0 !important");
   });
     
-  // passenger
   $('#uipv_ul_adults li,#uipv_ul_child li,#uipv_ul_infants li').bind('touchmove',function(e){
     e.preventDefault();
-  });
+  });  
 
   // Search Trace
   $("#origin_airport").click(function (){
@@ -334,21 +323,21 @@ $(document).ready(function() {
        $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstFrom').show();
        $.each($("#airportLstFrom a"), function() {
          str = $(this).text();
-         $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.split(";")[0].substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span><span class='hidden fullFromName'>" + str + "</span></a>");
+         $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span>"  + "</a>");
        });
        $(".selectClosestAirport").click(function(e){
          e.preventDefault();
-         ap =  $($(this).children()[2]).text();
+         ap =  $($(this).children()[0]).text()
+         ap += " (" +  $($(this).children()[1]).text() + ")";
          $("#search_from_hidden").val(ap);
          $.mobile.changePage("#flightIndex");
-         
-         $("#searchOrigin").val($($(this).children()[1]).text());
+         $("#origin_short").html($($(this).children()[1]).text());
          city = $($(this).children()[0]).text();
-         $("#origin_city").html(ap.split(";")[1].substring(0, ap.split(";")[1].indexOf("(")-1));
+
          if(city.lastIndexOf("(") != -1)
-            $("#origin_short").html(city.substring(0,city.lastIndexOf("(")+1));
+            $("#origin_city").html(city.substring(0,city.lastIndexOf("(")+1));
          else
-            $("#origin_short").html(city);
+            $("#origin_city").html(city);
        });
 
 
@@ -380,21 +369,20 @@ $(document).ready(function() {
       $(".searchHeaderbox").hide();
       $.each($("#airportLstTo a"), function() {
          str = $(this).text();
-         $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.split(";")[0].substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span><span class='hidden fullToName'>" + str + "</span></a>");
+         $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span>"  + "</a>");
       });
       $(".selectClosestAirport").click(function(e){
         e.preventDefault();
-        ap =  $($(this).children()[2]).text();
-        //ap += " (" +  $($(this).children()[1]).text() + ")";
-        $("#search_to_hidden").val(ap);
+        ap =  $($(this).children()[0]).text();
+        ap += " (" +  $($(this).children()[1]).text() + ")";
+        $("#search_from_hidden").val(ap);
         $.mobile.changePage("#flightIndex");
-        $("#searchDestination").val($($(this).children()[1]).text());
+        $("#dest_short").html($($(this).children()[1]).text());
         city = $($(this).children()[0]).text();
-        $("#dest_city").html(ap.split(";")[1].substring(0, ap.split(";")[1].indexOf("(")-1));
         if(city.lastIndexOf("(") != -1)
-           $("#dest_short").html(city.substring(0, city.lastIndexOf("(")-1));
+           $("#dest_city").html(city.substring(0, city.lastIndexOf("(")-1));
         else
-           $("#dest_short").html(city);        
+           $("#dest_city").html(city);        
       });
     },
     close:function(event,ui){
@@ -464,7 +452,7 @@ $(document).ready(function() {
     $.ajax({
       type: "GET",
       url: "/flight/findFlights",
-      data: "f=" + $("#searchOrigin").val() + "&t=" + $("#searchDestination").val() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
+      data: "f=" + $("#origin_short").text() + "&t=" + $("#dest_short").text() + "&d=" + $("#dpSource_f").text() + "&a=" + $("#rpSource_f").text() + "&c=" + $("#child").val() + "&i=" + $("#infants").val() + "&p=" + $("#adults").val()  + "&commit=" + commit,
      success:
      function(html){
        $("#recentResults").empty();
@@ -574,7 +562,7 @@ function findClosestAirport(lat, lng, fromto){
             $("#search_from_hidden").val(data[0].a.split(";")[1] + " (" + data[0].a.split(";")[0] +")");
             $.ajax({
                url: "/flight/findDestinationAirports",
-               data: "o=" + $("#searchOrigin").val(),
+               data: "o=" + $("#search_from_hidden").val(),
                type: "GET",
                success:function(d){
                  item = []
@@ -622,7 +610,7 @@ function findClosestAirport(lat, lng, fromto){
             $("#search_from_hidden").val(data[0].a.split(";")[1] + " (" + data[0].a.split(";")[0] +")");
             $.ajax({
                url: "/flight/findDestinationAirports",
-               data: "o=" + $("#searchOrigin").val(),
+               data: "o=" + $("#search_from_hidden").val(),
                type: "GET",
                success:function(d){
                  item = []
@@ -763,10 +751,4 @@ function check_return_date(new_r_date) {
   } else {
     return new_r_date;
   }
-}
-
-function positionFooter(){
-    if($(document).height() < $(window).height()){
-        $("#footer").css({position: "absolute",top:($(window).scrollTop()+$(window).height()-$("#footer").height())+"px"})
-    }
 }
