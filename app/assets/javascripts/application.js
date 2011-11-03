@@ -202,9 +202,9 @@ $(document).ready(function() {
 
   //Find Flights to Calendar event
   $("#calLink").click(function(){
-    $("#datepickerR").datepicker("setDate", r_date);
+    $("#datepickerR").datepicker("option", "setDate", r_date);
     $("#datepickerR").datepicker("refresh");
-    $("#datepickerD").datepicker("setDate", d_date);
+    $("#datepickerD").datepicker("option", "setDate", d_date);
     $("#datepickerD").datepicker("refresh");
   });
 
@@ -238,21 +238,18 @@ $(document).ready(function() {
   // Calendar Functionality - START
   // NOTE: check tagDepart() and tagReturn() on how these integrates
   $("#datepickerD").datepicker({
-    minDate: format_date(d_date, ''),
+    minDate: d_date,
     dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     firstDay: 1,
     defaultDate: format_date(d_date, ''),
     beforeShowDay: tagReturn,
     onSelect: function(dateText, inst) {
       d_date = dateText;
-      console.log("D_DATE:" + d_date)
+      //console.log("Clicked Departure! " + d_date)
       $("#dpDay_c").text(d_date.split("/")[1]);
       $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(d_date) + "</div><div class='dpMN'>" + getMonthName(d_date) + "</div>");
       $("#dpSource_c").html(d_date);
       $("#rpSource_c").text("");
-      $("#datepickerR").datepicker("option","minDate", d_date);
-      $("#datepickerR").datepicker("option","defaultDate", d_date);
-      $("#datepickerR").datepicker("refresh");
     }
   });
 
@@ -264,12 +261,11 @@ $(document).ready(function() {
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
       r_date = check_picked_date(dateText, "return");
+      //console.log("Clicked Return! " + r_date);
       $("#rpDay_c").text(r_date.split("/")[1]);
       $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(r_date) + "</div><div class='dpMN'>" + getMonthName(r_date) + "</div>");
       $("#rpSource_c").html(r_date);
-      $("#datepickerD").datepicker("option","maxDate",$("#rpSource_c").text());
-      $("#datepickerD").datepicker("refresh");
-      console.log("RETURN DATE: " + r_date + "\n");
+      
     }
   });
 
