@@ -346,9 +346,9 @@ $(document).ready(function() {
             type: "GET",
             success:function(d){
               item = []
-              for(i=0; i<d.length; i++){
-                item.push(d[i][0]);
-              }
+              for(i=0; i<d.length; i++)
+                if (d[i][0].split(";")[1].indexOf($("#searchOrigin").val()) == -1)
+                  item.push(d[i][0]);
               $('ul.ui-autocomplete').empty();
               $('#search_to').autocomplete("option", { source: item });
             }
@@ -582,9 +582,10 @@ function findClosestAirport(lat, lng, fromto){
                type: "GET",
                success:function(d){
                  item = []
-                 for(i=0; i<d.length; i++){
-                   item.push(d[i][0]);
-                 }
+                 for(i=0; i<d.length; i++)
+                   if(d[i][0].indexOf(data[0].a.split(";")[0]) == -1)
+                    item.push(d[i][0]);
+                 
                  //destination_airports = d;
                  $('ul.ui-autocomplete').empty();
                  $('#search_to').autocomplete("option", { source: item });
@@ -630,9 +631,10 @@ function findClosestAirport(lat, lng, fromto){
                type: "GET",
                success:function(d){
                  item = []
-                 for(i=0; i<d.length; i++){
-                   item.push(d[i][0]);
-                 }
+                 for(i=0; i<d.length; i++)
+                   if(d[i][0].indexOf(data[0].a.split(";")[0]) == -1)
+                     item.push(d[i][0]);
+
                  //destination_airports = d;
                  $('ul.ui-autocomplete').empty();
                  $('#search_to').autocomplete("option", { source: item });
