@@ -10,7 +10,7 @@
 
 // var dp_source = $("#dpSource").html();
 // var rp_source = $("#rpSource").html();
-var myScroll;
+
 var r_date = ""
 var d_date = ""
 
@@ -777,8 +777,4 @@ function check_return_date(new_r_date) {
   } else {
     return new_r_date;
   }
-}
-
-function loaded() {
-	myScroll = new iScroll('searchPage');
 }
