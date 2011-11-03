@@ -156,10 +156,10 @@ $(document).ready(function() {
     $(this).css("color","#b0b0b0 !important");
   });
 
-  $(".selectClosestAirport").live('mousedown',function(e){
+  $(".selectClosestAirport").live('touchstart',function(e){
     $(this).parent("li").css("background-color","#30ADEB").delay(3000);
   });
-  $(".selectClosestAirport").live('mouseup',function(e){
+  $(".selectClosestAirport").live('touchend',function(e){
     $(this).parent("li").delay(3000).css("background-color","#e9e9e9");
   });
         
