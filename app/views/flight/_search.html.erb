@@ -1,4 +1,4 @@
-<div data-role="page" id="flightSearch<%= q.camelize%>">
+<div data-role="page" id="flightSearch<%= q.camelize%>" data-iscroll="enable">
   <div data-role="header" class="header">
     <div id="findFlights">      
        <span id="searchFieldGroup">
@@ -11,24 +11,26 @@
      </div>
   </div>
   
-  <div data-role="content"> 
-    <div id="searchPage" class="contentWrap left">
-      <div id="geolocation" class="left geoneararea nearestairport<%= q.camelize%>">
-        <div id="geoLocWrap" class="left fullwidth">
-          <span class="boxLeft left"></span>
-          <span id="geolocationTxt" class="left">
-            <span id="plane" class="left"></span>
-            <span id="geolocationHeader" class="geolocationHeaderclass">Show nearest <%= (q == "from")?  "Departure" : "Return" %> airports</span>
-            <span id="pen" class="right"></span>
-          </span>
-          <span class="boxRight right"></span>
+  <div data-role="content">
+    <div data-iscroll="scroller">
+       <div id="searchPage" class="contentWrap left">
+         <div id="geolocation" class="left geoneararea nearestairport<%= q.camelize%>">
+           <div id="geoLocWrap" class="left fullwidth">
+             <span class="boxLeft left"></span>
+             <span id="geolocationTxt" class="left">
+               <span id="plane" class="left"></span>
+               <span id="geolocationHeader" class="geolocationHeaderclass">Show nearest <%= (q == "from")?  "Departure" : "Return" %> airports</span>
+               <span id="pen" class="right"></span>
+             </span>
+             <span class="boxRight right"></span>
+           </div>
+         </div>
         </div>
-        
-      </div>
-      <div id="airportLst<%= q.camelize%>" class=" searchResults left fullwidth"></div>
+        <div id="airportLst<%= q.camelize%>" class=" searchResults left fullwidth"></div>
+       </div>
     </div>
   </div>
-  
+
   <div data-role="footer" class="footer">
     <%= render "footer" %>
   </div>
