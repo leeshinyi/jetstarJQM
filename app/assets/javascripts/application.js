@@ -156,10 +156,10 @@ $(document).ready(function() {
     $(this).css("color","#b0b0b0 !important");
   });
 
-  $(".selectClosestAirport").live('mousedown',function(e){
+  $(".selectClosestAirport").live('touchstart',function(e){
     $(this).parent("li").css("background-color","#30ADEB").delay(3000);
   });
-  $(".selectClosestAirport").live('mouseup',function(e){
+  $(".selectClosestAirport").live('touchend',function(e){
     $(this).parent("li").delay(3000).css("background-color","#e9e9e9");
   });
         
@@ -502,6 +502,8 @@ $(document).ready(function() {
            var da = html.to[i].da=="" ? $("#origin_short").text() : html.to[i].da
            var aa = html.to[i].aa=="" ? $("#dest_short").text() : html.to[i].aa
 
+           $.mobile.changePage("#recentSearch");
+
            $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + da + "-" + aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + getNewTime(ddt) + "<br/>ARR " + getNewTime(adt) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
          }
        }
@@ -516,6 +518,8 @@ $(document).ready(function() {
             var bottom = (i==html.from.length-1) ? "bottomradius" : "";
             var da = html.from[i].da=="" ? $("#dest_short").text() : html.from[i].da
             var aa = html.from[i].aa=="" ? $("#origin_short").text() : html.from[i].aa
+
+            $.mobile.changePage("#recentSearch");
 
             $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + da + "-" + aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + getNewTime(ddt) + "<br/>ARR " + getNewTime(adt) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
            }
