@@ -96,27 +96,27 @@ $(document).ready(function() {
   });
 
   // change background images on tap of buttons in flight index search by
-  $('#lowestFares').bind('touchstart',function(e){
-    $(this).css("background","url('/assets/tap-lowfare.png') no-repeat").delay(3000);
-    $(this).css("width","144px");
-    $(this).css("height","41px");
-  });
-  $('#lowestFares').bind('touchend',function(e){
-    $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') no-repeat");
-    $(this).css("width","141px");
-    $(this).css("height","38px");
-  });
+  // $('#lowestFares').bind('touchstart',function(e){
+  //   $(this).css("background","url('/assets/tap-lowfare.png') no-repeat").delay(3000);
+  //   $(this).css("width","144px");
+  //   $(this).css("height","41px");
+  // });
+  // $('#lowestFares').bind('touchend',function(e){
+  //   $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') no-repeat");
+  //   $(this).css("width","141px");
+  //   $(this).css("height","38px");
+  // });
 
-  $('#exactDates').bind('touchstart',function(e){
-    $(this).css("background","url('/assets/tap-exactdate.png') no-repeat").delay(3000);
-    $(this).css("width","144px");
-    $(this).css("height","41px");
-  });
-  $('#exactDates').bind('touchend',function(e){
-    $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
-    $(this).css("width","141px");
-    $(this).css("height","38px");
-  });
+  // $('#exactDates').bind('touchstart',function(e){
+  //   $(this).css("background","url('/assets/tap-exactdate.png') no-repeat").delay(3000);
+  //   $(this).css("width","144px");
+  //   $(this).css("height","41px");
+  // });
+  // $('#exactDates').bind('touchend',function(e){
+  //   $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
+  //   $(this).css("width","141px");
+  //   $(this).css("height","38px");
+  // });
 
   $('#intro a').bind('touchstart',function(e){
     $(this).css("background-color","#30ADEB").delay(3000);
