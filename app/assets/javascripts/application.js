@@ -237,7 +237,7 @@ $(document).ready(function() {
 
   // sets the date colors in between dates.. :|
   $("#datepickerD").click(function(){
-    begin = parseInt(d_date.split("/")[1].replace("0","")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
+    begin = parseInt(d_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
     end   = parseInt($(".dDate a").html())
     if(Date.parse(d_date) < Date.parse(r_date)) {
       if(d_date.split("/")[0] < r_date.split("/")[0]) { 
@@ -257,7 +257,7 @@ $(document).ready(function() {
   });
 
   $("#datepickerR").click(function(){
-    end   = parseInt(r_date.split("/")[1].replace("0","")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
+    end   = parseInt(r_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
     begin = parseInt($(".dDate a").html())
     if(Date.parse(d_date) < Date.parse(r_date)) {
       if(d_date.split("/")[0] < r_date.split("/")[0]) { 
