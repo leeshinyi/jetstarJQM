@@ -1,6 +1,6 @@
-<div data-role="page" id="flightIndex">
+<div data-role="page" id="flightIndex" >
     
-  <div data-role="header" class="header">
+  <div data-role="header" class="header" data-position="fixed">
     <div id="findFlights2">
       <div id="back"><a href="/" id="backBtn" data-direction="reverse">Back</a></div>
       <div id="midHeader"><h2 id="findFlights">Find Flights</h2></div>
@@ -8,7 +8,7 @@
     </div>
   </div>
   
-  <div data-role="content" class="left contentWrap ffIndex">
+  <div data-role="content" class="left contentWrap ffIndex"> 
     <div id="main">
     <div id="flightMenu" class="left contentWrap ffIndex">
       <ul id="flightNav">
@@ -122,6 +122,7 @@
     
     <ul id="search_#{params[:q]}_list"></ul>
     
+    <!--
     <div class="left contentWrap">
       <div id="recentSearches">
         <div id="searchesHeader">
@@ -132,8 +133,9 @@
         <ul id="recentResults" class="hidden"></ul>
       </div>
     </div>
+    -->
     </div>
-    <div data-role="footer" class="footer" >
+    <div data-role="footer" class="footer" data-position="fixed" data-id="ifooter">
       <%= render "footer" %>
     </div>
 </div>

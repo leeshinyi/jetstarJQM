@@ -1,0 +1,32 @@
+<div data-role="page" id="recentSearch">
+    
+  <div data-role="header" class="header">
+    <div id="recent_searches"><a href="#flightIndex" class="cancelBtn" data-rel="back" id="cancelFrmRs">Back</a></div>
+    <div id="midHeader">
+      <h2 id="tfthead">
+        <span>Recent Searches</span>
+      </h2>
+    </div>
+  </div>
+  
+  <div data-role="content"> 
+    <div id="drWrap">
+      <div class="left contentWrap">
+        <div id="recentSearches">
+          <div id="searchesHeader">
+            <div id="clock" class="floatLeft"></div>
+            <h3 class="left width70">Recent Searches</h3>
+            <div id="downIcon" class="floatRight"></div>
+          </div>
+          <ul id="recentResults" class="hidden"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div data-role="footer" class="footer" >
+    <%= render "footer" %>
+  </div>
+  
+</div>
+
