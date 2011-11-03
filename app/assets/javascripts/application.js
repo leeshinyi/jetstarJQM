@@ -712,7 +712,10 @@ function setNewDate(date){
 }
 
 function getNewTime(date){
- time = date.getHours() + ":" + date.getMinutes();
+ var h = date.getHours().toString().length == 1 ? "0"+ date.getHours().toString() : date.getHours();
+ var m = date.getMinutes().toString().length == 1 ? "0"+ date.getMinutes().toString() : date.getMinutes();
+ 
+ time = h + ":" + m;
  return time;
 }
 
