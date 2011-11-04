@@ -173,7 +173,6 @@ class FlightController < ApplicationController
         #   @return_flights = flights
         # end
         flights.each do |f|
-          logger.info ">>>>>>>>>>>>>#{f[:aa]}"
           if f[:aa] == params[:f]  #departure
             @flights << f
           elsif f[:aa] == params[:t]

@@ -554,6 +554,10 @@ $(document).ready(function() {
          $("#recentResults").addClass("hidden");
        }
 
+       if(html.from.length==0 && html.to.length==0){         
+         $("#drWrap .contentWrap").text("No scheduled flights are available for the chosen dates.");
+       }
+
        $("#recentResults").show();
        $("#downIcon").show();
        $("#recentSearches p").remove();
