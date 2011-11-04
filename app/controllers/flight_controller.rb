@@ -5,40 +5,40 @@ class FlightController < ApplicationController
     @destination = findDestinationAirports
   end
 
-  def create
-    if params[:from] && !params[:from].blank?
-      session[:origin] = params[:from] 
-      session[:dest] = nil
-    end
-    session[:dest] = params[:to] if params[:to]  && !params[:to].blank?
-    session[:depart] = params[:depart] if params[:depart]
-    session[:return] = params[:return] if params[:return]
-    
-    if params[:commit]
-      
-      session[:adults] = params[:adults]
-      session[:child] = params[:child]
-      session[:infants] = params[:infants]
-      
-      findFlights
-    else
-      session[:flight] = nil
-      session[:return_flights] = nil
-    end
-    if request.xml_http_request?
-      render :nothing => true, :status => 200
-      #render :action => 'index#flightIndex'
-      #redirect_to  "/#flightIndex"
-      #redirect_to flight_index_path ,:anchor => "flightIndex"
-    else
-      #redirect_to flight_index_path ,:anchor => "flightIndex"
-    end
-  end
+  # def create
+  #   if params[:from] && !params[:from].blank?
+  #     session[:origin] = params[:from] 
+  #     session[:dest] = nil
+  #   end
+  #   session[:dest] = params[:to] if params[:to]  && !params[:to].blank?
+  #   session[:depart] = params[:depart] if params[:depart]
+  #   session[:return] = params[:return] if params[:return]
+  #   
+  #   if params[:commit]
+  #     
+  #     session[:adults] = params[:adults]
+  #     session[:child] = params[:child]
+  #     session[:infants] = params[:infants]
+  #     
+  #     findFlights
+  #   else
+  #     session[:flight] = nil
+  #     session[:return_flights] = nil
+  #   end
+  #   if request.xml_http_request?
+  #     render :nothing => true, :status => 200
+  #     #render :action => 'index#flightIndex'
+  #     #redirect_to  "/#flightIndex"
+  #     #redirect_to flight_index_path ,:anchor => "flightIndex"
+  #   else
+  #     #redirect_to flight_index_path ,:anchor => "flightIndex"
+  #   end
+  # end
 
-  def search
-    @origins = findOriginAirports
-    @destination = findDestinationAirports
-  end
+  # def search
+  #   @origins = findOriginAirports
+  #   @destination = findDestinationAirports
+  # end
   
   def findClosestAirports
     #{"altitude":-1,"city":"Tokyo","country":"Japan","countryCode":"JP","daylightSaving":78,"iataCode":"NRT","icaoCode":"NRT","latitude":-1,"longitude":-1,"name":"Tokyo (Narita Airport)","origin":true,"timeZoneOffset":-1}
@@ -113,28 +113,31 @@ class FlightController < ApplicationController
     
   def findFlights
     @flights = []
-    # @return_flights = []
+    @return_flights = []
 
-      depart = params[:d].split('/')
-      dDate = "#{depart[2]}#{depart[0]}#{depart[1]}"
-      arrive = params[:a].split('/')
-      aDate = "#{arrive[2]}#{arrive[0]}#{arrive[1]}"
+    depart = params[:d].split('/')
+    dDate = "#{depart[2]}#{depart[0]}#{depart[1]}"
+    arrive = params[:a].split('/')
+    aDate = "#{arrive[2]}#{arrive[0]}#{arrive[1]}"
 
-      str = ((params[:commit].downcase.index("exact"))? "exact" : "flexible")
-      url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/flights/#{str}Dates/#{params[:f]}/#{params[:t]}/#{dDate}/#{aDate}/#{params[:p]}/#{params[:c]}/#{params[:i]}")
-      logger.info url
-      req = Net::HTTP::Get.new(url.path)
-      res = Net::HTTP.start(url.host, url.port) do |http|
-        http.request(req)
-      end
-      logger.info res.body
-      parsed_json = ActiveSupport::JSON.decode(res.body)
-      
-      if parsed_json["results"]
+    str = ((params[:commit].downcase.index("exact"))? "exact" : "flexible")
+    url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/flights/#{str}Dates/#{params[:f]}/#{params[:t]}/#{dDate}/#{aDate}/#{params[:p]}/#{params[:c]}/#{params[:i]}")
+    logger.info url
+    req = Net::HTTP::Get.new(url.path)
+    res = Net::HTTP.start(url.host, url.port) do |http|
+      http.request(req)
+    end
+    # logger.info res.body
+    parsed_json = ActiveSupport::JSON.decode(res.body)
+    
+    if parsed_json["results"]
+      parsed_json["results"].size.times do |i|
         tmp = {}
-        parsed_json["results"].each do |flight|
+        flights = []
+        parsed_json["results"][i].each do |flight|
+          # logger.info flight
           if flight.class == Hash
-            @flights << {:aa => flight["arrivalAirport"], :adt => flight["arrivalDateTime"], :bc => flight["businessClassAvailable"], :c => flight["currency"], :da => flight["departureAirport"], :ddt => flight["departureDateTime"], :flight => flight["flightDesignator"], :stop => flight["numStops"], :price => flight["price"]}
+            flights << {:aa => flight["arrivalAirport"], :adt => flight["arrivalDateTime"], :bc => flight["businessClassAvailable"], :c => flight["currency"], :da => flight["departureAirport"], :ddt => flight["departureDateTime"], :flight => flight["flightDesignator"], :stop => flight["numStops"], :price => flight["price"]}
           else
             str = case(flight[0])
               when "arrivalAirport"
@@ -159,29 +162,31 @@ class FlightController < ApplicationController
             tmp.store(str, flight[1]) if str
           end
         end
+        
         if !tmp.empty?
-          @flights << tmp 
+          flights << tmp
         end
         
-        @f = []
-        @rf = []
-        @flights.each do |f|
-          if f[:da] == params[:f]
-            @f << f
-          elsif f[:da] == params[:t]
-            @rf << f
+        # if i == 0  #departure
+        #   @flights = flights
+        # elsif i == 1
+        #   @return_flights = flights
+        # end
+        flights.each do |f|
+          logger.info ">>>>>>>>>>>>>#{f[:aa]}"
+          if f[:aa] == params[:f]  #departure
+            @flights << f
+          elsif f[:aa] == params[:t]
+            @return_flights << f
           end
         end
-      end 
+      end
+    end 
 
-      # return flights
-      #o = session[:dest][-4..-2]
-      #d = session[:origin][-4..-2]
-      #{"f"=>"ADL", "t"=>"SYD", "d"=>"10/25/2011", "a"=>"10/26/2011", "c"=>"0", "i"=>"0", "p"=>"1"}
-      @f = @f.sort_by { |flight| flight[:ddt] }
-      @rf = @rf.sort_by { |flight| flight[:ddt] }
-    #end
-    render :json => {:to => @f, :from => @rf}
+    #{"f"=>"ADL", "t"=>"SYD", "d"=>"10/25/2011", "a"=>"10/26/2011", "c"=>"0", "i"=>"0", "p"=>"1"}
+    @flights = @flights.sort_by { |flight| flight[:ddt] }
+    @return_flights = @return_flights.sort_by { |flight| flight[:ddt] }
+    render :json => {:to => @flights, :from => @return_flights}
   end
   
   def reset
