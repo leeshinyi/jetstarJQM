@@ -246,40 +246,42 @@ $(document).ready(function() {
 
   // sets the date colors in between dates.. :|
   $("#datepickerD").click(function(){
-    begin = parseInt(d_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
-    end   = parseInt($(".dDate a").html())
-    if(Date.parse(d_date) < Date.parse(r_date)) {
-      if(d_date.split("/")[0] < r_date.split("/")[0]) { 
-        end = 31
-      }
-      $("a.ui-state-default").each(function(){
-        for(i = begin; i < end; i++) {
-          if(parseInt($(this).html()) == i) {
-            $(this).parent().addClass("ui-range-value");
-            $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
-          }
-        }
-      }); 
-    }
+    check_between_dates("departure")
+    // begin = parseInt(d_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
+    // end   = parseInt($(".dDate a").html())
+    // if(Date.parse(d_date) < Date.parse(r_date)) {
+    //   if(d_date.split("/")[0] < r_date.split("/")[0]) { 
+    //     end = 31
+    //   }
+    //   $("a.ui-state-default").each(function(){
+    //     for(i = begin; i < end; i++) {
+    //       if(parseInt($(this).html()) == i) {
+    //         $(this).parent().addClass("ui-range-value");
+    //         $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
+    //       }
+    //     }
+    //   }); 
+    // }
   });
 
   $("#datepickerR").click(function(){
-    end   = parseInt(r_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
-    begin = parseInt($("#datepickerR * .dDate a").html())
-    if(Date.parse(d_date) < Date.parse(r_date)) {
-      if(d_date.split("/")[0] < r_date.split("/")[0]) { 
-        begin = 1
-      }
-      // console.log(begin)
-      $("a.ui-state-default").each(function(){
-        for(i = begin; i < end; i++) {
-          if(parseInt($(this).html()) == i) {
-            $(this).parent().addClass("ui-range-value");
-            $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
-          }
-        }
-      }); 
-    }
+    check_between_dates("return")
+    // end   = parseInt(r_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
+    // begin = parseInt($("#datepickerR * .dDate a").html())
+    // if(Date.parse(d_date) < Date.parse(r_date)) {
+    //   if(d_date.split("/")[0] < r_date.split("/")[0]) { 
+    //     begin = 1
+    //   }
+    //   // console.log(begin)
+    //   $("a.ui-state-default").each(function(){
+    //     for(i = begin; i < end; i++) {
+    //       if(parseInt($(this).html()) == i) {
+    //         $(this).parent().addClass("ui-range-value");
+    //         $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
+    //       }
+    //     }
+    //   }); 
+    // }
   });
 
   // NOTE: check tagDepart() and tagReturn() on how these integrates
@@ -849,3 +851,35 @@ function check_picked_date(new_date, datepicker) {
     }
   }
 }
+
+function check_between_dates(datepicker) {
+  var begin = null
+  var end   = null
+  if(datepicker == "departure") {
+    begin = parseInt(d_date.split("/")[1].replace(/^0/,"")) + 1
+    end   = parseInt($(".dDate a").html())  
+  } else {
+    begin = parseInt(d_date.split("/")[1].replace(/^0/,"")) + 1
+    end   = parseInt(r_date.split("/")[1].replace(/^0/,""))
+  }
+  
+  if(Date.parse(d_date) < Date.parse(r_date)) {
+    if(d_date.split("/")[0] < r_date.split("/")[0]) { 
+      (datepicker == "departure") ? end = 31 : begin = 1
+    }
+    $("a.ui-state-default").each(function(){
+      for(i = begin; i < end; i++) {
+        if(parseInt($(this).html()) == i) {
+          $(this).parent().addClass("ui-range-value");
+          if (!$(this).parent("td").hasClass("dDate")){
+            $(this).css("background","#cdcdcd !important");
+            $(this).css("color","#fff !important");
+            $(this).css("text-shadow","none !important");
+          }
+        }
+      }
+    }); 
+  }
+}
+
+
