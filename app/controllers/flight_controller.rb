@@ -54,7 +54,7 @@ class FlightController < ApplicationController
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["results"].each do |airport|
       if airport.class == Hash
-        airports << {:a => "#{airport["city"]}; #{airport["name"]}"}
+        airports << {:a => "#{airport["city"]}; #{airport["name"]}", :acode => "#{airport["iataCode"]}"}
       else
         str = case(airport[0])
           when "name"

@@ -204,6 +204,15 @@ $(document).ready(function() {
   $("#calLink").click(function(){
     $("#datepickerR").datepicker("option", "setDate", r_date);
     $("#datepickerD").datepicker("option", "setDate", d_date);
+    
+    if ($("#flightIndex #origin_letters").text() == "" || $("#flightIndex #dest_letters").text()==""){
+      $("#originToDest").text("Schedule");
+      $("#destToOrgin").text("Schedule");
+    }
+    else{
+      $("#originToDest").text($("#flightIndex #origin_letters").text() + " to " + $("#flightIndex #dest_letters").text());
+      $("#destToOrgin").text($("#flightIndex #dest_letters").text() + " to " + $("#flightIndex #origin_letters").text());
+    }
   });
 
   // Update the flight page with the new values
@@ -234,6 +243,45 @@ $(document).ready(function() {
   });
 
   // Calendar Functionality - START
+
+  // sets the date colors in between dates.. :|
+  $("#datepickerD").click(function(){
+    begin = parseInt(d_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
+    end   = parseInt($(".dDate a").html())
+    if(Date.parse(d_date) < Date.parse(r_date)) {
+      if(d_date.split("/")[0] < r_date.split("/")[0]) { 
+        end = 31
+      }
+      $("a.ui-state-default").each(function(){
+        for(i = begin; i < end; i++) {
+          if(parseInt($(this).html()) == i) {
+            $(this).parent().addClass("ui-range-value");
+            $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
+          }
+        }
+      }); 
+    }
+  });
+
+  $("#datepickerR").click(function(){
+    end   = parseInt(r_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
+    begin = parseInt($("#datepickerR * .dDate a").html())
+    if(Date.parse(d_date) < Date.parse(r_date)) {
+      if(d_date.split("/")[0] < r_date.split("/")[0]) { 
+        begin = 1
+      }
+      // console.log(begin)
+      $("a.ui-state-default").each(function(){
+        for(i = begin; i < end; i++) {
+          if(parseInt($(this).html()) == i) {
+            $(this).parent().addClass("ui-range-value");
+            $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
+          }
+        }
+      }); 
+    }
+  });
+
   // NOTE: check tagDepart() and tagReturn() on how these integrates
   $("#datepickerD").datepicker({
     minDate: d_date,
@@ -243,7 +291,6 @@ $(document).ready(function() {
     beforeShowDay: tagReturn,
     onSelect: function(dateText, inst) {
       d_date = dateText;
-      //console.log("Clicked Departure! " + d_date)
       $("#dpDay_c").text(d_date.split("/")[1]);
       $("#dpDate_c").html("<div class='dpWD'>" + getWeekDay(d_date) + "</div><div class='dpMN'>" + getMonthName(d_date) + "</div>");
       $("#dpSource_c").html(d_date);
@@ -259,7 +306,6 @@ $(document).ready(function() {
     beforeShowDay: tagDepart,
     onSelect: function(dateText, inst) {
       r_date = check_picked_date(dateText, "return");
-      //console.log("Clicked Return! " + r_date);
       $("#rpDay_c").text(r_date.split("/")[1]);
       $("#rpDate_c").html("<div class='dpWD'>" +  getWeekDay(r_date) + "</div><div class='dpMN'>" + getMonthName(r_date) + "</div>");
       $("#rpSource_c").html(r_date);
@@ -277,6 +323,7 @@ $(document).ready(function() {
       $("#destToOrgin").toggleClass("hidden");
       $("#originToDest").toggleClass("hidden");
     }
+    $("#datepickerR").click();
   });
 
   $("#dd").click(function (){
@@ -289,8 +336,10 @@ $(document).ready(function() {
       $("#destToOrgin").toggleClass("hidden");
       $("#originToDest").toggleClass("hidden");
     }
+    $("#datepickerD").click();
   });
   // Calendar Functionality - END
+  
 
    $('#search_from').autocomplete({
      source: origin_airports,
@@ -326,13 +375,13 @@ $(document).ready(function() {
        $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstFrom').show();
        $.each($("#airportLstFrom a"), function() {
          str = $(this).text();
+         
          $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.split(";")[0].substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span><span class='hidden fullFromName'>" + str + "</span></a>");
        });
        $(".selectClosestAirport").click(function(e){
-         //console.log("fakkkk");
-         //e.preventDefault();
          ap =  $($(this).children()[2]).text();
          $("#search_from_hidden").val(ap);
+         $("#origin_letters").html($($(this).children()[1]).text());
          $.mobile.changePage("#flightIndex");
 
          $("#searchOrigin").val($($(this).children()[1]).text());
@@ -386,7 +435,10 @@ $(document).ready(function() {
       $('ul.ui-autocomplete').removeAttr('style').hide().appendTo('#airportLstTo').show();
       $(".searchHeaderbox").hide();
       $.each($("#airportLstTo a"), function() {
-         str = $(this).text();
+         var str = $(this).text();
+         // if(str.length!=3){
+         //   str = $("#search_from_hidden").val();
+         // }
          $(this).parent().html("<a href='javascript:void(0)' class='selectClosestAirport ui-corner-all' ><span style='font-weight:bold !important'>" + str.split(";")[0].substring(0, str.lastIndexOf("(")-1) + " </span><span class='upper right'>" + str.substring(str.lastIndexOf("(")+1, str.length -1) +"</span><span class='hidden fullToName'>" + str + "</span></a>");
       });
       $(".selectClosestAirport").click(function(e){
@@ -394,6 +446,7 @@ $(document).ready(function() {
         ap =  $($(this).children()[2]).text();
         //ap += " (" +  $($(this).children()[1]).text() + ")";
         $("#search_to_hidden").val(ap);
+        $("#dest_letters").html($($(this).children()[1]).text());
         $.mobile.changePage("#flightIndex");
         $("#searchDestination").val($($(this).children()[1]).text());
         city = $($(this).children()[0]).text();
@@ -467,6 +520,13 @@ $(document).ready(function() {
 
   $("#exactDates, #lowestFares").click(function(event) {
     event.preventDefault();
+    
+    //***** TEMPORARY FIX FOR SEARCH FOR DEFAULT LOCATION
+    if($("#searchOrigin").val()==""){
+      var x = $("#search_from_hidden").val();
+      $("#searchOrigin").val(x.substring(x.indexOf("(")+1,x.indexOf(")")));
+    }
+    
     var commit = $(this).attr("id");
     $.ajax({
       type: "GET",
@@ -502,8 +562,6 @@ $(document).ready(function() {
            var da = html.to[i].da=="" ? $("#origin_short").text() : html.to[i].da
            var aa = html.to[i].aa=="" ? $("#dest_short").text() : html.to[i].aa
 
-           //$.mobile.changePage("#recentSearch");
-
            $("#recentResults").append("<li class='left'><a href='#' class='" + bottom + " borderBottomGray " + top + "'><span class='resultTitle floatLeft'>" + da + "-" + aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + getNewTime(ddt) + "<br/>ARR " + getNewTime(adt) + "</div><div class='floatleft days'>" + getWeekDay(ddt).substring(0,3) + "<br/>" + getMonthName(ddt) + "</div><div class='floatRight date'>" + ddt.getDate() + "</div></div></a></li>");
          }
        }
@@ -519,12 +577,11 @@ $(document).ready(function() {
             var da = html.from[i].da=="" ? $("#dest_short").text() : html.from[i].da
             var aa = html.from[i].aa=="" ? $("#origin_short").text() : html.from[i].aa
 
-
             $("#recentResults").append("<li class='left'><a href='#' class='" + top + " borderBottomGray " + bottom + " returnGray'><span class='return resultTitle floatLeft'>" + da + "-" + aa + "</span><div class='searchDates floatRight'><div id='atd' class='floatleft days'>DEP " + getNewTime(ddt) + "<br/>ARR " + getNewTime(adt) + "</div><div class='floatleft days'>" + getWeekDay(adt).substring(0,3) + "<br/>" + getMonthName(adt) + "</div><div class='floatRight date'>" + adt.getDate() + "</div></div></a></li>");
            }
         }
-
-            $.mobile.changePage("#recentSearch");
+        $.mobile.changePage("#recentSearch");
+        
         // if ((html.to.length <= 0) || (html.from.length <= 0)) {
         //   //$("#recentResults").text(" No flight schedule found.");
         // } else {
@@ -581,14 +638,19 @@ function findClosestAirport(lat, lng, fromto){
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
 
-            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' ><span style='font-weight:bold !important'>" + data[i].a.split(";")[1] + " </span><span class='upper right'>" + data[i].a.split(";")[0] +"</span>"  + "</a></li>"
+            str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' ><span style='font-weight:bold !important'>" + data[i].a.split(";")[1] + " </span><span class='upper right'>" + data[i].acode +"</span>"  + "</a></li>"
           }
           $(".geolocret").remove();
           $(".geoneararea").append(str + "</ul></div>");
         }
 
           if($("#search_from_hidden").val()==""){
-            $("#search_from_hidden").val(data[0].a.split(";")[1] + " (" + data[0].a.split(";")[0] +")");
+            $("#search_from_hidden").val(data[0].a.split(";")[1] + ";" + data[0].a.split(";")[0] + " (" + data[0].acode + ")");
+            if($("#searchOrigin").val()==""){
+              var x = $("#search_from_hidden").val();
+              $("#searchOrigin").val(x.substring(x.indexOf("(")+1,x.indexOf(")")));
+            }
+            
             $.ajax({
                url: "/flight/findDestinationAirports",
                data: "o=" + $("#searchOrigin").val(),
@@ -619,6 +681,8 @@ function findClosestAirport(lat, lng, fromto){
           e.preventDefault();
             if(fromto == "from"){
               $("#search_from_hidden").val($(this).html());
+              $("#origin_letters").html(data[0].acode);
+              $("#searchOrigin").val(data[0].acode)
             }
             else if(fromto == "to"){
               $("#search_to_hidden").val($(this).html());
@@ -630,7 +694,6 @@ function findClosestAirport(lat, lng, fromto){
         if ($(".geoneararea").length) {
           str = "<div id='geolocret' class='left fullWidth geolocret'><ul class='ui-autocomplete2 ui-menu ui-widget ui-widget-content ui-corner-all' role='listbox' aria-activedescendant='ui-active-menuitem'>";
           for(i=0;i<data.length;i++){
-            // console.log(data[i])
             str += "<li class='lightGrayBg bold borderBottom ui-menu-item'><a href='javascript:void(0)' class='selectClosestAirport' ><span style='font-weight:bold !important'>" + data[i].a.split(";")[1] + " </span><span class='upper right'>" + data[i].a.split(";")[0] +"</span>"  + "</a></li>"
           }
           $(".geolocret").remove();

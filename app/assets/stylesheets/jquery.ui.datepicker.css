@@ -201,3 +201,7 @@ tr td.dDate a {
 #dpDay, #rpDay, #dpDay_c, #rpDay_c {
   font-size: 35px !important;
 }
+
+#rpDay_c {
+  height: 43px !important;
+}
