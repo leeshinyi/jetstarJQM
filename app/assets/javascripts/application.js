@@ -339,6 +339,7 @@ $(document).ready(function() {
     $("#datepickerD").click();
   });
   // Calendar Functionality - END
+  
 
    $('#search_from').autocomplete({
      source: origin_airports,
@@ -645,6 +646,11 @@ function findClosestAirport(lat, lng, fromto){
 
           if($("#search_from_hidden").val()==""){
             $("#search_from_hidden").val(data[0].a.split(";")[1] + ";" + data[0].a.split(";")[0] + " (" + data[0].acode + ")");
+            if($("#searchOrigin").val()==""){
+              var x = $("#search_from_hidden").val();
+              $("#searchOrigin").val(x.substring(x.indexOf("(")+1,x.indexOf(")")));
+            }
+            
             $.ajax({
                url: "/flight/findDestinationAirports",
                data: "o=" + $("#searchOrigin").val(),
