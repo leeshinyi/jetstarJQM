@@ -204,6 +204,9 @@ $(document).ready(function() {
   $("#calLink").click(function(){
     $("#datepickerR").datepicker("option", "setDate", r_date);
     $("#datepickerD").datepicker("option", "setDate", d_date);
+
+    check_between_dates("departure")
+    check_between_dates("return")
     
     if ($("#flightIndex #origin_letters").text() == "" || $("#flightIndex #dest_letters").text()==""){
       $("#originToDest").text("Schedule");
