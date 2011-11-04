@@ -780,6 +780,7 @@ function check_picked_date(new_date, datepicker) {
       }
       if($("#rpDay_c").text() != "")
         alert("Your return must be a date not before your departure. Your choice was cancelled.")
+        
       return r_date
     } else {
       return new_date
