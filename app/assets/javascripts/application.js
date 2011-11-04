@@ -191,8 +191,10 @@ $(document).ready(function() {
     $(window).bind('orientationchange', function(event) {
       if (window.orientation == 90 || window.orientation == -90) {
         $('meta[name="viewport"]').attr('content', 'height=device-width,width=device-height,initial-scale=1.0,maximum-scale=1.0');
+        $('#searchPage').css('min-height','150px');
       } else {
         $('meta[name="viewport"]').attr('content', 'height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0');
+        $('#searchPage').css('min-height','290px');
       }
       setTimeout(function (){
         window.scrollTo(0,1);
