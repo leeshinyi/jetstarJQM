@@ -11,8 +11,8 @@
 // var dp_source = $("#dpSource").html();
 // var rp_source = $("#rpSource").html();
 
-var r_date = ""
-var d_date = ""
+var r_date = "";
+var d_date = "";
 
 $(document).ready(function() {
   var d1 = new Date();
@@ -22,7 +22,6 @@ $(document).ready(function() {
 
   d1.setDate(new Date().getDate() + 1);
 
-  
   // Display Elements
   $(".dpWD").text(getWeekDay(new Date()));
   $(".dpMN").text(getMonthName(new Date()));
@@ -47,22 +46,6 @@ $(document).ready(function() {
     $(this).css("box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
     $(this).css("-webkit-box-shadow","inset 0 1px 4px rgba(0,0,0,.2) !important");
   });
-
-  // $("#calLink").live("tap", function(event){
-  //   $("#drWrap").css("border", "none");
-  //   $("#calLink").css("background-color", "#58c6ff");
-  //   $("#calLink").css("border-radius", "5px");
-  // });
-
-  /*
-    DO NOT DELETE!!!
-    - to be used on the tabs in the Find Flights section
-  */
-
-  //$("#retFlightNav").live("tap", function(event){
-  //  $("a#retFlightNav").removeClass("current").addClass("tnav-tap");
-  //  $(this).css("color","#fff !important");
-  //});
 
   $('#retFlightNav').live('touchstart',function(event){
     $("a#retFlightNav").removeClass("current").addClass("tnav-tap").delay(3000);
@@ -94,30 +77,7 @@ $(document).ready(function() {
     $("#origin_airport span.tap-tfl").delay(3000).removeClass("tap-tfl").addClass("tfl");
     $("#fromContent").delay(3000).css("background", "url('/assets/tfbg.png') repeat-x");
   });
-
-  // change background images on tap of buttons in flight index search by
-  // $('#lowestFares').bind('touchstart',function(e){
-  //   $(this).css("background","url('/assets/tap-lowfare.png') no-repeat").delay(3000);
-  //   $(this).css("width","144px");
-  //   $(this).css("height","41px");
-  // });
-  // $('#lowestFares').bind('touchend',function(e){
-  //   $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') no-repeat");
-  //   $(this).css("width","141px");
-  //   $(this).css("height","38px");
-  // });
-
-  // $('#exactDates').bind('touchstart',function(e){
-  //   $(this).css("background","url('/assets/tap-exactdate.png') no-repeat").delay(3000);
-  //   $(this).css("width","144px");
-  //   $(this).css("height","41px");
-  // });
-  // $('#exactDates').bind('touchend',function(e){
-  //   $(this).delay(3000).css("background","url('/assets/searchBtn.jpg') 0 -38px no-repeat");
-  //   $(this).css("width","141px");
-  //   $(this).css("height","38px");
-  // });
-
+  
   $('#intro a').bind('touchstart',function(e){
     $(this).css("background-color","#30ADEB").delay(3000);
   });
@@ -248,45 +208,13 @@ $(document).ready(function() {
   });
 
   // Calendar Functionality - START
-
   // sets the date colors in between dates.. :|
   $("#datepickerD").click(function(){
     check_between_dates("departure")
-    // begin = parseInt(d_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
-    // end   = parseInt($(".dDate a").html())
-    // if(Date.parse(d_date) < Date.parse(r_date)) {
-    //   if(d_date.split("/")[0] < r_date.split("/")[0]) { 
-    //     end = 31
-    //   }
-    //   $("a.ui-state-default").each(function(){
-    //     for(i = begin; i < end; i++) {
-    //       if(parseInt($(this).html()) == i) {
-    //         $(this).parent().addClass("ui-range-value");
-    //         $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
-    //       }
-    //     }
-    //   }); 
-    // }
   });
 
   $("#datepickerR").click(function(){
     check_between_dates("return")
-    // end   = parseInt(r_date.split("/")[1].replace(/^0/,"")) // Numbers 8 and 9 are somewhat buggy, thus method replace is added
-    // begin = parseInt($("#datepickerR * .dDate a").html())
-    // if(Date.parse(d_date) < Date.parse(r_date)) {
-    //   if(d_date.split("/")[0] < r_date.split("/")[0]) { 
-    //     begin = 1
-    //   }
-    //   // console.log(begin)
-    //   $("a.ui-state-default").each(function(){
-    //     for(i = begin; i < end; i++) {
-    //       if(parseInt($(this).html()) == i) {
-    //         $(this).parent().addClass("ui-range-value");
-    //         $(".ui-range-value").css({"border": "solid 1px #f00 !important;"})
-    //       }
-    //     }
-    //   }); 
-    // }
   });
 
   // NOTE: check tagDepart() and tagReturn() on how these integrates
@@ -470,15 +398,7 @@ $(document).ready(function() {
     }
   });
 
-  function clearsearchfields (){
-    $(".searchField").val("");
-    $(".nearestairportFrom").slideDown();
-    $(".searchResults").css("margin-top","0");
-    $(".searchHeaderbox").show();
-    $(".nearestairportTo").css("display","none");
-    $(".geolocret").slideUp();
-    $('ul.ui-autocomplete').empty();
-  }
+  
 
   $("#dest_airport").click(function() {
     clearsearchfields();
@@ -545,8 +465,7 @@ $(document).ready(function() {
         complete: function() {
             $("div.ui-loader").hide();
         },    
-     success:
-     function(html){
+     success: function(html){
        $("#recentResults").empty();
        if(html.from.length!=0 || html.to.length!=0){
          $("#recentResults").removeClass("hidden");
@@ -616,6 +535,16 @@ $(document).ready(function() {
     }
   });
 });
+
+function clearsearchfields (){
+  $(".searchField").val("");
+  $(".nearestairportFrom").slideDown();
+  $(".searchResults").css("margin-top","0");
+  $(".searchHeaderbox").show();
+  $(".nearestairportTo").css("display","none");
+  $(".geolocret").slideUp();
+  $('ul.ui-autocomplete').empty();
+}
 
 // Calendar-specific functions - START
 function tagDepart(targetDate) {

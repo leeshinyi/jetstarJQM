@@ -4,49 +4,13 @@ class FlightController < ApplicationController
     @origins = findOriginAirports
     @destination = findDestinationAirports
   end
-
-  # def create
-  #   if params[:from] && !params[:from].blank?
-  #     session[:origin] = params[:from] 
-  #     session[:dest] = nil
-  #   end
-  #   session[:dest] = params[:to] if params[:to]  && !params[:to].blank?
-  #   session[:depart] = params[:depart] if params[:depart]
-  #   session[:return] = params[:return] if params[:return]
-  #   
-  #   if params[:commit]
-  #     
-  #     session[:adults] = params[:adults]
-  #     session[:child] = params[:child]
-  #     session[:infants] = params[:infants]
-  #     
-  #     findFlights
-  #   else
-  #     session[:flight] = nil
-  #     session[:return_flights] = nil
-  #   end
-  #   if request.xml_http_request?
-  #     render :nothing => true, :status => 200
-  #     #render :action => 'index#flightIndex'
-  #     #redirect_to  "/#flightIndex"
-  #     #redirect_to flight_index_path ,:anchor => "flightIndex"
-  #   else
-  #     #redirect_to flight_index_path ,:anchor => "flightIndex"
-  #   end
-  # end
-
-  # def search
-  #   @origins = findOriginAirports
-  #   @destination = findDestinationAirports
-  # end
   
-  def findClosestAirports
-    #{"altitude":-1,"city":"Tokyo","country":"Japan","countryCode":"JP","daylightSaving":78,"iataCode":"NRT","icaoCode":"NRT","latitude":-1,"longitude":-1,"name":"Tokyo (Narita Airport)","origin":true,"timeZoneOffset":-1}
+  def findClosestAirports  #{"altitude":-1,"city":"Tokyo","country":"Japan","countryCode":"JP","daylightSaving":78,"iataCode":"NRT","icaoCode":"NRT","latitude":-1,"longitude":-1,"name":"Tokyo (Narita Airport)","origin":true,"timeZoneOffset":-1}
     url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/airports/near/#{params[:lat]}/#{params[:lng]}/100")
     req = Net::HTTP::Get.new(url.path)
-    res = Net::HTTP.start(url.host, url.port) {|http|
+    res = Net::HTTP.start(url.host, url.port) do |http|
       http.request(req)
-    }
+    end
     airports = []
     tmp = {}
     name = ""
@@ -75,14 +39,14 @@ class FlightController < ApplicationController
     airports = []
     url = URI.parse("http://110.232.117.57:8080/JetstarWebServices/services/airports/origin/")
     req = Net::HTTP::Get.new(url.path)
-    res = Net::HTTP.start(url.host, url.port) {|http|
+    res = Net::HTTP.start(url.host, url.port) do |http|
       http.request(req)
-    }
+    end
     parsed_json = ActiveSupport::JSON.decode(res.body)
     parsed_json["results"].each do |airport|
       airports << ["#{ airport["name"]};#{airport["city"]} (#{airport["iataCode"]})"]
     end if parsed_json["results"]
-    # logger.info airports
+    
     airports
   end
   
@@ -104,10 +68,7 @@ class FlightController < ApplicationController
       airports << ["#{ airport["name"]};#{airport["city"]} (#{airport["iataCode"]})"]
     end if parsed_json["results"]
     
-    
-    if request.xhr?
-      render :json => airports
-    end
+    render :json => airports if request.xhr?
     airports
   end
     
@@ -127,7 +88,6 @@ class FlightController < ApplicationController
     res = Net::HTTP.start(url.host, url.port) do |http|
       http.request(req)
     end
-    # logger.info res.body
     parsed_json = ActiveSupport::JSON.decode(res.body)
     
     if parsed_json["results"]
@@ -135,7 +95,6 @@ class FlightController < ApplicationController
         tmp = {}
         flights = []
         parsed_json["results"][i].each do |flight|
-          # logger.info flight
           if flight.class == Hash
             flights << {:aa => flight["arrivalAirport"], :adt => flight["arrivalDateTime"], :bc => flight["businessClassAvailable"], :c => flight["currency"], :da => flight["departureAirport"], :ddt => flight["departureDateTime"], :flight => flight["flightDesignator"], :stop => flight["numStops"], :price => flight["price"]}
           else
@@ -167,11 +126,6 @@ class FlightController < ApplicationController
           flights << tmp
         end
         
-        # if i == 0  #departure
-        #   @flights = flights
-        # elsif i == 1
-        #   @return_flights = flights
-        # end
         flights.each do |f|
           if f[:aa] == params[:f]  #departure
             @flights << f
@@ -188,8 +142,8 @@ class FlightController < ApplicationController
     render :json => {:to => @flights, :from => @return_flights}
   end
   
-  def reset
-    reset_session
-    redirect_to "/flight"
-  end
+  # def reset
+  #   reset_session
+  #   redirect_to "/flight"
+  # end
 end
